@@ -20,6 +20,20 @@
 * 集成spring-cloud-alibaba-dependencies (2.2.6.RELEASE)
 * 继承spring-boot-dependencies (2.3.2.RELEASE)
 
+版本
+> Test环境 -> test-1.0.0-SNAPSHOT
+> QA环境 -> prev-1.0.0-SNAPSHOT
+> 线上环境 -> prod-1.0.0
+```
+    <parent>
+        <groupId>com.ziroom.framework</groupId>
+        <artifactId>ziroom-springcloud-dependencies</artifactId>
+        <version>test-1.0.0-SNAPSHOT</version>
+        <relativePath />
+    </parent>
+    
+```
+
 
 ## ziroom-framework-example
 各组件使用样例

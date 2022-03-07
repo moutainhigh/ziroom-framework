@@ -65,8 +65,8 @@
             <properties>
                 <env>dev</env>
                 <reversion>dev-1.0.0-SNAPSHOT</reversion>
-                <repositories.id>ziroom</repositories.id>
-                <repositories.url>http://mvn.ziroom.com/ams-snapshot</repositories.url>
+                <repositories.id>ziroom-framework</repositories.id>
+                <repositories.url>http://mvn.ziroom.com/framework-snapshot</repositories.url>
             </properties>
         </profile>
         <profile>
@@ -74,8 +74,8 @@
             <properties>
                 <env>test</env>
                 <reversion>test-1.0.0-SNAPSHOT</reversion>
-                <repositories.id>ziroom</repositories.id>
-                <repositories.url>http://mvn.ziroom.com/ams-snapshot</repositories.url>
+                <repositories.id>ziroom-framework</repositories.id>
+                <repositories.url>http://mvn.ziroom.com/framework-snapshot</repositories.url>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -86,25 +86,30 @@
             <properties>
                 <env>prev</env>
                 <reversion>prev-1.0.0-SNAPSHOT</reversion>
-                <repositories.id>ziroom</repositories.id>
-                <repositories.url>http://mvn.ziroom.com/ams-snapshot</repositories.url>
+                <repositories.id>ziroom-framework</repositories.id>
+                <repositories.url>http://mvn.ziroom.com/framework-snapshot</repositories.url>
             </properties>
         </profile>
         <profile>
             <id>prod</id>
             <properties>
                 <env>prod</env>
-                <reversion>prod-1.0.0-SNAPSHOT</reversion>
-                <repositories.id>ziroom</repositories.id>
-                <repositories.url>http://mvn.ziroom.com/ams-release</repositories.url>
+                <reversion>prod-1.0.0</reversion>
+                <repositories.id>ziroom-framework</repositories.id>
+                <repositories.url>http://mvn.ziroom.com/framework-release</repositories.url>
             </properties>
         </profile>
     </profiles>
 
     <distributionManagement>
+        <snapshotRepository>
+            <id>${repositories.id}</id>
+            <name>framework-snapshot</name>
+            <url>${repositories.url}</url>
+        </snapshotRepository>
         <repository>
             <id>${repositories.id}</id>
-            <name>ziroom-releases</name>
+            <name>framework-release</name>
             <url>${repositories.url}</url>
         </repository>
     </distributionManagement>

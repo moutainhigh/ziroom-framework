@@ -4,15 +4,20 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ziroom.framework</groupId>
   <artifactId>ziroom-springcloud-dependencies</artifactId>
-  <version>test-1.0.0-SNAPSHOT</version>
+  <version>prev-1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <description>Rent Spring Cloud Dependencies</description>
   <distributionManagement>
     <repository>
       <id>${repositories.id}</id>
-      <name>ziroom-releases</name>
+      <name>framework-release</name>
       <url>${repositories.url}</url>
     </repository>
+    <snapshotRepository>
+      <id>${repositories.id}</id>
+      <name>framework-snapshot</name>
+      <url>${repositories.url}</url>
+    </snapshotRepository>
   </distributionManagement>
   <properties>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
@@ -115,9 +120,9 @@
       <id>dev</id>
       <properties>
         <reversion>dev-1.0.0-SNAPSHOT</reversion>
-        <repositories.id>ziroom</repositories.id>
+        <repositories.id>ziroom-framework</repositories.id>
         <env>dev</env>
-        <repositories.url>http://mvn.ziroom.com/ams-snapshot</repositories.url>
+        <repositories.url>http://mvn.ziroom.com/framework-snapshot</repositories.url>
       </properties>
     </profile>
     <profile>
@@ -127,27 +132,27 @@
       </activation>
       <properties>
         <reversion>test-1.0.0-SNAPSHOT</reversion>
-        <repositories.id>ziroom</repositories.id>
+        <repositories.id>ziroom-framework</repositories.id>
         <env>test</env>
-        <repositories.url>http://mvn.ziroom.com/ams-snapshot</repositories.url>
+        <repositories.url>http://mvn.ziroom.com/framework-snapshot</repositories.url>
       </properties>
     </profile>
     <profile>
       <id>prev</id>
       <properties>
         <reversion>prev-1.0.0-SNAPSHOT</reversion>
-        <repositories.id>ziroom</repositories.id>
+        <repositories.id>ziroom-framework</repositories.id>
         <env>prev</env>
-        <repositories.url>http://mvn.ziroom.com/ams-snapshot</repositories.url>
+        <repositories.url>http://mvn.ziroom.com/framework-snapshot</repositories.url>
       </properties>
     </profile>
     <profile>
       <id>prod</id>
       <properties>
-        <reversion>prod-1.0.0-SNAPSHOT</reversion>
-        <repositories.id>ziroom</repositories.id>
+        <reversion>prod-1.0.0</reversion>
+        <repositories.id>ziroom-framework</repositories.id>
         <env>prod</env>
-        <repositories.url>http://mvn.ziroom.com/ams-release</repositories.url>
+        <repositories.url>http://mvn.ziroom.com/framework-release</repositories.url>
       </properties>
     </profile>
   </profiles>
