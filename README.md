@@ -7,6 +7,24 @@
 ## ziroom-http-starter
 统一HTTP接口定义和filter
 
+版本
+
+> Test环境 -> test-1.0.0-SNAPSHOT
+
+> QA环境 -> prev-1.0.0-SNAPSHOT
+
+> 线上环境 -> prod-1.0.0
+
+
+```
+    <dependency>
+        <groupId>com.ziroom.framework</groupId>
+        <artifactId>ziroom-http-starter</artifactId>
+        <version>${ziroom-http-starter.version}</version>
+    </dependency>
+    
+```
+
 ## ziroom-swagger-starter
 引用swagger的V2.9.2，通过自定义的swagger.properties，来简化swagger的接入
 
@@ -21,9 +39,14 @@
 * 继承spring-boot-dependencies (2.3.2.RELEASE)
 
 版本
+
 > Test环境 -> test-1.0.0-SNAPSHOT
+
 > QA环境 -> prev-1.0.0-SNAPSHOT
+
 > 线上环境 -> prod-1.0.0
+
+ 
 ```
     <parent>
         <groupId>com.ziroom.framework</groupId>
