@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ziroom.framework</groupId>
+        <artifactId>ziroom-framework-example</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <groupId>com.ziroom.framework</groupId>
+    <artifactId>ziroom-framework-spring-boot-example</artifactId>
+    <name>ziroom-framework-spring-boot-example</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- ziroom -->
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-exception-starter</artifactId>
+            <version>${ziroom-exception-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-http-starter</artifactId>
+            <version>${ziroom-http-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-dubbo-starter</artifactId>
+            <version>${ziroom-dubbo-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-swagger-starter</artifactId>
+            <version>${ziroom-swagger-starter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ziroom.gelflog.spring</groupId>
+            <artifactId>gelflog-spring</artifactId>
+            <version>${gelflog.version}</version>
+        </dependency>
+
+        <!-- 第三方 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <env>dev</env>
+                <reversion>dev-1.0.0-SNAPSHOT</reversion>
+                <repositories.id>ziroom</repositories.id>
+                <repositories.url>http://mvn.ziroom.com/ams-snapshot</repositories.url>
+                <ziroom-exception-starter.version>dev-1.0.0-SNAPSHOT</ziroom-exception-starter.version>
+                <ziroom-http-starter.version>dev-1.0.0-SNAPSHOT</ziroom-http-starter.version>
+                <ziroom-dubbo-starter.version>dev-1.0.0-SNAPSHOT</ziroom-dubbo-starter.version>
+                <ziroom-swagger-starter.version>dev-1.0.0-SNAPSHOT</ziroom-swagger-starter.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <env>test</env>
+                <reversion>test-1.0.0-SNAPSHOT</reversion>
+                <repositories.id>ziroom</repositories.id>
+                <repositories.url>http://mvn.ziroom.com/ams-snapshot</repositories.url>
+                <ziroom-exception-starter.version>test-1.0.0-SNAPSHOT</ziroom-exception-starter.version>
+                <ziroom-http-starter.version>test-1.0.0-SNAPSHOT</ziroom-http-starter.version>
+                <ziroom-dubbo-starter.version>test-1.0.0-SNAPSHOT</ziroom-dubbo-starter.version>
+                <ziroom-swagger-starter.version>test-1.0.1-SNAPSHOT</ziroom-swagger-starter.version>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>prev</id>
+            <properties>
+                <env>prev</env>
+                <reversion>prev-1.0.0-SNAPSHOT</reversion>
+                <repositories.id>ziroom</repositories.id>
+                <repositories.url>http://mvn.ziroom.com/ams-snapshot</repositories.url>
+                <ziroom-exception-starter.version>prev-1.0.0-SNAPSHOT</ziroom-exception-starter.version>
+                <ziroom-http-starter.version>prev-1.0.0-SNAPSHOT</ziroom-http-starter.version>
+                <ziroom-dubbo-starter.version>prev-1.0.0-SNAPSHOT</ziroom-dubbo-starter.version>
+                <ziroom-swagger-starter.version>prev-1.0.0-SNAPSHOT</ziroom-swagger-starter.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <env>prod</env>
+                <reversion>prod-1.0.0</reversion>
+                <repositories.id>ziroom</repositories.id>
+                <repositories.url>http://mvn.ziroom.com/ams-release</repositories.url>
+                <ziroom-exception-starter.version>prod-1.0.0</ziroom-exception-starter.version>
+                <ziroom-http-starter.version>prod-1.0.0</ziroom-http-starter.version>
+                <ziroom-dubbo-starter.version>prod-1.0.0</ziroom-dubbo-starter.version>
+                <ziroom-swagger-starter.version>prod-1.0.0</ziroom-swagger-starter.version>
+            </properties>
+        </profile>
+    </profiles>
+</project>

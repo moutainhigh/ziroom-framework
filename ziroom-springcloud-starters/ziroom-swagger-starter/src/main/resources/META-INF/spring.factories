@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.ziroom.framework.swagger.config.SwaggerConfig, \
+  com.ziroom.framework.swagger.config.SwaggerDubboConfig
