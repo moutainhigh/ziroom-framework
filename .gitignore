@@ -32,3 +32,5 @@ build/
 .vscode/
 
 /.flattened-pom.xml
+ziroom-framework-example/ziroom-framework-spring-cloud-example/ziroom-springcloud-parent-example/logs/all_data.log
+ziroom-framework-example/ziroom-framework-spring-cloud-example/ziroom-springcloud-parent-example/logs/error-data.log
