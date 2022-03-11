@@ -5,35 +5,39 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.ziroom.framework</groupId>
-    <artifactId>ziroom-springcloud-sdk</artifactId>
-    <version>${project.revision}</version>
+    <artifactId>ziroom-framework-dependencies</artifactId>
+    <version>${revision}</version>
     <packaging>pom</packaging>
+    <description>Rent Spring Cloud Dependencies</description>
 
     <properties>
-        <!-- Project revision -->
-        <project.revision>1.0.0-SNAPSHOT</project.revision>
-
         <!-- Framework Versions -->
         <spring-boot.version>2.3.2.RELEASE</spring-boot.version>
         <spring.cloud.version>Hoxton.SR12</spring.cloud.version>
         <spring.cloud.alibaba.version>2.2.6.RELEASE</spring.cloud.alibaba.version>
 
-        <!-- Maven Plugin Versions -->
-        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
-        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
-        <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
-        <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
-        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
-        <flatten-maven-plugin.version>1.1.0</flatten-maven-plugin.version>
-        <gmavenplus-plugin.version>1.6</gmavenplus-plugin.version>
-        <jacoco.version>0.8.3</jacoco.version>
+        <!--JAVA ZIROOM Versions -->
         <java.version>1.8</java.version>
 
+        <revision>1.0.0-SNAPSHOT</revision>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>com.ziroom.swagger</groupId>
+                <artifactId>ziroom-swagger-dubbo</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ziroom.framewor</groupId>
+                <artifactId>ziroom-swagger-starter</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+
             <!-- Spring Dependencies -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -61,24 +65,25 @@
         </dependencies>
     </dependencyManagement>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>${maven-deploy-plugin.version}</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>6</source>
-                    <target>6</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <profiles>
+        <profile>
+            <id>release</id>
+            <properties>
+                <revision>1.0.0</revision>
+            </properties>
+        </profile>
+    </profiles>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>framework-snapshots</id>
+            <url>http://mvn.ziroom.com/framework-snapshot/</url>
+        </snapshotRepository>
+        <repository>
+            <id>framework-release</id>
+            <url>http://mvn.ziroom.com/framework-release/</url>
+        </repository>
+    </distributionManagement>
+
+
 </project>
