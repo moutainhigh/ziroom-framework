@@ -4,9 +4,15 @@
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.ziroom.framework</groupId>
+    <!-- 版本管理，统一交给ziroom-framework-dependencies-->
+    <parent>
+        <groupId>com.ziroom.framework</groupId>
+        <artifactId>ziroom-framework-dependencies</artifactId>
+        <version>${revision}</version>
+        <relativePath>./ziroom-framework-dependencies/pom.xml</relativePath>
+    </parent>
+
     <artifactId>ziroom-framework</artifactId>
-    <version>${revision}</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -27,9 +33,7 @@
         <jacoco.version>0.8.3</jacoco.version>
         <java.version>1.8</java.version>
 
-        <lombok.version>1.18.4</lombok.version>
 
-        <revision>1.0.0-SNAPSHOT</revision>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -66,6 +70,7 @@
         <module>ziroom-framework-dependencies</module>
         <module>ziroom-framework-starters</module>
         <module>ziroom-framework-common</module>
+        <module>ziroom-framework-examples</module>
     </modules>
 
     <dependencyManagement>
@@ -81,14 +86,6 @@
 
     </dependencyManagement>
 
-    <profiles>
-        <profile>
-            <id>release</id>
-            <properties>
-                <revision>1.0.0</revision>
-            </properties>
-        </profile>
-    </profiles>
 
     <build>
         <plugins>
@@ -105,19 +102,19 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-javadoc-plugin</artifactId>-->
+<!--                <version>${maven-javadoc-plugin.version}</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>jar</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

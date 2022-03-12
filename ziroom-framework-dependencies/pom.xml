@@ -11,19 +11,54 @@
     <description>Rent Spring Cloud Dependencies</description>
 
     <properties>
+        <java.version>1.8</java.version>
+        <java.source.version>1.8</java.source.version>
+        <java.target.version>1.8</java.target.version>
+        <java.encoding>UTF-8</java.encoding>
+
+        <!--JAVA ZIROOM Versions -->
+        <revision>1.0.0-SNAPSHOT</revision>
+
         <!-- Framework Versions -->
         <spring-boot.version>2.3.2.RELEASE</spring-boot.version>
         <spring.cloud.version>Hoxton.SR12</spring.cloud.version>
         <spring.cloud.alibaba.version>2.2.6.RELEASE</spring.cloud.alibaba.version>
 
-        <!--JAVA ZIROOM Versions -->
-        <java.version>1.8</java.version>
+        <!-- Other -->
+        <swagger.version>2.9.2</swagger.version>
+        <swagger-ui.version>1.9.6</swagger-ui.version>
 
-        <revision>1.0.0-SNAPSHOT</revision>
+        <fastjson.version>1.2.76</fastjson.version>
+        <lombok.version>1.18.22</lombok.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+
+            <!-- 自如内部组件 start-->
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-starter-exception</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-starter-http</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-starter-swagger</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-starter-dubbo</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.ziroom.swagger</groupId>
@@ -37,6 +72,13 @@
                 <version>${revision}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 自如内部组件 end -->
 
             <!-- Spring Dependencies -->
             <dependency>
@@ -62,6 +104,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 

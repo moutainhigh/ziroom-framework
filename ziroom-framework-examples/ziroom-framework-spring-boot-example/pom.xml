@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.ziroom.framework</groupId>
+        <artifactId>ziroom-framework-examples</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>ziroom-framework-spring-boot-example</artifactId>
+    <name>ziroom-framework-spring-boot-example</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- ziroom -->
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-framework-starter-exception</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-framework-starter-http</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-framework-starter-swagger</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-framework-starter-dubbo</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.ziroom.gelflog.spring</groupId>
+            <artifactId>gelflog-spring</artifactId>
+            <version>${gelflog.version}</version>
+        </dependency>
+
+        <!-- 第三方 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>

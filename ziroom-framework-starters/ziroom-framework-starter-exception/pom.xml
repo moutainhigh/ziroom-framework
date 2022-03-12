@@ -21,7 +21,6 @@
         <java.encoding>UTF-8</java.encoding>
         <maven.compiler.version>3.8.0</maven.compiler.version>
         <spring.version>5.2.13.RELEASE</spring.version>
-        <swagger.version>2.9.2</swagger.version>
         <swagger-ui.version>1.9.6</swagger-ui.version>
         <swagger-dubbo.version>test-2.0.3.1-SNAPSHOT</swagger-dubbo.version>
         <fastjson.version>1.2.76</fastjson.version>

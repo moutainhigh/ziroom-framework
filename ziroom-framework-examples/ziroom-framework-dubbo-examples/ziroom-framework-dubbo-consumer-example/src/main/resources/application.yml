@@ -1,0 +1,13 @@
+dubbo:
+  application:
+    name: example-consumer
+  scan:
+    base-packages:
+      - com.ziroom.framework.service
+  registry:
+    address: zookeeper://10.16.37.113:3181?timeout=10000
+  consumer:
+    version: 1.0.0-example
+
+
+debug: false
