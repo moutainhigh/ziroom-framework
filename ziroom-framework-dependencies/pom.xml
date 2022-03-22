@@ -38,6 +38,12 @@
             <!-- 自如内部组件 start-->
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-starter-web</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-starter-exception</artifactId>
                 <version>${revision}</version>
             </dependency>
@@ -134,6 +140,5 @@
             <url>http://mvn.ziroom.com/framework-release/</url>
         </repository>
     </distributionManagement>
-
 
 </project>

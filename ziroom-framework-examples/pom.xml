@@ -17,6 +17,7 @@
     <modules>
         <module>ziroom-framework-spring-boot-example</module>
         <module>ziroom-framework-dubbo-examples</module>
+        <module>ziroom-framework-web-example</module>
 <!--        <module>ziroom-framework-spring-cloud-example</module>-->
 <!--        <module>ziroom-springcloud-dependencies-example</module>-->
     </modules>

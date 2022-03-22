@@ -20,6 +20,7 @@
         <module>ziroom-framework-starter-parent</module>
         <module>ziroom-framework-starter-swagger</module>
         <module>ziroom-framework-starter-swagger-dubbo</module>
+        <module>ziroom-framework-starter-web</module>
     </modules>
 
 </project>

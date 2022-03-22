@@ -1,8 +1,0 @@
-[
-  {
-    "resource": "POST:http://mycenter/api/mycenter/base/config",
-    "count": 0.5,
-    "grade": 1,
-    "timeWindow": 30
-  }
-]
