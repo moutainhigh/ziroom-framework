@@ -12,6 +12,18 @@
     <artifactId>ziroom-framework-spring-cloud-provider-example</artifactId>
     <name>ziroom-framework-spring-cloud-provider-example</name>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-exception-starter</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>com.ziroom.gelflog.spring</groupId>
+                <artifactId>gelflog-spring</artifactId>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -31,11 +43,6 @@
         <!-- ziroom -->
         <dependency>
             <groupId>com.ziroom.framework</groupId>
-            <artifactId>ziroom-exception-starter</artifactId>
-            <version>${ziroom-exception-starter.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ziroom.framework</groupId>
             <artifactId>ziroom-http-starter</artifactId>
             <version>${ziroom-http-starter.version}</version>
         </dependency>
@@ -43,11 +50,6 @@
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ziroom-swagger-starter</artifactId>
             <version>${ziroom-swagger-starter.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ziroom.gelflog.spring</groupId>
-            <artifactId>gelflog-spring</artifactId>
-            <version>${gelflog.version}</version>
         </dependency>
         <!-- 第三方 -->
         <dependency>

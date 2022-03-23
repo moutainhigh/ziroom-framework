@@ -16,6 +16,14 @@
     <properties>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-exception-starter</artifactId>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -44,11 +52,6 @@
 
 
         <!-- ziroom -->
-        <dependency>
-            <groupId>com.ziroom.framework</groupId>
-            <artifactId>ziroom-exception-starter</artifactId>
-            <version>${ziroom-exception-starter.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ziroom-http-starter</artifactId>
