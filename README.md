@@ -58,7 +58,7 @@
 ```
 
 
-## ziroom-framework-example
+## ziroom-framework-examples
 各组件使用样例
 
 * ziroom-framework-dubbo-example
