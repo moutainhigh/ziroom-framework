@@ -36,7 +36,7 @@
 
 * 集成spring-cloud-dependencies (Hoxton.SR12)
 * 集成spring-cloud-alibaba-dependencies (2.2.6.RELEASE)
-* 继承spring-boot-dependencies (2.3.2.RELEASE)
+* 继承spring-boot-dependencies (2.1.18.RELEASE)
 
 版本
 
