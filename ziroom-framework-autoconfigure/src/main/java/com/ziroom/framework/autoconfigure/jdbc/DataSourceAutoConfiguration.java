@@ -16,6 +16,7 @@
 
 package com.ziroom.framework.autoconfigure.jdbc;
 
+import com.ziroom.framework.autoconfigure.jdbc.definition.ZiRoomDataSourceProperties;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.*;
 import org.springframework.boot.autoconfigure.jdbc.*;
@@ -43,12 +44,11 @@ import javax.sql.XADataSource;
  */
 @Configuration
 @ConditionalOnClass({ DataSource.class, EmbeddedDatabaseType.class })
-@ConditionalOnMissingBean(type = "io.r2dbc.spi.ConnectionFactory")
-@EnableConfigurationProperties(DataSourceProperties.class)
+@EnableConfigurationProperties({DataSourceProperties.class, ZiRoomDataSourceProperties.class})
 @Import({ DataSourcePoolMetadataProvidersConfiguration.class, DataSourceInitializationConfiguration.class })
 public class DataSourceAutoConfiguration {
 
-	@Configuration(proxyBeanMethods = false)
+	@Configuration
 	@Conditional(EmbeddedDatabaseCondition.class)
 	@ConditionalOnMissingBean({ DataSource.class, XADataSource.class })
 	@Import(EmbeddedDataSourceConfiguration.class)
@@ -56,7 +56,7 @@ public class DataSourceAutoConfiguration {
 
 	}
 
-	@Configuration(proxyBeanMethods = false)
+	@Configuration
 	@Conditional(PooledDataSourceCondition.class)
 	@ConditionalOnMissingBean({ DataSource.class, XADataSource.class })
 	@Import({ DataSourceConfiguration.Hikari.class, DataSourceConfiguration.Tomcat.class,
@@ -96,10 +96,21 @@ public class DataSourceAutoConfiguration {
 		@Override
 		public ConditionOutcome getMatchOutcome(ConditionContext context, AnnotatedTypeMetadata metadata) {
 			ConditionMessage.Builder message = ConditionMessage.forCondition("PooledDataSource");
-			if (DataSourceBuilder.findType(context.getClassLoader()) != null) {
+			if (getDataSourceClassLoader(context) != null) {
 				return ConditionOutcome.match(message.foundExactly("supported DataSource"));
 			}
 			return ConditionOutcome.noMatch(message.didNotFind("supported DataSource").atAll());
+		}
+
+		/**
+		 * Returns the class loader for the {@link DataSource} class. Used to ensure that
+		 * the driver class can actually be loaded by the data source.
+		 * @param context the condition context
+		 * @return the class loader
+		 */
+		private ClassLoader getDataSourceClassLoader(ConditionContext context) {
+			Class<?> dataSourceClass = DataSourceBuilder.findType(context.getClassLoader());
+			return (dataSourceClass != null) ? dataSourceClass.getClassLoader() : null;
 		}
 
 	}
