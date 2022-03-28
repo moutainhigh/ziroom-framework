@@ -21,6 +21,7 @@
         <module>ziroom-framework-starter-swagger</module>
         <module>ziroom-framework-starter-swagger-dubbo</module>
         <module>ziroom-framework-starter-web</module>
+        <module>ziroom-framework-starter-jdbc</module>
     </modules>
 
 </project>

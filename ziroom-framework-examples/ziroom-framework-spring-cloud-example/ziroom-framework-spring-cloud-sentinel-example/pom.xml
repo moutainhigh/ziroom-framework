@@ -54,13 +54,13 @@
         <!-- ziroom -->
         <dependency>
             <groupId>com.ziroom.framework</groupId>
-            <artifactId>ziroom-http-starter</artifactId>
-            <version>${ziroom-http-starter.version}</version>
+            <artifactId>ziroom-framework-starter-http</artifactId>
+            <version>${version}</version>
         </dependency>
         <dependency>
             <groupId>com.ziroom.framework</groupId>
-            <artifactId>ziroom-swagger-starter</artifactId>
-            <version>${ziroom-swagger-starter.version}</version>
+            <artifactId>ziroom-framework-starter-swagger</artifactId>
+            <version>${version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>javax.validation</groupId>
