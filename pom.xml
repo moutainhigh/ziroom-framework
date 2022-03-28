@@ -17,7 +17,7 @@
 
     <properties>
         <!-- Framework Versions -->
-        <spring-boot.version>2.1.18.RELEASE</spring-boot.version>
+        <spring-boot.version>2.3.2.RELEASE</spring-boot.version>
         <spring.cloud.version>Hoxton.SR12</spring.cloud.version>
         <spring.cloud.alibaba.version>2.2.6.RELEASE</spring.cloud.alibaba.version>
 

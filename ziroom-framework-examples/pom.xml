@@ -27,7 +27,7 @@
         <project.revision>1.0.0-SNAPSHOT</project.revision>
 
         <!-- Framework Versions -->
-        <spring-boot.version>2.1.18.RELEASE</spring-boot.version>
+        <spring-boot.version>2.3.2.RELEASE</spring-boot.version>
 
         <!-- Maven Plugin Versions -->
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>

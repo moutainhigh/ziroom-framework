@@ -55,9 +55,9 @@ abstract class DataSourceConfiguration {
 
 	@SuppressWarnings("unchecked")
 	protected static <T> T createDataSource(DataSourceProperties properties, Class<? extends DataSource> type) {
-		if (!Objects.isNull(assembleDataSourceProperties())){
-			properties = assembleDataSourceProperties();
-		}
+//		if (!Objects.isNull(assembleDataSourceProperties())){
+//			properties = assembleDataSourceProperties();
+//		}
 		return (T) properties.initializeDataSourceBuilder().type(type).build();
 	}
 
