@@ -4,6 +4,9 @@ package com.ziroom.framework.autoconfigure.common;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.BeanClassLoaderAware;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,9 +18,21 @@ import java.util.Properties;
  * @Author lidm
  * @Date 2020/11/4
  */
-public class ApplicationProvider{
+public class ApplicationProvider implements BeanClassLoaderAware, InitializingBean {
 
     private static final Log log = LogFactory.getLog(ApplicationProvider.class);
+
+    private ClassLoader classLoader;
+
+    @Override
+    public void setBeanClassLoader(ClassLoader classLoader) {
+        this.classLoader = classLoader;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+//        this.embeddedDatabaseConnection = EmbeddedDatabaseConnection.get(this.classLoader);
+    }
 
     public static final String APP_PROPERTIES_CLASSPATH = "/META-INF/app.properties";
 

@@ -17,6 +17,9 @@
 package com.ziroom.framework.autoconfigure.jdbc;
 
 import com.zaxxer.hikari.HikariDataSource;
+import com.ziroom.framework.autoconfigure.jdbc.definition.ZiRoomDataSourceProvider;
+import com.ziroom.framework.autoconfigure.jdbc.definition.domain.ZiRoomDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -28,6 +31,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
+import java.util.Objects;
 
 /**
  * Actual DataSource configurations imported by {@link DataSourceAutoConfiguration}.
@@ -38,8 +42,22 @@ import javax.sql.DataSource;
  */
 abstract class DataSourceConfiguration {
 
+
+	@Autowired
+	private ZiRoomDataSourceProvider ziRoomDataSourceProvider;
+
+	@Bean
+	public DataSourceProperties assembleDataSourceProperties(){
+		ZiRoomDataSource ziRoomDataSource = ziRoomDataSourceProvider.getZiRoomDataSource();
+		DataSourceProperties properties = new DataSourceProperties();
+		return properties;
+	}
+
 	@SuppressWarnings("unchecked")
 	protected static <T> T createDataSource(DataSourceProperties properties, Class<? extends DataSource> type) {
+		if (!Objects.isNull(assembleDataSourceProperties())){
+			properties = assembleDataSourceProperties();
+		}
 		return (T) properties.initializeDataSourceBuilder().type(type).build();
 	}
 
