@@ -2,6 +2,9 @@ package com.ziroom.framework.autoconfigure.common;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Configuration;
 
 
 /**
@@ -9,7 +12,8 @@ import org.apache.commons.logging.LogFactory;
  * @Author lidm
  * @Date 2020/11/4
  */
-public class EnvironmentProvider {
+@Configuration
+public class EnvironmentProvider implements ApplicationContextInitializer {
 
     private static final Log log = LogFactory.getLog(EnvironmentProvider.class);
 
@@ -17,7 +21,8 @@ public class EnvironmentProvider {
 
     protected String env;
 
-    public void initialize(){
+    @Override
+    public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
         // 1. 从环境变量加载
         String env = System.getenv("APPLICATION_ENV");
         if (CommonMixUtils.isNotBlank(env)) {
@@ -32,5 +37,8 @@ public class EnvironmentProvider {
             log.info(String.format("read env from environment failed. use default environment:{}", DEFAULT_ENV));
             env = DEFAULT_ENV;
         }
+    }
+    public String getEnv(){
+        return env;
     }
 }

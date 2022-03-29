@@ -4,9 +4,16 @@ package com.ziroom.framework.autoconfigure.common;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
+import org.springframework.context.ApplicationContextInitializer;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Configuration;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -18,21 +25,10 @@ import java.util.Properties;
  * @Author lidm
  * @Date 2020/11/4
  */
-public class ApplicationProvider implements BeanClassLoaderAware, InitializingBean {
+@Configuration
+public class ApplicationProvider implements ApplicationContextInitializer {
 
     private static final Log log = LogFactory.getLog(ApplicationProvider.class);
-
-    private ClassLoader classLoader;
-
-    @Override
-    public void setBeanClassLoader(ClassLoader classLoader) {
-        this.classLoader = classLoader;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-//        this.embeddedDatabaseConnection = EmbeddedDatabaseConnection.get(this.classLoader);
-    }
 
     public static final String APP_PROPERTIES_CLASSPATH = "/META-INF/app.properties";
 
@@ -40,7 +36,8 @@ public class ApplicationProvider implements BeanClassLoaderAware, InitializingBe
 
     protected String appId;
 
-    public void initialize() {
+    @Override
+    public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
         try {
             InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(APP_PROPERTIES_CLASSPATH);
             if (in == null) {
@@ -114,11 +111,7 @@ public class ApplicationProvider implements BeanClassLoaderAware, InitializingBe
         log.warn(String.format("app.id is not available from System Property and {}. It is set to null", APP_PROPERTIES_CLASSPATH));
     }
 
-    public String get() {
-        // 1. 从配置文件获取
-        // 2. 从输入参数获取
-        // 3. 从环境获取
-
+    public String getAppId() {
         return appId;
     }
 }

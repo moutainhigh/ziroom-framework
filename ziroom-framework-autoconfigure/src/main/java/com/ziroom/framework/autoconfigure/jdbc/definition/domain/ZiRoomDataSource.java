@@ -47,7 +47,7 @@ public class ZiRoomDataSource {
             this.PropertiesObject = propertiesObject;
         }
 
-    public class Properties {
+    public static class Properties {
 
         private String name;
 
@@ -94,7 +94,7 @@ public class ZiRoomDataSource {
             this.password = password;
         }
     }
-    public class Config {
+    public static class Config {
 
         private String classify;
 
