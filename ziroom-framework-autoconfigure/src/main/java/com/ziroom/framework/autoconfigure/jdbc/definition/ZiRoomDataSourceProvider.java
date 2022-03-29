@@ -24,7 +24,7 @@ import java.util.Properties;
  * @Date 2020/11/4
  */
 @Configuration
-public class ZiRoomDataSourceProvider implements BeanClassLoaderAware, ApplicationContextInitializer {
+public class ZiRoomDataSourceProvider implements ApplicationContextInitializer {
 
     private static final Log log = LogFactory.getLog(ZiRoomDataSourceProvider.class);
 
@@ -32,18 +32,11 @@ public class ZiRoomDataSourceProvider implements BeanClassLoaderAware, Applicati
 
     private ZiRoomDataSource ziRoomDataSource;
 
-    private ClassLoader classLoader;
-
-    @Override
-    public void setBeanClassLoader(ClassLoader classLoader) {
-        this.classLoader = classLoader;
-    }
-
     @Override
     public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
         try {
             ApplicationProvider appProvider = configurableApplicationContext.getBean(ApplicationProvider.class);
-            InputStream in = classLoader.getResourceAsStream(String.format(DATASOURCE_CLASSPATH,appProvider.getAppId()));
+            InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(String.format(DATASOURCE_CLASSPATH,appProvider.getAppId()));
             Properties dataSourceProperties = new Properties();
             dataSourceProperties.load(new InputStreamReader(new BOMInputStream(in), StandardCharsets.UTF_8));
             //TODO
