@@ -30,6 +30,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-framework-autoconfigure</artifactId>
+            <version>${version}</version>
+        </dependency>
     </dependencies>
 
 </project>
