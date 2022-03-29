@@ -1,8 +1,5 @@
 package com.ziroom.framework.autoconfigure.jdbc.definition.domain;
 
-
-import com.google.common.base.MoreObjects;
-
 /**
  * /app/conf/数据库链接配置文件
  */
@@ -115,8 +112,10 @@ public class ZiRoomDataSource {
         }
     }
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).toString();
-    }
+//    @Override
+//    public String toString() {
+////        return "ZiRoomDataSource [appId=" + appId + ", prefix=" + prefix + ", Config =" + version + ", opaque=" + opaque + ", flag(B)="
+////                + Integer.toBinaryString(flag) + ", remark=" + remark + ", extFields=" + extFields + ", serializeTypeCurrentRPC="
+////                + serializeTypeCurrentRPC + "]";
+//    }
 }

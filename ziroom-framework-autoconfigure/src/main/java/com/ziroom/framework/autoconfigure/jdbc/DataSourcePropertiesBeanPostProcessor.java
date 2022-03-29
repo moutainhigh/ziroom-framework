@@ -9,9 +9,11 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.Objects;
 
+@Configuration
 public class DataSourcePropertiesBeanPostProcessor implements BeanPostProcessor, ApplicationContextInitializer {
 
     private static final Log log = LogFactory.getLog(DataSourcePropertiesBeanPostProcessor.class);
