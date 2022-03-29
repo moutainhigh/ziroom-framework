@@ -28,7 +28,7 @@ public class ZiRoomDataSourceProvider implements ApplicationContextInitializer {
 
     private static final Log log = LogFactory.getLog(ZiRoomDataSourceProvider.class);
 
-    private static final String DATASOURCE_CLASSPATH = "/app/config/%s-datasource.properties";
+    private static final String DATASOURCE_CLASSPATH = "/app/conf/%s-datasource.properties";
 
     private ZiRoomDataSource ziRoomDataSource;
 
@@ -62,6 +62,8 @@ public class ZiRoomDataSourceProvider implements ApplicationContextInitializer {
             if (CommonMixUtils.isNotBlank(appId)&&CommonMixUtils.isNotBlank(prefix)&&
                     CommonMixUtils.isNotBlank(propertiesName)&&CommonMixUtils.isNotBlank(propertiesUrl)&&
                     CommonMixUtils.isNotBlank(propertiesUsername)&&CommonMixUtils.isNotBlank(propertiesPassword)){
+                log.info(String.format("appId %s的数据源链接信息已被omega配置文件覆盖，详细参数请查看omega环境配置文件"));
+                log.info("ziRoomDataSource:"+dataSource);
                 ziRoomDataSource = dataSource;
             }
         } catch (Throwable ex) {
