@@ -44,7 +44,6 @@ import java.sql.SQLException;
         SpringBootShardingRuleConfigurationProperties.class,
         SpringBootMasterSlaveRuleConfigurationProperties.class,
         SpringBootPropertiesConfigurationProperties.class})
-//@ConditionalOnProperty(prefix = "spring.shardingsphere", name = "enabled", havingValue = "true", matchIfMissing = true)
 @AutoConfigureBefore(DataSourceAutoConfiguration.class)
 @RequiredArgsConstructor
 @Import({GearDefinition.class})

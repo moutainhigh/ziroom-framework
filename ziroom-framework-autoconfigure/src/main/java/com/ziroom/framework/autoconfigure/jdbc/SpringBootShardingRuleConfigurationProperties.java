@@ -17,7 +17,6 @@
 
 package com.ziroom.framework.autoconfigure.jdbc;
 
-//import com.ziroom.gaea.gear.yaml.sharding.YamlShardingRuleConfiguration;
 import org.apache.shardingsphere.core.yaml.config.sharding.YamlShardingRuleConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

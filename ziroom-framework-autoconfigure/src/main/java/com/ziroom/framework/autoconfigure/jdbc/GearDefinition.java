@@ -31,10 +31,6 @@ public class GearDefinition implements BeanDefinitionRegistryPostProcessor {
         }
 
         configurableListableBeanFactory.registerSingleton(beanName, bean);
-//        GenericBeanDefinition beanDefinition = (GenericBeanDefinition) configurableListableBeanFactory.getBeanDefinition(beanName);
-//        beanDefinition.setInitMethodName(initMethod);
-//        beanDefinition.setDestroyMethodName(destroyMethod);
-
         return true;
     }
 
@@ -47,12 +43,6 @@ public class GearDefinition implements BeanDefinitionRegistryPostProcessor {
             ((DefaultListableBeanFactory) registry).destroySingleton(beanName);
         }
 
-        return true;
-    }
-
-    public static boolean registerAndRemove(ConfigurableListableBeanFactory configurableListableBeanFactory, BeanDefinitionRegistry registry, String beanName, Object bean, String initMethod, String destroyMethod) {
-        remove(registry, beanName);
-        register(configurableListableBeanFactory, beanName, bean, initMethod, destroyMethod);
         return true;
     }
 

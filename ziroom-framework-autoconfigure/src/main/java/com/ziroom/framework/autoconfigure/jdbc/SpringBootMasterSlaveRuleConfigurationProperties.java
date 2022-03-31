@@ -17,7 +17,6 @@
 
 package com.ziroom.framework.autoconfigure.jdbc;
 
-//import com.ziroom.gaea.gear.yaml.masterslave.YamlMasterSlaveRuleConfiguration;
 import org.apache.shardingsphere.core.yaml.config.masterslave.YamlMasterSlaveRuleConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

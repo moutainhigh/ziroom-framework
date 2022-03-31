@@ -78,9 +78,6 @@ public class GearDatasource implements DataSource {
 
     @PostConstruct
     private void initDbConf() {
-//        ConfigManager configManager = ProviderManager.configManager().get();
-//         设置配置变更监听器
-//        configManager.listener(this);
 
         try {
 //            ImmutableMultimap<String, DatabaseMeta> dbConfigs = configManager.getDatabase();
@@ -107,18 +104,6 @@ public class GearDatasource implements DataSource {
      * @throws SQLException
      */
     private void initDataSource(ImmutableMultimap<String/*db group*/, DatabaseMeta> dbConfigs) throws SQLException {
-        // 判断是否需要刷新DNS缓存
-//        if (!StringUtils.isEmpty(ProviderManager.properties().get().getProperty(REFRESH_DNS))) {
-//            try {
-//                InetAddressCacheUtil.clearInetAddressCache();
-//            } catch (NoSuchFieldException e) {
-//                logger.error(e.getMessage());
-//                e.printStackTrace();
-//            } catch (IllegalAccessException e) {
-//                logger.error(e.getMessage());
-//                e.printStackTrace();
-//            }
-//        }
 
         // 和成员变量 dataSourceGroupMap 对应，先进行新的副本构建成功后，再对旧的副本进行销毁
         // <groupKey, Collection<dbId>>
@@ -511,22 +496,6 @@ public class GearDatasource implements DataSource {
     public int getLoginTimeout() throws SQLException {
         throw new SQLFeatureNotSupportedException("unsupported getLoginTimeout()");
     }
-
-
-//    @Override
-//    public void resetDBConfig() {
-//        try {
-//            ImmutableMultimap<String, DatabaseMeta> database = ProviderManager.configManager().get().getDatabase();
-//            initDataSource(database);
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            throw new RuntimeException(e);
-//        } catch (NacosException e) {
-//            e.printStackTrace();
-//        }
-//        initDefaultDB();
-//    }
-
 
     public static Map<String, List<String>> getGroupBeanList() {
         return dataSourceGroupMap;
