@@ -1,24 +1,7 @@
 package com.ziroom.framework.autoconfigure.jdbc;
 
-import java.util.Properties;
+public interface ProviderManager {
+  public String getProperty(String name, String defaultValue);
 
-/**
- * @Description
- * @Author lidm
- * @Date 2020/11/5
- */
-public class ProviderManager {
-
-    static Provider<Properties> propertiesProvider;
-
-    static {
-
-        propertiesProvider = new PropertiesProvider();
-        propertiesProvider.initialize();
-
-    }
-    public static Provider<Properties> properties() {
-        return propertiesProvider;
-    }
-
+  public <T extends Provider> T provider(Class<T> clazz);
 }

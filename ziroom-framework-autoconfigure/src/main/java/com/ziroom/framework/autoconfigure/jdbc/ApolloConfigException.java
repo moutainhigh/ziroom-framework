@@ -1,0 +1,14 @@
+package com.ziroom.framework.autoconfigure.jdbc;
+
+/**
+ * @author Jason Song(song_s@ctrip.com)
+ */
+public class ApolloConfigException extends RuntimeException {
+  public ApolloConfigException(String message) {
+    super(message);
+  }
+
+  public ApolloConfigException(String message, Throwable cause) {
+    super(message, cause);
+  }
+}

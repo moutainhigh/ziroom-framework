@@ -29,7 +29,7 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <scope>compile</scope>
+<!--                <scope>compile</scope>-->
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -416,6 +416,20 @@
             <artifactId>protostuff-core</artifactId>
             <version>1.6.0</version>
             <!--<scope>test</scope>-->
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>4.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
         </dependency>
     </dependencies>
     <profiles>
