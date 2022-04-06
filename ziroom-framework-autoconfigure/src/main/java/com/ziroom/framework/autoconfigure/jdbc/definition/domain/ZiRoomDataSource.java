@@ -57,6 +57,7 @@ public class ZiRoomDataSource {
 
         private String password;
 
+        private String driver;
 
         // Getter Methods
 
@@ -92,6 +93,14 @@ public class ZiRoomDataSource {
 
         public void setPassword(String password) {
             this.password = password;
+        }
+
+        public String getDriver() {
+            return driver;
+        }
+
+        public void setDriver(String driver) {
+            this.driver = driver;
         }
     }
     public static class Config {

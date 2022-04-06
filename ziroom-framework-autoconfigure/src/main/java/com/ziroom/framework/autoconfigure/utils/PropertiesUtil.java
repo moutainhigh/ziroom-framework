@@ -1,4 +1,4 @@
-package com.ziroom.framework.autoconfigure.jdbc;
+package com.ziroom.framework.autoconfigure.utils;
 
 import java.io.IOException;
 import java.io.StringWriter;

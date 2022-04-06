@@ -45,7 +45,6 @@ import javax.sql.XADataSource;
 @Configuration(proxyBeanMethods = false)
 //@ConditionalOnClass({ DataSource.class, EmbeddedDatabaseType.class })
 //@ConditionalOnMissingBean(type = "io.r2dbc.spi.ConnectionFactory")
-//@EnableConfigurationProperties(DataSourceProperties.class)
 //@EnableConfigurationProperties(ZiRoomDataSourceProperties.class)
 @AutoConfigureBefore(DataSourceAutoConfiguration.class)
 @Import({ OmegaConfigRegistrar.class})

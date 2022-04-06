@@ -10,8 +10,10 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
-package com.ziroom.framework.autoconfigure.jdbc;
+package com.ziroom.framework.autoconfigure.utils;
 
+
+import com.ziroom.framework.autoconfigure.jdbc.ProxyInputStream;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,53 +26,6 @@ import java.util.List;
  *
  * This class detects these bytes and, if required, can automatically skip them and return the subsequent byte as the
  * first byte in the stream.
- *
- * The {@link ByteOrderMark} implementation has the following pre-defined BOMs:
- * <ul>
- * <li>UTF-8 - {@link ByteOrderMark#UTF_8}</li>
- * <li>UTF-16BE - {@link ByteOrderMark#UTF_16LE}</li>
- * <li>UTF-16LE - {@link ByteOrderMark#UTF_16BE}</li>
- * <li>UTF-32BE - {@link ByteOrderMark#UTF_32LE}</li>
- * <li>UTF-32LE - {@link ByteOrderMark#UTF_32BE}</li>
- * </ul>
- *
- *
- * <h3>Example 1 - Detect and exclude a UTF-8 BOM</h3>
- *
- * <pre>
- * BOMInputStream bomIn = new BOMInputStream(in);
- * if (bomIn.hasBOM()) {
- *   // has a UTF-8 BOM
- * }
- * </pre>
- *
- * <h3>Example 2 - Detect a UTF-8 BOM (but don't exclude it)</h3>
- *
- * <pre>
- * boolean include = true;
- * BOMInputStream bomIn = new BOMInputStream(in, include);
- * if (bomIn.hasBOM()) {
- *   // has a UTF-8 BOM
- * }
- * </pre>
- *
- * <h3>Example 3 - Detect Multiple BOMs</h3>
- *
- * <pre>
- * BOMInputStream bomIn = new BOMInputStream(in, ByteOrderMark.UTF_16LE, ByteOrderMark.UTF_16BE, ByteOrderMark.UTF_32LE,
- *     ByteOrderMark.UTF_32BE);
- * if (bomIn.hasBOM() == false) {
- *   // No BOM found
- * } else if (bomIn.hasBOM(ByteOrderMark.UTF_16LE)) {
- *   // has a UTF-16LE BOM
- * } else if (bomIn.hasBOM(ByteOrderMark.UTF_16BE)) {
- *   // has a UTF-16BE BOM
- * } else if (bomIn.hasBOM(ByteOrderMark.UTF_32LE)) {
- *   // has a UTF-32LE BOM
- * } else if (bomIn.hasBOM(ByteOrderMark.UTF_32BE)) {
- *   // has a UTF-32BE BOM
- * }
- * </pre>
  *
  * @see ByteOrderMark
  * @see <a href="http://en.wikipedia.org/wiki/Byte_order_mark">Wikipedia - Byte Order Mark</a>
@@ -128,7 +83,7 @@ public class BOMInputStream extends ProxyInputStream {
       final int len1 = bom1.length();
       final int len2 = bom2.length();
       if (len1 > len2) {
-        return IOUtils.EOF;
+        return EOF;
       }
       if (len2 > len1) {
         return 1;
@@ -238,7 +193,7 @@ public class BOMInputStream extends ProxyInputStream {
    */
   private int readFirstBytes() throws IOException {
     getBOM();
-    return fbIndex < fbLength ? firstBytes[fbIndex++] : IOUtils.EOF;
+    return fbIndex < fbLength ? firstBytes[fbIndex++] : EOF;
   }
 
   /**
@@ -312,7 +267,7 @@ public class BOMInputStream extends ProxyInputStream {
       }
     }
     final int secondCount = in.read(buf, off, len);
-    return secondCount < 0 ? firstCount > 0 ? firstCount : IOUtils.EOF : firstCount + secondCount;
+    return secondCount < 0 ? firstCount > 0 ? firstCount : EOF : firstCount + secondCount;
   }
 
   /**
