@@ -64,10 +64,11 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
 
         ziRoomDataSourceProvider.getZiRoomDataSourceMap().entrySet().stream().forEach(entry ->{
                 Properties properties = new Properties();
-                properties.setProperty(SPRING_JDBC_PREFIX+"driver-class-name",entry.getValue().getProperties().getDriver());
-                properties.setProperty(SPRING_JDBC_PREFIX+"url",entry.getValue().getProperties().getUrl());
-                properties.setProperty(SPRING_JDBC_PREFIX+"username",entry.getValue().getProperties().getUsername());
-                properties.setProperty(SPRING_JDBC_PREFIX+"password",entry.getValue().getProperties().getPassword());
+                String prefix = SPRING_JDBC_PREFIX+entry.getKey()+".";
+                properties.setProperty(prefix+"driver-class-name",entry.getValue().getProperties().getDriver());
+                properties.setProperty(prefix+"url",entry.getValue().getProperties().getUrl());
+                properties.setProperty(prefix+"username",entry.getValue().getProperties().getUsername());
+                properties.setProperty(prefix+"password",entry.getValue().getProperties().getPassword());
 //                composite.addPropertySource(new PropertiesPropertySource(entry.getKey(),properties));
                 environment.getPropertySources().addFirst(new PropertiesPropertySource(entry.getKey(),properties));
             }

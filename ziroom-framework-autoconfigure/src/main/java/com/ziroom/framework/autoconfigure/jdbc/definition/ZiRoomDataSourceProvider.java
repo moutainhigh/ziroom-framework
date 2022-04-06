@@ -57,7 +57,7 @@ public class ZiRoomDataSourceProvider implements ApplicationContextInitializer {
                 String configClassify = dataSourceProperties.getProperty("config.classify");
                 String propertiesName = dataSourceProperties.getProperty("properties.name");
                 String propertiesUrl = dataSourceProperties.getProperty("properties.url");
-                String propertiesDriver = dataSourceProperties.getProperty("driver-class-name","com.mysql.cj.jdbc.Driver");
+                String propertiesDriver = dataSourceProperties.getProperty("properties.driver-class-name","com.mysql.cj.jdbc.Driver");
                 String propertiesUsername = dataSourceProperties.getProperty("properties.username");
                 String propertiesPassword = dataSourceProperties.getProperty("properties.password");
                 ZiRoomDataSource dataSource = new ZiRoomDataSource();
