@@ -1,11 +1,10 @@
-package com.ziroom.framework.autoconfigure.jdbc;
+package com.ziroom.framework.autoconfigure.utils;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.ziroom.framework.autoconfigure.common.ZiRoomAutoConfigException;
-import com.ziroom.framework.autoconfigure.jdbc.definition.ZiRoomDataSourceProvider;
 import com.ziroom.framework.autoconfigure.property.PlaceholderHelper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
