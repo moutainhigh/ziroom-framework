@@ -53,6 +53,7 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         this.ziRoomDataSourceProvider = SpringInjector.getInstance(ZiRoomDataSourceProvider.class);
+        ziRoomDataSourceProvider.initialize();
         initializePropertySources();
     }
 
@@ -63,16 +64,19 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
 //        }
 
         ziRoomDataSourceProvider.getZiRoomDataSourceMap().entrySet().stream().forEach(entry ->{
-                Properties properties = new Properties();
-                String prefix = SPRING_JDBC_PREFIX+entry.getKey()+".";
-                properties.setProperty(prefix+"driver-class-name",entry.getValue().getProperties().getDriver());
-                properties.setProperty(prefix+"url",entry.getValue().getProperties().getUrl());
-                properties.setProperty(prefix+"username",entry.getValue().getProperties().getUsername());
-                properties.setProperty(prefix+"password",entry.getValue().getProperties().getPassword());
-//                composite.addPropertySource(new PropertiesPropertySource(entry.getKey(),properties));
-                environment.getPropertySources().addFirst(new PropertiesPropertySource(entry.getKey(),properties));
+            Properties properties = new Properties();
+            //单默认数据源时不实用数据库名前缀
+            String prefix = SPRING_JDBC_PREFIX;
+            if (ziRoomDataSourceProvider.getZiRoomDataSourceMap().size() > 1){
+                prefix = SPRING_JDBC_PREFIX+entry.getKey()+".";
             }
-        );
+            properties.setProperty(prefix+"driver-class-name",entry.getValue().getProperties().getDriver());
+            properties.setProperty(prefix+"url",entry.getValue().getProperties().getUrl());
+            properties.setProperty(prefix+"username",entry.getValue().getProperties().getUsername());
+            properties.setProperty(prefix+"password",entry.getValue().getProperties().getPassword());
+//                composite.addPropertySource(new PropertiesPropertySource(entry.getKey(),properties));
+            environment.getPropertySources().addFirst(new PropertiesPropertySource(entry.getKey(),properties));
+        });
     }
 
     @Override

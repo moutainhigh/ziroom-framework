@@ -10,9 +10,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -22,24 +24,19 @@ import java.util.Properties;
  * @Author lidm
  * @Date 2020/11/4
  */
-@Configuration
-public class ZiRoomDataSourceProvider implements ApplicationContextInitializer {
+public class ZiRoomDataSourceProvider {
 
     private static final Log log = LogFactory.getLog(ZiRoomDataSourceProvider.class);
-
-//    private static final String DATASOURCE_CLASSPATH = "/app/conf/%s-datasource.properties";
 
     private static final String DATASOURCE_PATH= "/app/conf";
 
     private static final String DATASOURCE_PREFIX= "datasource";
 
-    private Map<String,ZiRoomDataSource> ziRoomDataSourceMap;
+    private Map<String,ZiRoomDataSource> ziRoomDataSourceMap = new HashMap<>();
 
-    @Override
-    public void initialize(ConfigurableApplicationContext configurableApplicationContext) {
+    public void initialize() {
         try {
 //            ApplicationProvider appProvider = configurableApplicationContext.getBean(ApplicationProvider.class);
-//            InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(String.format(DATASOURCE_CLASSPATH,appProvider.getAppId()));
             File dataSourceFiles = new File(DATASOURCE_PATH);
             if (!dataSourceFiles.isDirectory()){
                 return;
@@ -49,7 +46,8 @@ public class ZiRoomDataSourceProvider implements ApplicationContextInitializer {
                     continue;
                 }
                 Properties dataSourceProperties = new Properties();
-                InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(file.getPath());
+                InputStream in = new FileInputStream(file);
+//                InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(file.getPath().substring(1));
                 dataSourceProperties.load(new InputStreamReader(new BOMInputStream(in), StandardCharsets.UTF_8));
                 //TODO
                 String appId = dataSourceProperties.getProperty("appId");
@@ -76,9 +74,8 @@ public class ZiRoomDataSourceProvider implements ApplicationContextInitializer {
                 if (CommonMixUtils.isNotBlank(appId)&&CommonMixUtils.isNotBlank(prefix)&&
                         CommonMixUtils.isNotBlank(propertiesName)&&CommonMixUtils.isNotBlank(propertiesUrl)&&
                         CommonMixUtils.isNotBlank(propertiesUsername)&&CommonMixUtils.isNotBlank(propertiesPassword)){
-                    log.info(String.format("appId %s的数据源链接信息已被omega配置文件覆盖，详细参数请查看omega环境配置文件"));
-                    log.info("ziRoomDataSource:"+dataSource);
-                    ziRoomDataSourceMap.put(propertiesName,dataSource);
+                    log.info(String.format("appId %s的数据源链接信息已被omega配置文件覆盖，详细参数请查看omega环境配置文件",appId));
+                    this.ziRoomDataSourceMap.put(propertiesName,dataSource);
                 }
             }
         } catch (Throwable ex) {
@@ -88,7 +85,10 @@ public class ZiRoomDataSourceProvider implements ApplicationContextInitializer {
 
 
     public Map<String,ZiRoomDataSource> getZiRoomDataSourceMap(){
-        return  ziRoomDataSourceMap;
+        return  this.ziRoomDataSourceMap;
     }
 
+    public static void main(String[] args){
+        new ZiRoomDataSourceProvider().initialize();
+    }
 }
