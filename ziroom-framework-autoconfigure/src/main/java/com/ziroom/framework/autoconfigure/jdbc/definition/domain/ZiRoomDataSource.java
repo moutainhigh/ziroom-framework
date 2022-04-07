@@ -59,6 +59,8 @@ public class ZiRoomDataSource {
 
         private String driver;
 
+        private String type;
+
         // Getter Methods
 
         public String getName() {
@@ -101,6 +103,14 @@ public class ZiRoomDataSource {
 
         public void setDriver(String driver) {
             this.driver = driver;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
         }
     }
     public static class Config {

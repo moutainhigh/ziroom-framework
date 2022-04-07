@@ -8,15 +8,22 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 
 /**
@@ -28,27 +35,19 @@ public class ZiRoomDataSourceProvider {
 
     private static final Log log = LogFactory.getLog(ZiRoomDataSourceProvider.class);
 
-    private static final String DATASOURCE_PATH= "/app/conf";
-
     private static final String DATASOURCE_PREFIX= "datasource";
 
     private Map<String,ZiRoomDataSource> ziRoomDataSourceMap = new HashMap<>();
 
     public void initialize() {
         try {
-//            ApplicationProvider appProvider = configurableApplicationContext.getBean(ApplicationProvider.class);
-            File dataSourceFiles = new File(DATASOURCE_PATH);
-            if (!dataSourceFiles.isDirectory()){
-                return;
-            }
-            for (File file : dataSourceFiles.listFiles()){
-                if (!file.getName().contains(DATASOURCE_PREFIX)){
+            Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath:app/conf/*.properties");
+            for(Resource resource : resources){
+                if (!resource.getFilename().contains(DATASOURCE_PREFIX)){
                     continue;
                 }
                 Properties dataSourceProperties = new Properties();
-                InputStream in = new FileInputStream(file);
-//                InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream(file.getPath().substring(1));
-                dataSourceProperties.load(new InputStreamReader(new BOMInputStream(in), StandardCharsets.UTF_8));
+                dataSourceProperties.load(new InputStreamReader(new BOMInputStream(resource.getInputStream()), StandardCharsets.UTF_8));
                 //TODO
                 String appId = dataSourceProperties.getProperty("appId");
                 String prefix = dataSourceProperties.getProperty("prefix");
