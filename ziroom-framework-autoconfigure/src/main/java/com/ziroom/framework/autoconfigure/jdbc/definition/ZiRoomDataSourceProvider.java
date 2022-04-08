@@ -3,6 +3,7 @@ package com.ziroom.framework.autoconfigure.jdbc.definition;
 import com.ziroom.framework.autoconfigure.common.CommonMixUtils;
 import com.ziroom.framework.autoconfigure.jdbc.definition.domain.ZiRoomDataSource;
 import com.ziroom.framework.autoconfigure.utils.BOMInputStream;
+import com.ziroom.framework.autoconfigure.utils.SpringInjector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContextInitializer;
@@ -39,9 +40,14 @@ public class ZiRoomDataSourceProvider {
 
     private Map<String,ZiRoomDataSource> ziRoomDataSourceMap = new HashMap<>();
 
+    private PathMatchingResourcePatternResolver resourcePatternResolver;
+
     public void initialize() {
         try {
-            Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath:app/conf/*.properties");
+            this.resourcePatternResolver = SpringInjector.getInstance(PathMatchingResourcePatternResolver.class);
+//            Resource[] resources = resourcePatternResolver.getResources("classpath:app/conf/*.properties");
+            Resource[] resources = resourcePatternResolver.getResources("classpath:*.properties");
+//            resources = resourcePatternResolver.getResources("classpath:conf/*.properties");
             for(Resource resource : resources){
                 if (!resource.getFilename().contains(DATASOURCE_PREFIX)){
                     continue;

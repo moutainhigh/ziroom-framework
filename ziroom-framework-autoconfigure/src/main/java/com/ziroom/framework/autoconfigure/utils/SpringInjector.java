@@ -8,6 +8,7 @@ import com.ziroom.framework.autoconfigure.common.ZiRoomAutoConfigException;
 import com.ziroom.framework.autoconfigure.property.PlaceholderHelper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 public class SpringInjector {
   private static volatile Injector s_injector;
@@ -45,7 +46,7 @@ public class SpringInjector {
     @Override
     protected void configure() {
       bind(PlaceholderHelper.class).in(Singleton.class);
-//      bind(ConfigPropertySourceFactory.class).in(Singleton.class);
+      bind(PathMatchingResourcePatternResolver.class).in(Singleton.class);
 //      bind(SpringValueRegistry.class).in(Singleton.class);
       //
 //      bind(AutoBeanFieldRegistry.class).in(Singleton.class);

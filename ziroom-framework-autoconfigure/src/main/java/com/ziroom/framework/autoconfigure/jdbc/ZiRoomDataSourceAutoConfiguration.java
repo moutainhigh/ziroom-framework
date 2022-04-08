@@ -21,6 +21,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.*;
 import org.springframework.boot.autoconfigure.jdbc.*;
 import org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.ConditionalOnMissingFilterBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -47,5 +48,5 @@ import javax.sql.XADataSource;
 @AutoConfigureBefore(DataSourceAutoConfiguration.class)
 @Import({ OmegaConfigRegistrar.class})
 public class ZiRoomDataSourceAutoConfiguration {
-
+    //application.yaml不存在datasource配置时，不加载
 }
