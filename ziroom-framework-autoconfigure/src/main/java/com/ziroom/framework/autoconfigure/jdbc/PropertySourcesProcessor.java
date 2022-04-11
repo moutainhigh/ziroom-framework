@@ -90,8 +90,9 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
                     HikariDataSource hikariDataSource = (HikariDataSource)dataSource;
                     hikariDataSource.setPoolName(entry.getKey());
                     beanFactory.registerSingleton(entry.getKey(),hikariDataSource);
+                }else {
+                    beanFactory.registerSingleton(entry.getKey(),dataSource);
                 }
-                beanFactory.registerSingleton(entry.getKey(),dataSource);
             }
         });
     }
