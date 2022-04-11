@@ -62,14 +62,9 @@ import java.util.Objects;
 @AutoConfigureBefore(DataSourceAutoConfiguration.class)
 @Import({ OmegaConfigRegistrar.class})
 @ConditionalOnMissingBean(type = "io.r2dbc.spi.ConnectionFactory")
-@EnableConfigurationProperties({DataSourceProperties.class})
+//@EnableConfigurationProperties({DataSourceProperties.class})
 public class ZiRoomDataSourceAutoConfiguration implements InitializingBean {
     //application.yaml不存在datasource配置时，不加载
-
-
-
-    @Autowired
-    DataSourceProperties properties;
 
 //    @Bean
 //    @ConfigurationProperties(prefix = "spring.datasource.hikari")
