@@ -17,6 +17,7 @@
 package com.ziroom.framework.autoconfigure.jdbc;
 
 import com.zaxxer.hikari.HikariDataSource;
+import com.ziroom.framework.autoconfigure.jdbc.config.ExplicitUrl;
 import com.ziroom.framework.autoconfigure.jdbc.definition.ZiRoomDataSourceProvider;
 import com.ziroom.framework.autoconfigure.utils.SpringInjector;
 import org.springframework.beans.BeansException;
@@ -25,16 +26,19 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.RootBeanDefinition;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.PropertiesPropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -58,14 +62,13 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
     private ConfigurableListableBeanFactory beanFactory;
     private static final String SPRING_JDBC_PREFIX = "spring.datasource.";
 
-
     private void initializePropertySources() {
-        boolean applicationDataSourceFlag = beanFactory.containsBeanDefinition(ZiRoomDataSourceAutoConfiguration.
-                DataSourceCondition.ExplicitUrl.class.getName());
+        boolean applicationDataSourceFlag = beanFactory.containsBeanDefinition(ExplicitUrl.class.getName());
         ziRoomDataSourceProvider.getZiRoomDataSourceMap().entrySet().stream().forEach(entry ->{
-            Properties properties = new Properties();
             final String prefix = SPRING_JDBC_PREFIX;
-            if (ziRoomDataSourceProvider.getZiRoomDataSourceMap().size() ==  1 || (!applicationDataSourceFlag && Boolean.valueOf(entry.getValue().getConfig().getPrimary()))){
+            if (ziRoomDataSourceProvider.getZiRoomDataSourceMap().size() ==  1 || (!applicationDataSourceFlag
+                    && Boolean.valueOf(entry.getValue().getConfig().getPrimary()))){
+                Properties properties = new Properties();
                 entry.getValue().getProperties().entrySet().stream().forEach(
                         propertiesEntry ->{
                             properties.put(prefix + propertiesEntry.getKey(),propertiesEntry.getValue());
@@ -73,6 +76,7 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
                 );
                 environment.getPropertySources().addFirst(new PropertiesPropertySource(entry.getKey(),properties));
             }else{
+//                String tablePrefix = SPRING_JDBC_PREFIX + entry.getKey()+".";
                 String type = entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_TYPE);
                 try {
                     getClass().getClassLoader().loadClass(entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_TYPE));
