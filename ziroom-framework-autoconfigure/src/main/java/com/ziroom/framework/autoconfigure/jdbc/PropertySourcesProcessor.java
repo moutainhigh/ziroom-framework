@@ -60,12 +60,12 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
 
 
     private void initializePropertySources() {
-
+        boolean applicationDataSourceFlag = beanFactory.containsBeanDefinition(ZiRoomDataSourceAutoConfiguration.
+                DataSourceCondition.ExplicitUrl.class.getName());
         ziRoomDataSourceProvider.getZiRoomDataSourceMap().entrySet().stream().forEach(entry ->{
             Properties properties = new Properties();
             final String prefix = SPRING_JDBC_PREFIX;
-            if (ziRoomDataSourceProvider.getZiRoomDataSourceMap().size() ==  1){
-//                final String propertiesPrefix = SPRING_JDBC_PREFIX;
+            if (ziRoomDataSourceProvider.getZiRoomDataSourceMap().size() ==  1 || (!applicationDataSourceFlag && Boolean.valueOf(entry.getValue().getConfig().getPrimary()))){
                 entry.getValue().getProperties().entrySet().stream().forEach(
                         propertiesEntry ->{
                             properties.put(prefix + propertiesEntry.getKey(),propertiesEntry.getValue());
@@ -73,7 +73,6 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
                 );
                 environment.getPropertySources().addFirst(new PropertiesPropertySource(entry.getKey(),properties));
             }else{
-//                prefix = SPRING_JDBC_PREFIX+entry.getKey()+".";
                 String type = entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_TYPE);
                 try {
                     getClass().getClassLoader().loadClass(entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_TYPE));

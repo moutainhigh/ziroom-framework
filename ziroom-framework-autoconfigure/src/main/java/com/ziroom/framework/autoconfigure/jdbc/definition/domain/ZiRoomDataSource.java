@@ -50,10 +50,12 @@ public class ZiRoomDataSource {
         public void setProperties(Properties properties) {
             this.properties = properties;
         }
+
     public static class Config {
 
         private String classify;
 
+        private String primary;
 
         // Getter Methods
 
@@ -65,6 +67,14 @@ public class ZiRoomDataSource {
 
         public void setClassify(String classify) {
             this.classify = classify;
+        }
+
+        public String getPrimary() {
+            return primary;
+        }
+
+        public void setPrimary(String primary) {
+            this.primary = primary;
         }
     }
 

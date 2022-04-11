@@ -18,6 +18,7 @@ package com.ziroom.framework.autoconfigure.jdbc;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.*;
@@ -59,7 +60,7 @@ import java.util.Objects;
  */
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({ DataSource.class, EmbeddedDatabaseType.class })
-@AutoConfigureBefore(DataSourceAutoConfiguration.class)
+@AutoConfigureAfter(DataSourceAutoConfiguration.class)
 @Import({ OmegaConfigRegistrar.class})
 @ConditionalOnMissingBean(type = "io.r2dbc.spi.ConnectionFactory")
 //@EnableConfigurationProperties({DataSourceProperties.class})
@@ -69,6 +70,14 @@ public class ZiRoomDataSourceAutoConfiguration implements InitializingBean {
 //    @Bean
 //    @ConfigurationProperties(prefix = "spring.datasource.hikari")
 
+
+    static class DataSourceCondition  {
+
+        @ConditionalOnProperty(prefix = "spring.datasource", name = "url")
+        static class ExplicitUrl {
+
+        }
+    }
 
     @Autowired
     ConfigurableApplicationContext applicationContext;

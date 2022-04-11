@@ -59,6 +59,7 @@ public class ZiRoomDataSourceProvider {
                 String appId = dataSourceProperties.getProperty("appId");
                 String prefix = dataSourceProperties.getProperty("prefix");
                 String configClassify = dataSourceProperties.getProperty("config.classify");
+                String configPrimary = dataSourceProperties.getProperty("config.primary","false");
                 String propertiesName = dataSourceProperties.getProperty("properties.name");
                 String propertiesUrl = dataSourceProperties.getProperty("properties.url");
                 String propertiesDriver = dataSourceProperties.getProperty("properties.driver-class-name","com.mysql.cj.jdbc.Driver");
@@ -73,6 +74,7 @@ public class ZiRoomDataSourceProvider {
                     dataSource.setPrefix(prefix);
                     ZiRoomDataSource.Config config = new ZiRoomDataSource.Config();
                     config.setClassify(configClassify);
+                    config.setPrimary(configPrimary);
                     dataSource.setConfig(config);
                     Properties properties = new Properties();
                     properties.put(PropertySourcesConstants.DATA_NAME,propertiesName);
