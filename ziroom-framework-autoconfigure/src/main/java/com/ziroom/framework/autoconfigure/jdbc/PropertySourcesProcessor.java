@@ -22,6 +22,9 @@ import com.ziroom.framework.autoconfigure.utils.SpringInjector;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.Ordered;
@@ -47,19 +50,20 @@ import java.util.Properties;
  *
  * @author Jason Song(song_s@ctrip.com)
  */
-public class PropertySourcesProcessor implements BeanFactoryPostProcessor, EnvironmentAware, PriorityOrdered {
+public class PropertySourcesProcessor implements BeanDefinitionRegistryPostProcessor, EnvironmentAware, PriorityOrdered {
 //    private static final Multimap<Integer, String> NAMESPACE_NAMES = LinkedHashMultimap.create();
 //    private static final Set<BeanFactory> AUTO_UPDATE_INITIALIZED_BEAN_FACTORIES = Sets.newConcurrentHashSet();
 
     private ConfigurableEnvironment environment;
     private ZiRoomDataSourceProvider ziRoomDataSourceProvider;
-    private ConfigurableListableBeanFactory beanFactory;
+    private BeanDefinitionRegistry registry;
     private static final String SPRING_JDBC_PREFIX = "spring.datasource.";
 
+
     @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         this.ziRoomDataSourceProvider = SpringInjector.getInstance(ZiRoomDataSourceProvider.class);
-        this.beanFactory = beanFactory;
+        this.registry = registry;
         ziRoomDataSourceProvider.initialize();
         initializePropertySources();
     }
@@ -79,6 +83,10 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
         ziRoomDataSourceProvider.getZiRoomDataSourceMap().entrySet().stream().forEach(entry ->{
             Properties properties = new Properties();
             //单默认数据源时不实用数据库名前缀
+            //数据库连接数量
+            //连接池类型选择
+            //连接池参数
+//            properties.setProperty(entry.getKey(),entry.getValue());
             String prefix = SPRING_JDBC_PREFIX;
 //            if (ziRoomDataSourceProvider.getZiRoomDataSourceMap().size() ==  1){
                 properties.setProperty(prefix+"driver-class-name",entry.getValue().getProperties().getDriver());
@@ -97,7 +105,7 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
                         .password(entry.getValue().getProperties().getPassword())
                         .type(HikariDataSource.class).build();
                 dataSource.setPoolName(entry.getKey());
-                beanFactory.registerSingleton(entry.getKey(),dataSource);
+//                registry.registerBeanDefinition(entry.getKey(),dataSource);
 //            }
         });
     }
@@ -112,5 +120,10 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
     public int getOrder() {
         //make it as early as possible
         return Ordered.HIGHEST_PRECEDENCE;
+    }
+
+    @Override
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+
     }
 }
