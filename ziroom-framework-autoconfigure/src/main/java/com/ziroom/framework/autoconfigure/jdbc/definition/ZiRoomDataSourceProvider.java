@@ -64,24 +64,24 @@ public class ZiRoomDataSourceProvider {
                 String propertiesDriver = dataSourceProperties.getProperty("properties.driver-class-name","com.mysql.cj.jdbc.Driver");
                 String propertiesUsername = dataSourceProperties.getProperty("properties.username");
                 String propertiesPassword = dataSourceProperties.getProperty("properties.password");
-                String propertiesType = dataSourceProperties.getProperty("properties.type");
-                ZiRoomDataSource dataSource = new ZiRoomDataSource();
-                dataSource.setAppId(appId);
-                dataSource.setPrefix(prefix);
-                ZiRoomDataSource.Config config = new ZiRoomDataSource.Config();
-                config.setClassify(configClassify);
-                dataSource.setConfig(config);
-                Properties properties = new Properties();
-                properties.put(PropertySourcesConstants.DATA_NAME,propertiesName);
-                properties.put(PropertySourcesConstants.DATA_PASSWORD,propertiesPassword);
-                properties.put(PropertySourcesConstants.DATA_URL,propertiesUrl);
-                properties.put(PropertySourcesConstants.DATA_USERNAME,propertiesUsername);
-                properties.put(PropertySourcesConstants.DATA_DRIVER_CLASS_NAME,propertiesDriver);
-                properties.put(PropertySourcesConstants.DATA_TYPE,propertiesType);
-                dataSource.setProperties(properties);
+                String propertiesType = dataSourceProperties.getProperty("properties.type","com.zaxxer.hikari.HikariDataSource");
                 if (CommonMixUtils.isNotBlank(appId)&&CommonMixUtils.isNotBlank(prefix)&&
                         CommonMixUtils.isNotBlank(propertiesName)&&CommonMixUtils.isNotBlank(propertiesUrl)&&
                         CommonMixUtils.isNotBlank(propertiesUsername)&&CommonMixUtils.isNotBlank(propertiesPassword)){
+                    ZiRoomDataSource dataSource = new ZiRoomDataSource();
+                    dataSource.setAppId(appId);
+                    dataSource.setPrefix(prefix);
+                    ZiRoomDataSource.Config config = new ZiRoomDataSource.Config();
+                    config.setClassify(configClassify);
+                    dataSource.setConfig(config);
+                    Properties properties = new Properties();
+                    properties.put(PropertySourcesConstants.DATA_NAME,propertiesName);
+                    properties.put(PropertySourcesConstants.DATA_PASSWORD,propertiesPassword);
+                    properties.put(PropertySourcesConstants.DATA_URL,propertiesUrl);
+                    properties.put(PropertySourcesConstants.DATA_USERNAME,propertiesUsername);
+                    properties.put(PropertySourcesConstants.DATA_DRIVER_CLASS_NAME,propertiesDriver);
+                    properties.put(PropertySourcesConstants.DATA_TYPE,propertiesType);
+                    dataSource.setProperties(properties);
                     log.info(String.format("appId %s的数据源链接信息已被omega配置文件覆盖，详细参数请查看omega环境配置文件",appId));
                     this.ziRoomDataSourceMap.put(propertiesName,dataSource);
                 }
