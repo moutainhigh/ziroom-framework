@@ -1,5 +1,9 @@
 package com.ziroom.framework.autoconfigure.jdbc.definition.domain;
 
+import org.springframework.core.style.ToStringCreator;
+
+import java.util.Properties;
+
 /**
  * /app/conf/数据库链接配置文件
  */
@@ -11,7 +15,7 @@ public class ZiRoomDataSource {
 
         Config ConfigObject;
 
-        Properties PropertiesObject;
+        Properties properties;
 
         public String getAppId() {
             return appId;
@@ -26,7 +30,7 @@ public class ZiRoomDataSource {
         }
 
         public Properties getProperties() {
-            return PropertiesObject;
+            return properties;
         }
 
         // Setter Methods
@@ -43,76 +47,9 @@ public class ZiRoomDataSource {
             this.ConfigObject = configObject;
         }
 
-        public void setProperties(Properties propertiesObject) {
-            this.PropertiesObject = propertiesObject;
+        public void setProperties(Properties properties) {
+            this.properties = properties;
         }
-
-    public static class Properties {
-
-        private String name;
-
-        private String url;
-
-        private String username;
-
-        private String password;
-
-        private String driver;
-
-        private String type;
-
-        // Getter Methods
-
-        public String getName() {
-            return name;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        // Setter Methods
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public String getDriver() {
-            return driver;
-        }
-
-        public void setDriver(String driver) {
-            this.driver = driver;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-    }
     public static class Config {
 
         private String classify;
@@ -131,10 +68,8 @@ public class ZiRoomDataSource {
         }
     }
 
-//    @Override
-//    public String toString() {
-////        return "ZiRoomDataSource [appId=" + appId + ", prefix=" + prefix + ", Config =" + version + ", opaque=" + opaque + ", flag(B)="
-////                + Integer.toBinaryString(flag) + ", remark=" + remark + ", extFields=" + extFields + ", serializeTypeCurrentRPC="
-////                + serializeTypeCurrentRPC + "]";
-//    }
+    @Override
+    public String toString() {
+        return new ToStringCreator(this).toString();
+    }
 }

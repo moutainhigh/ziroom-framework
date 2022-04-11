@@ -1,6 +1,7 @@
 package com.ziroom.framework.autoconfigure.jdbc.definition;
 
 import com.ziroom.framework.autoconfigure.common.CommonMixUtils;
+import com.ziroom.framework.autoconfigure.jdbc.PropertySourcesConstants;
 import com.ziroom.framework.autoconfigure.jdbc.definition.domain.ZiRoomDataSource;
 import com.ziroom.framework.autoconfigure.utils.BOMInputStream;
 import com.ziroom.framework.autoconfigure.utils.SpringInjector;
@@ -63,18 +64,20 @@ public class ZiRoomDataSourceProvider {
                 String propertiesDriver = dataSourceProperties.getProperty("properties.driver-class-name","com.mysql.cj.jdbc.Driver");
                 String propertiesUsername = dataSourceProperties.getProperty("properties.username");
                 String propertiesPassword = dataSourceProperties.getProperty("properties.password");
+                String propertiesType = dataSourceProperties.getProperty("properties.type");
                 ZiRoomDataSource dataSource = new ZiRoomDataSource();
                 dataSource.setAppId(appId);
                 dataSource.setPrefix(prefix);
                 ZiRoomDataSource.Config config = new ZiRoomDataSource.Config();
                 config.setClassify(configClassify);
                 dataSource.setConfig(config);
-                ZiRoomDataSource.Properties properties = new ZiRoomDataSource.Properties();
-                properties.setName(propertiesName);
-                properties.setPassword(propertiesPassword);
-                properties.setUrl(propertiesUrl);
-                properties.setUsername(propertiesUsername);
-                properties.setDriver(propertiesDriver);
+                Properties properties = new Properties();
+                properties.put(PropertySourcesConstants.DATA_NAME,propertiesName);
+                properties.put(PropertySourcesConstants.DATA_PASSWORD,propertiesPassword);
+                properties.put(PropertySourcesConstants.DATA_URL,propertiesUrl);
+                properties.put(PropertySourcesConstants.DATA_USERNAME,propertiesUsername);
+                properties.put(PropertySourcesConstants.DATA_DRIVER_CLASS_NAME,propertiesDriver);
+                properties.put(PropertySourcesConstants.DATA_TYPE,propertiesType);
                 dataSource.setProperties(properties);
                 if (CommonMixUtils.isNotBlank(appId)&&CommonMixUtils.isNotBlank(prefix)&&
                         CommonMixUtils.isNotBlank(propertiesName)&&CommonMixUtils.isNotBlank(propertiesUrl)&&

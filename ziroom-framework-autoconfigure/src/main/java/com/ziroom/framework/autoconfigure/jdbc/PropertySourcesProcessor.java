@@ -26,6 +26,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.Ordered;
 import org.springframework.core.PriorityOrdered;
@@ -50,63 +51,48 @@ import java.util.Properties;
  *
  * @author Jason Song(song_s@ctrip.com)
  */
-public class PropertySourcesProcessor implements BeanDefinitionRegistryPostProcessor, EnvironmentAware, PriorityOrdered {
-//    private static final Multimap<Integer, String> NAMESPACE_NAMES = LinkedHashMultimap.create();
-//    private static final Set<BeanFactory> AUTO_UPDATE_INITIALIZED_BEAN_FACTORIES = Sets.newConcurrentHashSet();
+public class PropertySourcesProcessor implements BeanFactoryPostProcessor, EnvironmentAware, PriorityOrdered {
 
     private ConfigurableEnvironment environment;
     private ZiRoomDataSourceProvider ziRoomDataSourceProvider;
-    private BeanDefinitionRegistry registry;
+    private ConfigurableListableBeanFactory beanFactory;
     private static final String SPRING_JDBC_PREFIX = "spring.datasource.";
 
 
-    @Override
-    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-        this.ziRoomDataSourceProvider = SpringInjector.getInstance(ZiRoomDataSourceProvider.class);
-        this.registry = registry;
-        ziRoomDataSourceProvider.initialize();
-        initializePropertySources();
-    }
-
     private void initializePropertySources() {
-//        if (environment.getPropertySources().contains(PropertySourcesConstants.APOLLO_PROPERTY_SOURCE_NAME)) {
-//            //already initialized
-//            return;
-//        }
-        //判断
-//        PathMatchingResourcePatternResolver resourcePatternResolver = SpringInjector.getInstance(PathMatchingResourcePatternResolver.class);
-//        Resource[] resources = resourcePatternResolver.getResources("classpath:application.*");
-//        boolean sourceConfigFlag = false;
-//        for(Resource resource : resources){
-//
-//        }
+
         ziRoomDataSourceProvider.getZiRoomDataSourceMap().entrySet().stream().forEach(entry ->{
             Properties properties = new Properties();
-            //单默认数据源时不实用数据库名前缀
-            //数据库连接数量
-            //连接池类型选择
-            //连接池参数
-//            properties.setProperty(entry.getKey(),entry.getValue());
-            String prefix = SPRING_JDBC_PREFIX;
-//            if (ziRoomDataSourceProvider.getZiRoomDataSourceMap().size() ==  1){
-                properties.setProperty(prefix+"driver-class-name",entry.getValue().getProperties().getDriver());
-                properties.setProperty(prefix+"url",entry.getValue().getProperties().getUrl());
-                properties.setProperty(prefix+"username",entry.getValue().getProperties().getUsername());
-                properties.setProperty(prefix+"password",entry.getValue().getProperties().getPassword());
-                properties.setProperty(prefix+"name",entry.getKey());
+            final String prefix = SPRING_JDBC_PREFIX;
+            if (ziRoomDataSourceProvider.getZiRoomDataSourceMap().size() ==  1){
+//                final String propertiesPrefix = SPRING_JDBC_PREFIX;
+                entry.getValue().getProperties().entrySet().stream().forEach(
+                        propertiesEntry ->{
+                            properties.put(prefix + propertiesEntry.getKey(),propertiesEntry.getValue());
+                        }
+                );
                 environment.getPropertySources().addFirst(new PropertiesPropertySource(entry.getKey(),properties));
-//            }else{
-                prefix = SPRING_JDBC_PREFIX+entry.getKey()+".";
-            HikariDataSource dataSource = DataSourceBuilder.create(this.getClass().getClassLoader())
-//                        .type(entry.getValue().getProperties().getType())
-                        .driverClassName(entry.getValue().getProperties().getDriver())
-                        .url(entry.getValue().getProperties().getUrl())
-                        .username(entry.getValue().getProperties().getUsername())
-                        .password(entry.getValue().getProperties().getPassword())
-                        .type(HikariDataSource.class).build();
-                dataSource.setPoolName(entry.getKey());
-//                registry.registerBeanDefinition(entry.getKey(),dataSource);
-//            }
+            }else{
+//                prefix = SPRING_JDBC_PREFIX+entry.getKey()+".";
+                String type = entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_TYPE);
+                try {
+                    getClass().getClassLoader().loadClass(entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_TYPE));
+                }catch (ClassNotFoundException e) {
+                    type = "com.zaxxer.hikari.HikariDataSource";
+                }
+                DataSource dataSource = DataSourceBuilder.create(this.getClass().getClassLoader())
+                            .driverClassName(entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_DRIVER_CLASS_NAME))
+                            .url(entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_URL))
+                            .username(entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_USERNAME))
+                            .password(entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_PASSWORD))
+                            .type(genType(type)).build();
+                if (dataSource instanceof HikariDataSource){
+                    HikariDataSource hikariDataSource = (HikariDataSource)dataSource;
+                    hikariDataSource.setPoolName(entry.getKey());
+                    beanFactory.registerSingleton(entry.getKey(),hikariDataSource);
+                }
+                beanFactory.registerSingleton(entry.getKey(),dataSource);
+            }
         });
     }
 
@@ -124,6 +110,21 @@ public class PropertySourcesProcessor implements BeanDefinitionRegistryPostProce
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+        this.ziRoomDataSourceProvider = SpringInjector.getInstance(ZiRoomDataSourceProvider.class);
+        this.beanFactory = beanFactory;
+        ziRoomDataSourceProvider.initialize();
+        initializePropertySources();
+    }
 
+    private Class<? extends DataSource> genType (String type){
+        switch (type){
+            case "org.apache.tomcat.jdbc.pool.DataSource":
+                return org.apache.tomcat.jdbc.pool.DataSource.class;
+            case "org.apache.commons.dbcp2.BasicDataSource":
+                return org.apache.commons.dbcp2.BasicDataSource.class;
+            case "com.zaxxer.hikari.HikariDataSource":
+                return com.zaxxer.hikari.HikariDataSource.class;
+        }
+        return com.zaxxer.hikari.HikariDataSource.class;
     }
 }

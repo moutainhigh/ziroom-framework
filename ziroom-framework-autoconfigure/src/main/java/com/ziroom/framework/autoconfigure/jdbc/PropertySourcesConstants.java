@@ -1,10 +1,16 @@
 package com.ziroom.framework.autoconfigure.jdbc;
 
 public interface PropertySourcesConstants {
-  String APOLLO_PROPERTY_SOURCE_NAME = "ApolloPropertySources";
-  String APOLLO_BOOTSTRAP_PROPERTY_SOURCE_NAME = "ApolloBootstrapPropertySources";
-  String APOLLO_BOOTSTRAP_ENABLED = "apollo.bootstrap.enabled";
-  String APOLLO_BOOTSTRAP_NAMESPACES = "apollo.bootstrap.namespaces";
 
-  String DATA_SOURCE_NAME = "datasource-%s";
+  String DATA_DRIVER_CLASS_NAME = "driver-class-name";
+
+  String DATA_URL = "url";
+
+  String DATA_USERNAME = "username";
+
+  String DATA_PASSWORD = "password";
+
+  String DATA_NAME = "name";
+
+  String DATA_TYPE = "type";
 }
