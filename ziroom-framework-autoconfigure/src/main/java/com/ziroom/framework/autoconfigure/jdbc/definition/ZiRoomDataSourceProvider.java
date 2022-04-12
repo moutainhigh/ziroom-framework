@@ -39,6 +39,7 @@ public class ZiRoomDataSourceProvider {
                 if (!resource.getFilename().contains(DATASOURCE_PREFIX)){
                     continue;
                 }
+                // todo 支持yaml格式， 该模块单独抽离开， 设计成通用模块
                 Yaml yaml = new Yaml(new Constructor(ZiRoomDataSource.class));
                 ZiRoomDataSource ziRoomDataSource = yaml.load(resource.getInputStream());
                 if (StringUtils.isEmpty(ziRoomDataSource.getProperties().get(PropertySourcesConstants.DATA_DRIVER_CLASS_NAME))){
