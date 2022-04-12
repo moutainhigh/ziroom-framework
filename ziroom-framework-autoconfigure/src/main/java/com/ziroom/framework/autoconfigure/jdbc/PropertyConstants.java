@@ -1,6 +1,6 @@
 package com.ziroom.framework.autoconfigure.jdbc;
 
-public interface PropertySourcesConstants {
+public interface PropertyConstants {
 
   String DATA_DRIVER_CLASS_NAME = "driver-class-name";
 

@@ -1,7 +1,7 @@
 package com.ziroom.framework.autoconfigure.jdbc.definition;
 
 import com.ziroom.framework.autoconfigure.common.CommonMixUtils;
-import com.ziroom.framework.autoconfigure.jdbc.PropertySourcesConstants;
+import com.ziroom.framework.autoconfigure.jdbc.PropertyConstants;
 import com.ziroom.framework.autoconfigure.jdbc.definition.domain.ZiRoomDataSource;
 import com.ziroom.framework.autoconfigure.utils.SpringInjector;
 import org.apache.commons.lang3.StringUtils;
@@ -42,19 +42,19 @@ public class ZiRoomDataSourceProvider {
                 // todo 支持yaml格式， 该模块单独抽离开， 设计成通用模块
                 Yaml yaml = new Yaml(new Constructor(ZiRoomDataSource.class));
                 ZiRoomDataSource ziRoomDataSource = yaml.load(resource.getInputStream());
-                if (StringUtils.isEmpty(ziRoomDataSource.getProperties().get(PropertySourcesConstants.DATA_DRIVER_CLASS_NAME))){
-                    ziRoomDataSource.getProperties().put(PropertySourcesConstants.DATA_DRIVER_CLASS_NAME,"com.mysql.cj.jdbc.Driver");
+                if (StringUtils.isEmpty(ziRoomDataSource.getProperties().get(PropertyConstants.DATA_DRIVER_CLASS_NAME))){
+                    ziRoomDataSource.getProperties().put(PropertyConstants.DATA_DRIVER_CLASS_NAME,"com.mysql.cj.jdbc.Driver");
                 }
-                if (StringUtils.isEmpty(ziRoomDataSource.getProperties().get(PropertySourcesConstants.DATA_TYPE))){
-                    ziRoomDataSource.getProperties().put(PropertySourcesConstants.DATA_TYPE,"com.zaxxer.hikari.HikariDataSource");
+                if (StringUtils.isEmpty(ziRoomDataSource.getProperties().get(PropertyConstants.DATA_TYPE))){
+                    ziRoomDataSource.getProperties().put(PropertyConstants.DATA_TYPE,"com.zaxxer.hikari.HikariDataSource");
                 }
                 if (CommonMixUtils.isNotBlank(ziRoomDataSource.getAppId())&&CommonMixUtils.isNotBlank(ziRoomDataSource.getPrefix())&&
-                        CommonMixUtils.isNotBlank(ziRoomDataSource.getProperties().get(PropertySourcesConstants.DATA_NAME))
-                        &&CommonMixUtils.isNotBlank(ziRoomDataSource.getProperties().get(PropertySourcesConstants.DATA_URL))&&
-                        CommonMixUtils.isNotBlank(ziRoomDataSource.getProperties().get(PropertySourcesConstants.DATA_USERNAME))&&
-                        CommonMixUtils.isNotBlank(ziRoomDataSource.getProperties().get(PropertySourcesConstants.DATA_PASSWORD))){
+                        CommonMixUtils.isNotBlank(ziRoomDataSource.getProperties().get(PropertyConstants.DATA_NAME))
+                        &&CommonMixUtils.isNotBlank(ziRoomDataSource.getProperties().get(PropertyConstants.DATA_URL))&&
+                        CommonMixUtils.isNotBlank(ziRoomDataSource.getProperties().get(PropertyConstants.DATA_USERNAME))&&
+                        CommonMixUtils.isNotBlank(ziRoomDataSource.getProperties().get(PropertyConstants.DATA_PASSWORD))){
                     log.info(String.format("appId %s的数据源链接信息已被omega配置文件覆盖，详细参数请查看omega环境配置文件",ziRoomDataSource.getAppId()));
-                    this.ziRoomDataSourceMap.put(ziRoomDataSource.getProperties().get(PropertySourcesConstants.DATA_NAME),ziRoomDataSource);
+                    this.ziRoomDataSourceMap.put(ziRoomDataSource.getProperties().get(PropertyConstants.DATA_NAME),ziRoomDataSource);
                 }
             }
         } catch (Throwable ex) {
