@@ -84,3 +84,23 @@ public class MerakDataSourceConfig {
     }
 }
 ```
+* omega配置示例（测试，可直接放在项目classpath下面）
+  *文件名称omega-datasource.yaml 
+ ```
+ appId: merak
+config:
+  classify: master
+  primary: true
+prefix: jdbc
+properties:
+  name: merak
+  password: 
+  url: jdbc:mysql://127.0.0.1:3306/merak?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8
+  username: dev_
+  type: com.zaxxer.hikari.HikariDataSource
+  driver-class-name: com.mysql.cj.jdbc.Driver
+hikari:
+  connection-init-sql: select 1
+  maximum-pool-size: 100
+  minimum-idle: 10
+ ```
