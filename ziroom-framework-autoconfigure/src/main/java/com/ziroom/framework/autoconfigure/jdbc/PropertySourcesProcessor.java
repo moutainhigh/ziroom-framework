@@ -63,11 +63,10 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
     private static final String SPRING_JDBC_PREFIX = "spring.datasource.";
 
     private void initializePropertySources() {
-        boolean applicationDataSourceFlag = beanFactory.containsBeanDefinition(ExplicitUrl.class.getName());
+//        boolean applicationDataSourceFlag = beanFactory.containsBeanDefinition(ExplicitUrl.class.getName());
         ziRoomDataSourceProvider.getZiRoomDataSourceMap().entrySet().stream().forEach(entry ->{
             final String prefix = SPRING_JDBC_PREFIX;
-            if (ziRoomDataSourceProvider.getZiRoomDataSourceMap().size() ==  1 || (!applicationDataSourceFlag
-                    && Boolean.valueOf(entry.getValue().getConfig().getPrimary()))){
+            if (ziRoomDataSourceProvider.getZiRoomDataSourceMap().size() ==  1){
                 Properties properties = new Properties();
                 entry.getValue().getProperties().entrySet().stream().forEach(
                         propertiesEntry ->{
@@ -93,6 +92,9 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
                     HikariDataSource hikariDataSource = (HikariDataSource)dataSource;
                     hikariDataSource.setPoolName(entry.getKey());
                     beanFactory.registerSingleton(entry.getKey(),hikariDataSource);
+                    if (Boolean.valueOf(entry.getValue().getConfig().getPrimary())){
+                        beanFactory.registerSingleton("datasource",hikariDataSource);
+                    }
                 }else {
                     beanFactory.registerSingleton(entry.getKey(),dataSource);
                 }
