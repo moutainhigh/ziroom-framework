@@ -2,69 +2,75 @@ package com.ziroom.framework.autoconfigure.jdbc.definition.domain;
 
 import org.springframework.core.style.ToStringCreator;
 
-import java.util.Properties;
+import java.util.Map;
 
 /**
  * /app/conf/数据库链接配置文件
  */
 public class ZiRoomDataSource {
 
-        private String appId;
 
-        private String prefix;
+    private String appId;
 
-        Config ConfigObject;
+    private String prefix;
 
-        Properties properties;
+    Config ConfigObject;
 
-        public String getAppId() {
-            return appId;
-        }
+    Map<String,String> properties;
 
-        public String getPrefix() {
-            return prefix;
-        }
+    public String getAppId() {
+        return appId;
+    }
 
-        public Config getConfig() {
-            return ConfigObject;
-        }
+    public String getPrefix() {
+        return prefix;
+    }
 
-        public Properties getProperties() {
-            return properties;
-        }
+    public Config getConfig() {
+        return ConfigObject;
+    }
 
-        // Setter Methods
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
 
-        public void setAppId(String appId) {
-            this.appId = appId;
-        }
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+    }
 
-        public void setPrefix(String prefix) {
-            this.prefix = prefix;
-        }
+    public void setConfig(Config configObject) {
+        this.ConfigObject = configObject;
+    }
 
-        public void setConfig(Config configObject) {
-            this.ConfigObject = configObject;
-        }
 
-        public void setProperties(Properties properties) {
-            this.properties = properties;
-        }
+    public Map<String, String> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Map<String, String> properties) {
+        this.properties = properties;
+    }
+
     public static class Config {
 
         private String classify;
 
-
-        // Getter Methods
+        private String primary;
 
         public String getClassify() {
             return classify;
         }
 
-        // Setter Methods
-
         public void setClassify(String classify) {
             this.classify = classify;
+        }
+
+        public String getPrimary() {
+            return primary;
+        }
+
+        public void setPrimary(String primary) {
+            this.primary = primary;
         }
     }
 

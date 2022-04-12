@@ -20,31 +20,18 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.*;
-import org.springframework.boot.autoconfigure.jdbc.*;
-import org.springframework.boot.autoconfigure.jdbc.metadata.DataSourcePoolMetadataProvidersConfiguration;
-import org.springframework.boot.autoconfigure.web.servlet.ConditionalOnMissingFilterBean;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.context.properties.bind.BindHandler;
 import org.springframework.boot.context.properties.bind.Bindable;
-import org.springframework.boot.jdbc.DataSourceBuilder;
-import org.springframework.boot.jdbc.DataSourceUnwrapper;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.core.ResolvableType;
-import org.springframework.core.env.Environment;
-import org.springframework.core.type.AnnotatedTypeMetadata;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
-import javax.sql.XADataSource;
-import javax.xml.crypto.Data;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -62,18 +49,12 @@ import java.util.Objects;
 @AutoConfigureBefore(DataSourceAutoConfiguration.class)
 @Import({ OmegaConfigRegistrar.class})
 @ConditionalOnMissingBean(type = "io.r2dbc.spi.ConnectionFactory")
-@EnableConfigurationProperties({DataSourceProperties.class})
+//@EnableConfigurationProperties({DataSourceProperties.class})
 public class ZiRoomDataSourceAutoConfiguration implements InitializingBean {
     //application.yaml不存在datasource配置时，不加载
 
-
-
-    @Autowired
-    DataSourceProperties properties;
-
 //    @Bean
 //    @ConfigurationProperties(prefix = "spring.datasource.hikari")
-
 
     @Autowired
     ConfigurableApplicationContext applicationContext;
