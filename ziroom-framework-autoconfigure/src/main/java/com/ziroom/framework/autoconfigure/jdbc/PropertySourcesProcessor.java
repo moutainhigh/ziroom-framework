@@ -76,17 +76,17 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
                 environment.getPropertySources().addFirst(new PropertiesPropertySource(entry.getKey(),properties));
             }else{
 //                String tablePrefix = SPRING_JDBC_PREFIX + entry.getKey()+".";
-                String type = entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_TYPE);
+                String type = entry.getValue().getProperties().get(PropertySourcesConstants.DATA_TYPE);
                 try {
-                    getClass().getClassLoader().loadClass(entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_TYPE));
+                    getClass().getClassLoader().loadClass(entry.getValue().getProperties().get(PropertySourcesConstants.DATA_TYPE));
                 }catch (ClassNotFoundException e) {
                     type = "com.zaxxer.hikari.HikariDataSource";
                 }
                 DataSource dataSource = DataSourceBuilder.create(this.getClass().getClassLoader())
-                            .driverClassName(entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_DRIVER_CLASS_NAME))
-                            .url(entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_URL))
-                            .username(entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_USERNAME))
-                            .password(entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_PASSWORD))
+                            .driverClassName(entry.getValue().getProperties().get(PropertySourcesConstants.DATA_DRIVER_CLASS_NAME))
+                            .url(entry.getValue().getProperties().get(PropertySourcesConstants.DATA_URL))
+                            .username(entry.getValue().getProperties().get(PropertySourcesConstants.DATA_USERNAME))
+                            .password(entry.getValue().getProperties().get(PropertySourcesConstants.DATA_PASSWORD))
                             .type(genType(type)).build();
                 if (dataSource instanceof HikariDataSource){
                     HikariDataSource hikariDataSource = (HikariDataSource)dataSource;
