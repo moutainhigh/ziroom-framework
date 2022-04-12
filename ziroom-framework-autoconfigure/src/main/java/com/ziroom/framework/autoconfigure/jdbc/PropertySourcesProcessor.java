@@ -69,7 +69,7 @@ public class PropertySourcesProcessor implements BeanDefinitionRegistryPostProce
             final String prefix = SPRING_JDBC_PREFIX;
             if (ziRoomDataSourceProvider.getZiRoomDataSourceMap().size() ==  1){
                 Properties properties = new Properties();
-                entry.getValue().getProperties().entrySet().stream().forEach(
+                entry.getValue().getProperties().entrySet().forEach(
                         propertiesEntry ->{
                             properties.put(prefix + propertiesEntry.getKey(),propertiesEntry.getValue());
                             log.warn(String.format("数据库链接信息已被替换成omega平台配置,%s,值为: %s",
@@ -87,12 +87,10 @@ public class PropertySourcesProcessor implements BeanDefinitionRegistryPostProce
                     type = "com.zaxxer.hikari.HikariDataSource";
                 }
                 BeanDefinitionBuilder dataSourceBuilder = BeanDefinitionBuilder.genericBeanDefinition(genType(type));
-                dataSourceBuilder.addPropertyValue(PropertyConstants.DATA_DRIVER_CLASS_NAME, properties.get(PropertyConstants.DATA_DRIVER_CLASS_NAME));
-                dataSourceBuilder.addPropertyValue(PropertyConstants.DATA_URL, properties.get(PropertyConstants.DATA_URL));
-                dataSourceBuilder.addPropertyValue(PropertyConstants.DATA_USERNAME, properties.get(PropertyConstants.DATA_USERNAME));
-                dataSourceBuilder.addPropertyValue(PropertyConstants.DATA_PASSWORD, properties.get(PropertyConstants.DATA_PASSWORD));
+                properties.entrySet().forEach(propertie ->{
+                    dataSourceBuilder.addPropertyValue(propertie.getKey(),propertie.getValue());
+                });
                 dataSourceBuilder.addPropertyValue(PropertyConstants.DATA_TYPE,type);
-                dataSourceBuilder.addPropertyValue(PropertyConstants.DATA_NAME,properties.get(PropertyConstants.DATA_NAME));
 
                 ConfigurationPropertiesBinder binder = new ConfigurationPropertiesBinder(applicationContext);
                 BindHandler bindHandler = binder.getHandler();
