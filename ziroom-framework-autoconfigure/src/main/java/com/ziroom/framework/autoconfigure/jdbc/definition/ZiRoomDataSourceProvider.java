@@ -48,11 +48,13 @@ public class ZiRoomDataSourceProvider {
             this.resourcePatternResolver = SpringInjector.getInstance(PathMatchingResourcePatternResolver.class);
 //            Resource[] resources = resourcePatternResolver.getResources("classpath:app/conf/*.properties");
             Resource[] resources = resourcePatternResolver.getResources("classpath:*.properties");
+
 //            resources = resourcePatternResolver.getResources("classpath:conf/*.properties");
             for(Resource resource : resources){
                 if (!resource.getFilename().contains(DATASOURCE_PREFIX)){
                     continue;
                 }
+                // todo 支持yaml格式， 该模块单独抽离开， 设计成通用模块
                 Properties dataSourceProperties = new Properties();
                 dataSourceProperties.load(new InputStreamReader(new BOMInputStream(resource.getInputStream()), StandardCharsets.UTF_8));
                 //TODO

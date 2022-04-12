@@ -20,6 +20,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import com.ziroom.framework.autoconfigure.jdbc.definition.ZiRoomDataSourceProvider;
 import com.ziroom.framework.autoconfigure.utils.SpringInjector;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -66,6 +67,7 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
             final String prefix = SPRING_JDBC_PREFIX;
             if (ziRoomDataSourceProvider.getZiRoomDataSourceMap().size() ==  1){
 //                final String propertiesPrefix = SPRING_JDBC_PREFIX;
+                // todo 这里需要打印日志
                 entry.getValue().getProperties().entrySet().stream().forEach(
                         propertiesEntry ->{
                             properties.put(prefix + propertiesEntry.getKey(),propertiesEntry.getValue());
@@ -76,6 +78,7 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
 //                prefix = SPRING_JDBC_PREFIX+entry.getKey()+".";
                 String type = entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_TYPE);
                 try {
+                    // todo Class.forName()
                     getClass().getClassLoader().loadClass(entry.getValue().getProperties().getProperty(PropertySourcesConstants.DATA_TYPE));
                 }catch (ClassNotFoundException e) {
                     type = "com.zaxxer.hikari.HikariDataSource";
@@ -91,6 +94,7 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
                     hikariDataSource.setPoolName(entry.getKey());
                     beanFactory.registerSingleton(entry.getKey(),hikariDataSource);
                 }
+                // todo registerSingleton 脱离了spring生命周期的管理。
                 beanFactory.registerSingleton(entry.getKey(),dataSource);
             }
         });
@@ -110,6 +114,7 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+        // todo 去掉Guice， 尽可能减少对外部框架的依赖，容易造成业务项目冲突
         this.ziRoomDataSourceProvider = SpringInjector.getInstance(ZiRoomDataSourceProvider.class);
         this.beanFactory = beanFactory;
         ziRoomDataSourceProvider.initialize();
@@ -117,6 +122,7 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
     }
 
     private Class<? extends DataSource> genType (String type){
+        // todo Class.forName
         switch (type){
             case "org.apache.tomcat.jdbc.pool.DataSource":
                 return org.apache.tomcat.jdbc.pool.DataSource.class;

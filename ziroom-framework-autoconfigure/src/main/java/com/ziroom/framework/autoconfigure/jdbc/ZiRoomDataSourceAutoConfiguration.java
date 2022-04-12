@@ -78,6 +78,21 @@ public class ZiRoomDataSourceAutoConfiguration implements InitializingBean {
     @Autowired
     ConfigurableApplicationContext applicationContext;
 
+    /**
+     * 通过after
+     * @throws Exception
+     * @see org.springframework.context.support.AbstractApplicationContext#refresh()
+     * todo 这段代码是为了对dataSource增强， 而自动配置类起作用的时机是postProcessBeanFactory。
+     * 这段代码的执行时机是ZiRoomDataSourceAutoConfiguration实例化时即finishBeanFactoryInitialization
+     * 此时机该类不应该与DataSource有任何瓜葛。
+     * 优雅的写法应该是利用spring对bean生命周期预留的钩子程序
+     *
+     * 绑定参数：
+     *   BService bService = new BService();
+     *   Bindable<BService> target = Bindable.ofInstance(bService);
+     *   Binder binder = new Binder(ConfigurationPropertySources.from((environment.getPropertySources())));
+     *   binder.bind("prefix", target);
+     */
     @Override
     public void afterPropertiesSet() throws Exception {
         Map<String, DataSource> dataSources = applicationContext.getBeansOfType(DataSource.class);
