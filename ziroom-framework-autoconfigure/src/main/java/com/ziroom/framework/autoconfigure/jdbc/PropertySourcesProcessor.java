@@ -18,7 +18,6 @@ package com.ziroom.framework.autoconfigure.jdbc;
 
 import com.ziroom.framework.autoconfigure.jdbc.definition.ZiRoomDataSourceProvider;
 import com.ziroom.framework.autoconfigure.jdbc.definition.domain.ZiRoomDataSource;
-import com.ziroom.framework.autoconfigure.utils.SpringInjector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
@@ -27,16 +26,9 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.boot.context.properties.bind.BindHandler;
-import org.springframework.boot.context.properties.bind.Bindable;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
-import org.springframework.core.Ordered;
-import org.springframework.core.PriorityOrdered;
-import org.springframework.core.ResolvableType;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.PropertiesPropertySource;
@@ -56,14 +48,13 @@ import java.util.Set;
  *
  * @author Jason Song(song_s@ctrip.com)
  */
-public class PropertySourcesProcessor implements BeanFactoryPostProcessor, EnvironmentAware, ApplicationContextAware {
+public class PropertySourcesProcessor implements BeanDefinitionRegistryPostProcessor, EnvironmentAware, ApplicationContextAware {
 
     private static final Log log = LogFactory.getLog(PropertySourcesProcessor.class);
 
     private ConfigurableEnvironment environment;
     private ZiRoomDataSourceProvider ziRoomDataSourceProvider;
     private BeanDefinitionRegistry beanDefinitionRegistry;
-    private ConfigurableListableBeanFactory configurableListableBeanFactory;
     private static final String SPRING_JDBC_PREFIX = "spring.datasource.";
     private ApplicationContext applicationContext;
 
@@ -78,16 +69,10 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
                 entry.getValue().getProperties().entrySet().forEach(
                         propertiesEntry ->{
                             properties.put(prefix + propertiesEntry.getKey(),propertiesEntry.getValue());
-//                            log.warn(String.format("数据库链接信息已被替换成omega平台配置,%s,值为: %s",
-//                                    propertiesEntry.getKey(), propertiesEntry.getValue()));
                         }
                 );
                 environment.getPropertySources().addFirst(new PropertiesPropertySource(entry.getKey(),properties));
-                if (((DefaultListableBeanFactory) configurableListableBeanFactory).containsBean("ziRoomDataSource")) {
-                    ((DefaultListableBeanFactory) configurableListableBeanFactory).destroySingleton("ziRoomDataSource");
-                }
             }else{
-//                String tablePrefix = SPRING_JDBC_PREFIX + entry.getKey()+".";
                 Map<String,String> properties = entry.getValue().getProperties();
                 String type = properties.get(PropertyConstants.DATA_TYPE);
                 try {
@@ -95,56 +80,13 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
                 }catch (ClassNotFoundException e) {
                     type = "com.zaxxer.hikari.HikariDataSource";
                 }
-//                BeanDefinitionBuilder dataSourceBuilder = BeanDefinitionBuilder.genericBeanDefinition(genType(type));
-//                properties.entrySet().forEach(propertie ->{
-//                    dataSourceBuilder.addPropertyValue(propertie.getKey(),propertie.getValue());
-//                });
-//                dataSourceBuilder.addPropertyValue(PropertyConstants.DATA_TYPE,type);
-                DataSource dataSource = DataSourceBuilder.create(getClass().getClassLoader())
-                        .driverClassName(entry.getValue().getProperties().get(PropertyConstants.DATA_DRIVER_CLASS_NAME))
-                        .url(entry.getValue().getProperties().get(PropertyConstants.DATA_URL))
-                        .username(entry.getValue().getProperties().get(PropertyConstants.DATA_USERNAME))
-                        .password(entry.getValue().getProperties().get(PropertyConstants.DATA_PASSWORD))
-                        .type(genType(type)).build();
-
-                ConfigurationPropertiesBinder binder = new ConfigurationPropertiesBinder(applicationContext);
-                BindHandler bindHandler = binder.getHandler();
-                ResolvableType bindType;
-                switch (type) {
-                    case "org.apache.tomcat.jdbc.pool.DataSource":
-                        bindType = ResolvableType.forClass(org.apache.tomcat.jdbc.pool.DataSource.class);
-                        Bindable<Object> bindTarget = Bindable.of(bindType).withAnnotations(null);
-                        if (entry.getValue() != null) {
-                            bindTarget = bindTarget.withExistingValue(dataSource);
-                        }
-                        binder.getBinder().bind("spring.datasource.tomcat", bindTarget, bindHandler);
-                        break;
-                    case "org.apache.commons.dbcp2.BasicDataSource":
-                        bindType = ResolvableType.forClass(org.apache.commons.dbcp2.BasicDataSource.class);
-                        bindTarget = Bindable.of(bindType).withAnnotations(null);
-                        if (entry.getValue() != null) {
-                            bindTarget = bindTarget.withExistingValue(dataSource);
-                        }
-                        binder.getBinder().bind("spring.datasource.dbcp2", bindTarget, bindHandler);
-                        break;
-                    default:
-                        bindType = ResolvableType.forClass(com.zaxxer.hikari.HikariDataSource.class);
-                        bindTarget = Bindable.of(bindType).withAnnotations(null);
-                        if (entry.getValue() != null) {
-                            bindTarget = bindTarget.withExistingValue(dataSource);
-                        }
-                        binder.getBinder().bind("spring.datasource.hikari", bindTarget, bindHandler);
-
-
-                }
-//                dataSourceBuilder.addConstructorArgValue(bindType.);
-//                hikariDataSource.setPoolName(entry.getKey());
-//                beanDefinitionRegistry.registerBeanDefinition(entry.getKey(), dataSourceBuilder.getBeanDefinition());
-                configurableListableBeanFactory.registerSingleton(entry.getKey(),dataSource);
+                BeanDefinitionBuilder dataSourceBuilder = BeanDefinitionBuilder.genericBeanDefinition(genType(type));
+                properties.entrySet().forEach(propertie ->{
+                    dataSourceBuilder.addPropertyValue(propertie.getKey(),propertie.getValue());
+                });
+                dataSourceBuilder.addPropertyValue(PropertyConstants.DATA_TYPE,type);
+                beanDefinitionRegistry.registerBeanDefinition(entry.getKey(), dataSourceBuilder.getBeanDefinition());
             }
-        }
-        if (((DefaultListableBeanFactory) configurableListableBeanFactory).containsBean("ziRoomDataSource")) {
-            ((DefaultListableBeanFactory) configurableListableBeanFactory).destroySingleton("ziRoomDataSource");
         }
     }
 
@@ -154,27 +96,16 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
         this.environment = (ConfigurableEnvironment) environment;
     }
 
-//    @Override
-//    public int getOrder() {
-//        //make it as early as possible
-////        return Ordered.HIGHEST_PRECEDENCE;
-//    }
-
-//    @Override
-//    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-//        this.ziRoomDataSourceProvider = SpringInjector.getInstance(ZiRoomDataSourceProvider.class);
-//        this.beanDefinitionRegistry = registry;
-//        ziRoomDataSourceProvider.initialize();
-//        initializePropertySources();
-//    }
+    @Override
+    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
+        this.ziRoomDataSourceProvider = new ZiRoomDataSourceProvider();
+        this.beanDefinitionRegistry = registry;
+        ziRoomDataSourceProvider.initialize();
+        initializePropertySources();
+    }
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        // todo 去掉Guice， 尽可能减少对外部框架的依赖，容易造成业务项目冲突
-        this.configurableListableBeanFactory = beanFactory;
-        this.ziRoomDataSourceProvider = SpringInjector.getInstance(ZiRoomDataSourceProvider.class);
-        ziRoomDataSourceProvider.initialize();
-        initializePropertySources();
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.ziroom.framework.autoconfigure.jdbc.definition;
 import com.ziroom.framework.autoconfigure.common.CommonMixUtils;
 import com.ziroom.framework.autoconfigure.jdbc.PropertyConstants;
 import com.ziroom.framework.autoconfigure.jdbc.definition.domain.ZiRoomDataSource;
-import com.ziroom.framework.autoconfigure.utils.SpringInjector;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -29,12 +28,9 @@ public class ZiRoomDataSourceProvider {
 
     private Map<String,ZiRoomDataSource> ziRoomDataSourceMap = new HashMap<>();
 
-    private PathMatchingResourcePatternResolver resourcePatternResolver;
-
     public void initialize() {
         try {
-            this.resourcePatternResolver = SpringInjector.getInstance(PathMatchingResourcePatternResolver.class);
-            Resource[] resources = resourcePatternResolver.getResources("classpath:*.yaml");
+            Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath:*.yaml");
             for(Resource resource : resources){
                 if (!resource.getFilename().startsWith(DATASOURCE_PREFIX)){
                     continue;
