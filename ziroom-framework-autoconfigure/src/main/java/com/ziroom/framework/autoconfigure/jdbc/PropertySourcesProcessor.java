@@ -21,8 +21,10 @@ import com.ziroom.framework.autoconfigure.jdbc.definition.domain.ZiRoomDataSourc
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
@@ -84,7 +86,11 @@ public class PropertySourcesProcessor implements BeanDefinitionRegistryPostProce
                 properties.entrySet().forEach(propertie ->{
                     dataSourceBuilder.addPropertyValue(propertie.getKey(),propertie.getValue());
                 });
+                dataSourceBuilder.setPrimary(Boolean.valueOf(entry.getValue().getConfig().getPrimary()));
                 dataSourceBuilder.addPropertyValue(PropertyConstants.DATA_TYPE,type);
+                dataSourceBuilder.setScope(BeanDefinition.SCOPE_SINGLETON);
+                dataSourceBuilder.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_NAME);
+                //AnnotatedGenericBeanDefinition
                 beanDefinitionRegistry.registerBeanDefinition(entry.getKey(), dataSourceBuilder.getBeanDefinition());
             }
         }
