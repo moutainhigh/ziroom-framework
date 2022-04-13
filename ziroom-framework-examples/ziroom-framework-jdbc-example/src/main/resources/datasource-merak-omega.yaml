@@ -1,7 +1,7 @@
 appId: merak
 config:
   classify: master
-  primary: true
+  primary: false
 prefix: jdbc
 properties:
   name: merakOmega
