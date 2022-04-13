@@ -14,9 +14,9 @@
 
     <name>ziroom-framework-autoconfigure</name>
     <description>ziroom-framework-autoconfigure</description>
-    <properties>
-        <main.basedir>${basedir}/../..</main.basedir>
-    </properties>
+<!--    <properties>-->
+<!--        <main.basedir>${basedir}/../..</main.basedir>-->
+<!--    </properties>-->
 
     <dependencyManagement>
         <dependencies>

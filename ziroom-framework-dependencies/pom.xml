@@ -71,6 +71,12 @@
             </dependency>
 
             <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-starter-jdbc</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.ziroom.swagger</groupId>
                 <artifactId>ziroom-swagger-dubbo</artifactId>
                 <version>${revision}</version>
@@ -85,6 +91,12 @@
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-autoconfigure</artifactId>
                 <version>${revision}</version>
             </dependency>
 

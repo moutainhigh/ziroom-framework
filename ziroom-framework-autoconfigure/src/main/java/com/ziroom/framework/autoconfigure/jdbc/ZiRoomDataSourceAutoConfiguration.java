@@ -46,9 +46,9 @@ import javax.sql.DataSource;
 public class ZiRoomDataSourceAutoConfiguration{
 
 
-    @Bean
-    public PropertySourcesPlaceholderConfigurer ziRoomDataSource(){
-        return new PropertySourcesPlaceholderConfigurer();
-    }
+//    @Bean
+//    public PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer(){
+//        return new PropertySourcesPlaceholderConfigurer();
+//    }
 
 }
