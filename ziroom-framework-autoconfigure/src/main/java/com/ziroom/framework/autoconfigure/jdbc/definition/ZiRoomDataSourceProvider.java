@@ -36,7 +36,7 @@ public class ZiRoomDataSourceProvider {
             this.resourcePatternResolver = SpringInjector.getInstance(PathMatchingResourcePatternResolver.class);
             Resource[] resources = resourcePatternResolver.getResources("classpath:*.yaml");
             for(Resource resource : resources){
-                if (!resource.getFilename().contains(DATASOURCE_PREFIX)){
+                if (!resource.getFilename().startsWith(DATASOURCE_PREFIX)){
                     continue;
                 }
                 // todo 支持yaml格式， 该模块单独抽离开， 设计成通用模块

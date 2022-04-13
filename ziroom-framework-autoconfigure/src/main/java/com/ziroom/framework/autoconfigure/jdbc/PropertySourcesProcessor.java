@@ -27,6 +27,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.boot.context.properties.bind.BindHandler;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -55,7 +56,7 @@ import java.util.Set;
  *
  * @author Jason Song(song_s@ctrip.com)
  */
-public class PropertySourcesProcessor implements BeanFactoryPostProcessor, EnvironmentAware, PriorityOrdered, ApplicationContextAware {
+public class PropertySourcesProcessor implements BeanFactoryPostProcessor, EnvironmentAware, ApplicationContextAware {
 
     private static final Log log = LogFactory.getLog(PropertySourcesProcessor.class);
 
@@ -68,6 +69,7 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
 
     private void initializePropertySources() {
 //        boolean applicationDataSourceFlag = beanFactory.containsBeanDefinition(ExplicitUrl.class.getName());
+
         Set<Map.Entry<String, ZiRoomDataSource>> entries =  ziRoomDataSourceProvider.getZiRoomDataSourceMap().entrySet();
         for (Map.Entry<String, ZiRoomDataSource> entry : entries){
             final String prefix = SPRING_JDBC_PREFIX;
@@ -76,11 +78,14 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
                 entry.getValue().getProperties().entrySet().forEach(
                         propertiesEntry ->{
                             properties.put(prefix + propertiesEntry.getKey(),propertiesEntry.getValue());
-                            log.warn(String.format("数据库链接信息已被替换成omega平台配置,%s,值为: %s",
-                                    propertiesEntry.getKey(), propertiesEntry.getValue()));
+//                            log.warn(String.format("数据库链接信息已被替换成omega平台配置,%s,值为: %s",
+//                                    propertiesEntry.getKey(), propertiesEntry.getValue()));
                         }
                 );
                 environment.getPropertySources().addFirst(new PropertiesPropertySource(entry.getKey(),properties));
+                if (((DefaultListableBeanFactory) configurableListableBeanFactory).containsBean("ziRoomDataSource")) {
+                    ((DefaultListableBeanFactory) configurableListableBeanFactory).destroySingleton("ziRoomDataSource");
+                }
             }else{
 //                String tablePrefix = SPRING_JDBC_PREFIX + entry.getKey()+".";
                 Map<String,String> properties = entry.getValue().getProperties();
@@ -138,6 +143,9 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
                 configurableListableBeanFactory.registerSingleton(entry.getKey(),dataSource);
             }
         }
+        if (((DefaultListableBeanFactory) configurableListableBeanFactory).containsBean("ziRoomDataSource")) {
+            ((DefaultListableBeanFactory) configurableListableBeanFactory).destroySingleton("ziRoomDataSource");
+        }
     }
 
     @Override
@@ -146,11 +154,11 @@ public class PropertySourcesProcessor implements BeanFactoryPostProcessor, Envir
         this.environment = (ConfigurableEnvironment) environment;
     }
 
-    @Override
-    public int getOrder() {
-        //make it as early as possible
-        return Ordered.HIGHEST_PRECEDENCE;
-    }
+//    @Override
+//    public int getOrder() {
+//        //make it as early as possible
+////        return Ordered.HIGHEST_PRECEDENCE;
+//    }
 
 //    @Override
 //    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
