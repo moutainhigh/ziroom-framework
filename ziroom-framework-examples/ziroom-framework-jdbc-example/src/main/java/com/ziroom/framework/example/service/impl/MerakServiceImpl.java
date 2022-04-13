@@ -1,6 +1,7 @@
 package com.ziroom.framework.example.service.impl;
 
 import com.ziroom.framework.example.config.MerakDataSourceConfig;
+import com.ziroom.framework.example.dao.RoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ public class MerakServiceImpl{
     private MerakDataSourceConfig merakDataSourceConfig;
 
     public Long merakData2(){
-        return merakDataSourceConfig.sqlSessionTemplate.selectOne("com.ziroom.tech.omega.example.dao.RoleMapper.count");
+        RoleMapper mapper = merakDataSourceConfig.sqlSessionTemplate.getMapper(RoleMapper.class);
+        return mapper.count();
     }
 }

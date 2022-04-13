@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
+import org.springframework.core.io.ClassPathResource;
 
 ///**
 // * 主数据源配置
@@ -26,17 +27,25 @@ public class MerakDataSourceConfig  {
 
 //    @Autowired
 //    private BeanFactory beanFactory;
+    @Autowired
     public SqlSessionTemplate sqlSessionTemplate;
+
+    private DataSource dataSource;
 
     @Autowired(required = false)
     @Qualifier("merak")
-    private DataSource dataSource;
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+
 
     @Primary
     @Bean(name = "merakSqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactory() throws Exception {
+    public SqlSessionFactory sqlSessionFactory(@Autowired @Qualifier("merak") DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
+        bean.setMapperLocations(new ClassPathResource("mapper/RoleMapper.xml"));
 //        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
         return bean.getObject();
     }
@@ -47,15 +56,11 @@ public class MerakDataSourceConfig  {
 //        return new DataSourceTransactionManager((DataSource)beanFactory.getBean("merak"));
 //    }
 
-//    @Primary
-//    @Bean(name = "merakSqlSessionTemplate")
-//    public SqlSessionTemplate sqlSessionTemplate() throws Exception{
-//        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-//        bean.setDataSource((DataSource)beanFactory.getBean("merak"));
-//        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
-//        SqlSessionFactory sqlSessionFactory = (SqlSessionFactory) bean.getObject();
-//        return new SqlSessionTemplate(sqlSessionFactory);
-//    }
+    @Primary
+    @Bean(name = "merakSqlSessionTemplate")
+    public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) throws Exception{
+        return new SqlSessionTemplate(sqlSessionFactory);
+    }
 
 
 //    @Override

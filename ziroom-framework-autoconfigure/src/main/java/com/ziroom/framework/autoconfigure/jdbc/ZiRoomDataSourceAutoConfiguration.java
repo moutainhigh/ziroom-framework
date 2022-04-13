@@ -41,12 +41,14 @@ import javax.sql.DataSource;
 @Configuration(proxyBeanMethods = false)
 @ConditionalOnClass({ DataSource.class, EmbeddedDatabaseType.class })
 @AutoConfigureBefore(DataSourceAutoConfiguration.class)
-@Import({ OmegaConfigRegistrar.class})
+@Import({PropertySourcesProcessor.class})
 @ConditionalOnMissingBean(type = "io.r2dbc.spi.ConnectionFactory")
 public class ZiRoomDataSourceAutoConfiguration{
+
 
     @Bean
     public PropertySourcesPlaceholderConfigurer ziRoomDataSource(){
         return new PropertySourcesPlaceholderConfigurer();
     }
+
 }

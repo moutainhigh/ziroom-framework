@@ -21,16 +21,20 @@ import com.ziroom.framework.autoconfigure.jdbc.definition.domain.ZiRoomDataSourc
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.beans.factory.support.*;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.context.properties.bind.Bindable;
+import org.springframework.boot.context.properties.bind.Binder;
+import org.springframework.boot.context.properties.source.MapConfigurationPropertySource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.PropertiesPropertySource;
@@ -39,6 +43,7 @@ import javax.sql.DataSource;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import org.springframework.core.type.AnnotationMetadata;
 
 /**
  * Apollo Property Sources processor for Spring Annotation Based Application. <br /> <br />
@@ -50,7 +55,15 @@ import java.util.Set;
  *
  * @author Jason Song(song_s@ctrip.com)
  */
-public class PropertySourcesProcessor implements BeanDefinitionRegistryPostProcessor, EnvironmentAware, ApplicationContextAware {
+public class PropertySourcesProcessor implements EnvironmentAware, ApplicationContextAware, ImportBeanDefinitionRegistrar {
+
+    @Override
+    public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
+        this.ziRoomDataSourceProvider = new ZiRoomDataSourceProvider();
+        this.beanDefinitionRegistry = registry;
+        ziRoomDataSourceProvider.initialize();
+        initializePropertySources();
+    }
 
     private static final Log log = LogFactory.getLog(PropertySourcesProcessor.class);
 
@@ -82,17 +95,54 @@ public class PropertySourcesProcessor implements BeanDefinitionRegistryPostProce
                 }catch (ClassNotFoundException e) {
                     type = "com.zaxxer.hikari.HikariDataSource";
                 }
-                BeanDefinitionBuilder dataSourceBuilder = BeanDefinitionBuilder.genericBeanDefinition(genType(type));
-                properties.entrySet().forEach(propertie ->{
-                    dataSourceBuilder.addPropertyValue(propertie.getKey(),propertie.getValue());
-                });
-                dataSourceBuilder.setPrimary(Boolean.valueOf(entry.getValue().getConfig().getPrimary()));
-                dataSourceBuilder.addPropertyValue(PropertyConstants.DATA_TYPE,type);
+                BeanDefinitionBuilder dataSourceBuilder = BeanDefinitionBuilder.genericBeanDefinition(ZiroomDataSourceFactoryBean.class);
+//                properties.entrySet().forEach(propertie ->{
+//                    dataSourceBuilder.addPropertyValue(propertie.getKey(),propertie.getValue());
+//                });
+//                dataSourceBuilder.setPrimary(Boolean.valueOf(entry.getValue().getConfig().getPrimary()));
+                // clone properties
+                dataSourceBuilder.addPropertyValue("properties", properties);
+//                dataSourceBuilder.addPropertyValue(PropertyConstants.DATA_TYPE,type);
                 dataSourceBuilder.setScope(BeanDefinition.SCOPE_SINGLETON);
                 dataSourceBuilder.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_NAME);
+
                 //AnnotatedGenericBeanDefinition
                 beanDefinitionRegistry.registerBeanDefinition(entry.getKey(), dataSourceBuilder.getBeanDefinition());
             }
+        }
+    }
+
+    public static class ZiroomDataSourceFactoryBean implements FactoryBean<DataSource>, InitializingBean {
+
+        DataSourceProperties dataSourceProperties;
+
+        Properties properties;
+
+        public void setProperties(Properties properties) {
+            this.properties = properties;
+        }
+
+        ZiroomDataSourceFactoryBean() {
+
+        }
+
+
+        @Override
+        public DataSource getObject() throws Exception {
+            return dataSourceProperties.initializeDataSourceBuilder().build();
+        }
+
+        @Override
+        public Class<?> getObjectType() {
+            return DataSource.class;
+        }
+
+        @Override
+        public void afterPropertiesSet() {
+            dataSourceProperties = new DataSourceProperties();
+            Bindable<DataSourceProperties> target = Bindable.ofInstance(dataSourceProperties);
+            Binder binder = new Binder(new MapConfigurationPropertySource(properties));
+            binder.bind("", target);
         }
     }
 
@@ -102,7 +152,7 @@ public class PropertySourcesProcessor implements BeanDefinitionRegistryPostProce
         this.environment = (ConfigurableEnvironment) environment;
     }
 
-    @Override
+//    @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         this.ziRoomDataSourceProvider = new ZiRoomDataSourceProvider();
         this.beanDefinitionRegistry = registry;
@@ -110,7 +160,7 @@ public class PropertySourcesProcessor implements BeanDefinitionRegistryPostProce
         initializePropertySources();
     }
 
-    @Override
+//    @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
     }
 
