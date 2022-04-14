@@ -24,7 +24,6 @@
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ziroom-framework-autoconfigure</artifactId>
-            <version>${version}</version>
         </dependency>
     </dependencies>
 
