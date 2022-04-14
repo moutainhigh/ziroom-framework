@@ -17,6 +17,7 @@
 package com.ziroom.framework.autoconfigure.jdbc;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.lang.annotation.*;

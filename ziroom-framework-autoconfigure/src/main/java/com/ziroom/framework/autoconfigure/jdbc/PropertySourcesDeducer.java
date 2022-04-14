@@ -22,6 +22,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.ConfigurableEnvironment;
@@ -37,45 +39,45 @@ import org.springframework.util.Assert;
  */
 class PropertySourcesDeducer {
 
-	private static final Log logger = LogFactory.getLog(PropertySourcesDeducer.class);
+    private static final Logger logger = LoggerFactory.getLogger(PropertySourcesDeducer.class);
 
-	private final ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
 
-	PropertySourcesDeducer(ApplicationContext applicationContext) {
-		this.applicationContext = applicationContext;
-	}
+    PropertySourcesDeducer(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
-	PropertySources getPropertySources() {
-		PropertySourcesPlaceholderConfigurer configurer = getSinglePropertySourcesPlaceholderConfigurer();
-		if (configurer != null) {
-			return configurer.getAppliedPropertySources();
-		}
-		MutablePropertySources sources = extractEnvironmentPropertySources();
-		Assert.state(sources != null,
-				"Unable to obtain PropertySources from PropertySourcesPlaceholderConfigurer or Environment");
-		return sources;
-	}
+    PropertySources getPropertySources() {
+        PropertySourcesPlaceholderConfigurer configurer = getSinglePropertySourcesPlaceholderConfigurer();
+        if (configurer != null) {
+            return configurer.getAppliedPropertySources();
+        }
+        MutablePropertySources sources = extractEnvironmentPropertySources();
+        Assert.state(sources != null,
+            "Unable to obtain PropertySources from PropertySourcesPlaceholderConfigurer or Environment");
+        return sources;
+    }
 
-	private PropertySourcesPlaceholderConfigurer getSinglePropertySourcesPlaceholderConfigurer() {
-		// Take care not to cause early instantiation of all FactoryBeans
-		Map<String, PropertySourcesPlaceholderConfigurer> beans = this.applicationContext
-				.getBeansOfType(PropertySourcesPlaceholderConfigurer.class, false, false);
-		if (beans.size() == 1) {
-			return beans.values().iterator().next();
-		}
-		if (beans.size() > 1 && logger.isWarnEnabled()) {
-			logger.warn("Multiple PropertySourcesPlaceholderConfigurer beans registered " + beans.keySet()
-					+ ", falling back to Environment");
-		}
-		return null;
-	}
+    private PropertySourcesPlaceholderConfigurer getSinglePropertySourcesPlaceholderConfigurer() {
+        // Take care not to cause early instantiation of all FactoryBeans
+        Map<String, PropertySourcesPlaceholderConfigurer> beans = this.applicationContext
+            .getBeansOfType(PropertySourcesPlaceholderConfigurer.class, false, false);
+        if (beans.size() == 1) {
+            return beans.values().iterator().next();
+        }
+        if (beans.size() > 1 && logger.isWarnEnabled()) {
+            logger.warn("Multiple PropertySourcesPlaceholderConfigurer beans registered " + beans.keySet()
+                + ", falling back to Environment");
+        }
+        return null;
+    }
 
-	private MutablePropertySources extractEnvironmentPropertySources() {
-		Environment environment = this.applicationContext.getEnvironment();
-		if (environment instanceof ConfigurableEnvironment) {
-			return ((ConfigurableEnvironment) environment).getPropertySources();
-		}
-		return null;
-	}
+    private MutablePropertySources extractEnvironmentPropertySources() {
+        Environment environment = this.applicationContext.getEnvironment();
+        if (environment instanceof ConfigurableEnvironment) {
+            return ((ConfigurableEnvironment) environment).getPropertySources();
+        }
+        return null;
+    }
 
 }

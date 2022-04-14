@@ -7,8 +7,7 @@ import java.util.Map;
 /**
  * /app/conf/数据库链接配置文件
  */
-public class ZiRoomDataSource {
-
+public class ZiroomDataSource {
 
     private String appId;
 
@@ -16,7 +15,7 @@ public class ZiRoomDataSource {
 
     Config ConfigObject;
 
-    Map<String,String> properties;
+    Map<String, String> properties;
 
     public String getAppId() {
         return appId;

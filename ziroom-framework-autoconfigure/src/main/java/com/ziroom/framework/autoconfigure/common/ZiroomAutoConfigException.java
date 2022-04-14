@@ -19,13 +19,13 @@ package com.ziroom.framework.autoconfigure.common;
 /**
  * @author Jason Song(song_s@ctrip.com)
  */
-public class ZiRoomAutoConfigException extends RuntimeException {
+public class ZiroomAutoConfigException extends RuntimeException {
 
-  public ZiRoomAutoConfigException(String message) {
+  public ZiroomAutoConfigException(String message) {
     super(message);
   }
 
-  public ZiRoomAutoConfigException(String message, Throwable cause) {
+  public ZiroomAutoConfigException(String message, Throwable cause) {
     super(message, cause);
   }
 }

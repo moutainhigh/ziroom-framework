@@ -21,10 +21,8 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
 import javax.sql.DataSource;
@@ -43,7 +41,7 @@ import javax.sql.DataSource;
 @AutoConfigureBefore(DataSourceAutoConfiguration.class)
 @Import({PropertySourcesProcessor.class})
 @ConditionalOnMissingBean(type = "io.r2dbc.spi.ConnectionFactory")
-public class ZiRoomDataSourceAutoConfiguration{
+public class ZiroomDataSourceAutoConfiguration {
 
 
 //    @Bean

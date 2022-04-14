@@ -16,10 +16,12 @@
  */
 package com.ziroom.framework.autoconfigure.jdbc;
 
-import com.ziroom.framework.autoconfigure.jdbc.definition.ZiRoomDataSourceProvider;
-import com.ziroom.framework.autoconfigure.jdbc.definition.domain.ZiRoomDataSource;
+import com.ziroom.framework.autoconfigure.jdbc.definition.ZiroomDataSourceProvider;
+import com.ziroom.framework.autoconfigure.jdbc.definition.domain.ZiroomDataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -43,11 +45,12 @@ import javax.sql.DataSource;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+
 import org.springframework.core.type.AnnotationMetadata;
 
 /**
  * Apollo Property Sources processor for Spring Annotation Based Application. <br /> <br />
- *
+ * <p>
  * The reason why PropertySourcesProcessor implements {@link BeanFactoryPostProcessor} instead of
  * {@link org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor} is that lower versions of
  * Spring (e.g. 3.1.1) doesn't support registering BeanDefinitionRegistryPostProcessor in ImportBeanDefinitionRegistrar
@@ -59,16 +62,16 @@ public class PropertySourcesProcessor implements EnvironmentAware, ApplicationCo
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
-        this.ziRoomDataSourceProvider = new ZiRoomDataSourceProvider();
+        this.ziroomDataSourceProvider = new ZiroomDataSourceProvider();
         this.beanDefinitionRegistry = registry;
-        ziRoomDataSourceProvider.initialize();
+        ziroomDataSourceProvider.initialize();
         initializePropertySources();
     }
 
-    private static final Log log = LogFactory.getLog(PropertySourcesProcessor.class);
+    private static final Logger log = LoggerFactory.getLogger(PropertySourcesProcessor.class);
 
     private ConfigurableEnvironment environment;
-    private ZiRoomDataSourceProvider ziRoomDataSourceProvider;
+    private ZiroomDataSourceProvider ziroomDataSourceProvider;
     private BeanDefinitionRegistry beanDefinitionRegistry;
     private static final String SPRING_JDBC_PREFIX = "spring.datasource.";
     private ApplicationContext applicationContext;
@@ -76,24 +79,25 @@ public class PropertySourcesProcessor implements EnvironmentAware, ApplicationCo
     private void initializePropertySources() {
 //        boolean applicationDataSourceFlag = beanFactory.containsBeanDefinition(ExplicitUrl.class.getName());
 
-        Set<Map.Entry<String, ZiRoomDataSource>> entries =  ziRoomDataSourceProvider.getZiRoomDataSourceMap().entrySet();
-        for (Map.Entry<String, ZiRoomDataSource> entry : entries){
+        Set<Map.Entry<String, ZiroomDataSource>> entries = ziroomDataSourceProvider.getZiroomDataSourceMap().entrySet();
+        for (Map.Entry<String, ZiroomDataSource> entry : entries) {
             final String prefix = SPRING_JDBC_PREFIX;
-            if (ziRoomDataSourceProvider.getZiRoomDataSourceMap().size() ==  1){
+            if (ziroomDataSourceProvider.getZiroomDataSourceMap().size() == 1) {
                 Properties properties = new Properties();
-                entry.getValue().getProperties().entrySet().forEach(
-                        propertiesEntry ->{
-                            properties.put(prefix + propertiesEntry.getKey(),propertiesEntry.getValue());
-                        }
-                );
-                environment.getPropertySources().addFirst(new PropertiesPropertySource(entry.getKey(),properties));
-            }else{
-                Map<String,String> properties = entry.getValue().getProperties();
+                entry.getValue().getProperties().forEach((key, value) -> properties.put(prefix + key, value));
+                environment.getPropertySources().addFirst(new PropertiesPropertySource(entry.getKey(), properties));
+            } else {
+                Map<String, String> properties = entry.getValue().getProperties();
                 String type = properties.get(PropertyConstants.DATA_TYPE);
                 try {
                     Class.forName(type);
-                }catch (ClassNotFoundException e) {
+                } catch (ClassNotFoundException e) {
                     type = "com.zaxxer.hikari.HikariDataSource";
+                    try {
+                        Class.forName(type);
+                    } catch (ClassNotFoundException ex) {
+                        throw new BeanDefinitionValidationException("DataSource type not found");
+                    }
                 }
                 BeanDefinitionBuilder dataSourceBuilder = BeanDefinitionBuilder.genericBeanDefinition(ZiroomDataSourceFactoryBean.class);
 //                properties.entrySet().forEach(propertie ->{
@@ -152,15 +156,15 @@ public class PropertySourcesProcessor implements EnvironmentAware, ApplicationCo
         this.environment = (ConfigurableEnvironment) environment;
     }
 
-//    @Override
+    //    @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-        this.ziRoomDataSourceProvider = new ZiRoomDataSourceProvider();
+        this.ziroomDataSourceProvider = new ZiroomDataSourceProvider();
         this.beanDefinitionRegistry = registry;
-        ziRoomDataSourceProvider.initialize();
+        ziroomDataSourceProvider.initialize();
         initializePropertySources();
     }
 
-//    @Override
+    //    @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
     }
 
@@ -169,9 +173,9 @@ public class PropertySourcesProcessor implements EnvironmentAware, ApplicationCo
         this.applicationContext = applicationContext;
     }
 
-    private Class<? extends DataSource> genType (String type){
+    private Class<? extends DataSource> genType(String type) {
         // todo Class.forName
-        switch (type){
+        switch (type) {
             case "org.apache.tomcat.jdbc.pool.DataSource":
                 return org.apache.tomcat.jdbc.pool.DataSource.class;
             case "org.apache.commons.dbcp2.BasicDataSource":

@@ -1,0 +1,5 @@
+prefix: jdbc
+properties:
+  name: db1
+  url: jdbc:h2:mem:db1
+  connectionTimeout: 1000000

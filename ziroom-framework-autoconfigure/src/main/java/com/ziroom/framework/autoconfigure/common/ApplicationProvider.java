@@ -4,6 +4,8 @@ package com.ziroom.framework.autoconfigure.common;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.InitializingBean;
@@ -28,7 +30,7 @@ import java.util.Properties;
 @Configuration
 public class ApplicationProvider implements ApplicationContextInitializer {
 
-    private static final Log log = LogFactory.getLog(ApplicationProvider.class);
+    private static final Logger log = LoggerFactory.getLogger(ApplicationProvider.class);
 
     public static final String APP_PROPERTIES_CLASSPATH = "/META-INF/app.properties";
 

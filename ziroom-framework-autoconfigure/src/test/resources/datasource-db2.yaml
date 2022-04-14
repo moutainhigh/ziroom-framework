@@ -1,0 +1,4 @@
+prefix: jdbc
+properties:
+  name: db2
+  url: jdbc:h2:mem:db2
