@@ -22,7 +22,6 @@
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ziroom-framework-dubbo-examples-api</artifactId>
-            <version>${revision}</version>
         </dependency>
 
         <dependency>

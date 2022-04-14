@@ -100,6 +100,11 @@
                 <version>${revision}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-starters</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <!-- 自如内部组件 end -->
 
             <!-- Spring Dependencies -->

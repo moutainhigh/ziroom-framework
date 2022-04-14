@@ -5,11 +5,15 @@
     <parent>
         <groupId>com.ziroom.framework</groupId>
         <artifactId>ziroom-framework-starters</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
-        <relativePath/>
+        <version>${revision}</version>
+        <relativePath>../../ziroom-framework-starters/pom.xml</relativePath>
     </parent>
     <artifactId>ziroom-framework-spring-boot-example</artifactId>
     <name>ziroom-framework-spring-boot-example</name>
+
+    <properties>
+        <gelflog.version>2.0.8</gelflog.version>
+    </properties>
 
     <dependencies>
         <dependency>
