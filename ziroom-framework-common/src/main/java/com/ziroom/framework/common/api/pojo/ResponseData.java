@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public final class ResponseData<T> implements Serializable, IResponseData<T> {
+public final class ResponseData<T> implements Serializable {
 
     public static final int SUCCESS = 200;
     public static final int ERROR = 500;
@@ -25,45 +25,30 @@ public final class ResponseData<T> implements Serializable, IResponseData<T> {
     private String message;
     private T data;
 
-    public static ResponseData ok(Object data) {
-        return ResponseData.builder().code(SUCCESS).data(data).build();
+    public static <T> ResponseData<T> success(T data) {
+        return ResponseData.<T>builder().code(SUCCESS).data(data).build();
     }
 
-    public static ResponseData fail(String message) {
-        return ResponseData.builder().code(ERROR).message(message).build();
+    public static <T> ResponseData<T> fail(String message) {
+        return ResponseData.<T>builder().code(ERROR).message(message).build();
     }
 
     public static <T> ResponseData<T> fail(int code, String message, T data) {
-        ResponseData<T> responseData = new ResponseData<T>();
-        responseData.setCode(code);
-        responseData.setData(data);
-        responseData.setMessage(message);
-        return responseData;
+        return ResponseData.<T>builder()
+                .message(message)
+                .code(code)
+                .data(data)
+                .build();
     }
 
     public static <T> ResponseData<T> fail(String message, T data) {
-        ResponseData<T> responseData = new ResponseData<T>();
-        responseData.setCode(ERROR);
-        responseData.setData(data);
-        responseData.setMessage(message);
-        return responseData;
+        return ResponseData.<T>builder()
+                .message(message)
+                .code(ERROR)
+                .data(data)
+                .build();
     }
 
-    public static <T> ResponseData<T> fail(T data) {
-        ResponseData<T> responseData = new ResponseData<T>();
-        responseData.setCode(ERROR);
-        responseData.setData(data);
-        return responseData;
-    }
-
-    public static <T> ResponseData<T> success(T data) {
-        ResponseData<T> responseData = new ResponseData<T>();
-        responseData.setCode(SUCCESS);
-        responseData.setData(data);
-        return responseData;
-    }
-
-    @Override
     public Boolean isSuccess() {
         return this.code == SUCCESS;
     }
