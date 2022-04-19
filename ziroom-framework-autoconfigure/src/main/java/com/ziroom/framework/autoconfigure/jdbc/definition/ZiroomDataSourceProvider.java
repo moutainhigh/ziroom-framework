@@ -11,6 +11,7 @@ import org.springframework.boot.env.YamlPropertySourceLoader;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,18 +66,13 @@ public class ZiroomDataSourceProvider{
                     continue;
                 }
                 String driverClassName = binder.bind(DATASOURCE_PREFIX + DATA_DRIVER_CLASS_NAME, Bindable.of(String.class)).get();
-//                if (StringUtils.isEmpty(driverClassName)) {
-//                    Map<String, OriginTrackedValue> sourceMap = (Map<String, OriginTrackedValue>)ziroomPropertySource.getSource();
-//                    OriginTrackedValue originTrackedValue = OriginTrackedValue.of("com.mysql.cj.jdbc.Driver",
-//                            sourceMap.get(DATASOURCE_PREFIX + DATA_DRIVER_CLASS_NAME).getOrigin());
-//                    sourceMap.replace(DATASOURCE_PREFIX + DATA_DRIVER_CLASS_NAME,originTrackedValue);
-//                    binder.bind(DATASOURCE_PREFIX + DATA_DRIVER_CLASS_NAME, Bindable.of(String.class)).isBound();
-//                }
+                if (StringUtils.isEmpty(driverClassName)) {
+                    log.info("注册数据源[{}]. 加载自: {} driver-class-name设置为空,使用默认值：com.mysql.cj.jdbc.Driver", userName, resource.getFilename());
+                }
                 String type = binder.bind(DATASOURCE_PREFIX + DATA_TYPE, Bindable.of(String.class)).get();
-//                if (StringUtils.isEmpty(type)) {
-//                    OriginTrackedMapPropertySource originTrackedMapPropertySource = (OriginTrackedMapPropertySource)ziroomPropertySource;
-//                    originTrackedMapPropertySource.getSource().put(DATASOURCE_PREFIX + DATA_TYPE,com.zaxxer.hikari.HikariDataSource.class);
-//                }
+                if (StringUtils.isEmpty(type)) {
+                    log.info("注册数据源[{}]. 加载自: {} type设置为空,使用默认值：com.zaxxer.hikari.HikariDataSource", userName, resource.getFilename());
+                }
                 String name = binder.bind(DATASOURCE_PREFIX + DATA_NAME, Bindable.of(String.class)).get();
                 log.info("注册数据源[{}][{}]. 加载自: {}", userName, url, resource.getFilename());
                 this.ziRoomDataSourceMap.put(name, ziroomPropertySource);

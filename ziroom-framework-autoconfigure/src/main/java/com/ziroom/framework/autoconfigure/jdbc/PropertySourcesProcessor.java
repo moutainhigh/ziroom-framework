@@ -49,10 +49,7 @@ import org.springframework.core.env.PropertySource;
 import org.springframework.core.type.AnnotationMetadata;
 
 import javax.sql.DataSource;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 import static com.ziroom.framework.autoconfigure.jdbc.PropertyConstants.DATA_TYPE;
 import static com.ziroom.framework.autoconfigure.jdbc.definition.ZiroomDataSourceProvider.DATASOURCE_PREFIX;
@@ -107,7 +104,6 @@ public class PropertySourcesProcessor implements EnvironmentAware, ApplicationCo
 
                 Binder binder = new Binder(ConfigurationPropertySources.from(entry.getValue()),
                         new PropertySourcesPlaceholdersResolver(environment));
-//                ConfigurableEnvironment.
                 String type =  binder.bind(DATASOURCE_PREFIX + DATA_TYPE, Bindable.of(String.class)).get();
                 try {
                     Class.forName(type);
@@ -124,7 +120,6 @@ public class PropertySourcesProcessor implements EnvironmentAware, ApplicationCo
                 dataSourceBuilder.setScope(BeanDefinition.SCOPE_SINGLETON);
                 dataSourceBuilder.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_NAME);
 
-                //AnnotatedGenericBeanDefinition
                 beanDefinitionRegistry.registerBeanDefinition(entry.getKey(), dataSourceBuilder.getBeanDefinition());
             }
         }
@@ -148,7 +143,8 @@ public class PropertySourcesProcessor implements EnvironmentAware, ApplicationCo
             Bindable<DataSource> target = Bindable.ofInstance(dataSource);
             Binder binder = new Binder(ConfigurationPropertySources.from(propertySources),
                     new PropertySourcesPlaceholdersResolver(Arrays.asList(propertySources)));
-            binder.bind("ziroom.datasource.hikari", target);
+            String type = binder.bind(DATASOURCE_PREFIX + DATA_TYPE, Bindable.of(String.class)).get();
+            binder.bind("ziroom.datasource."+ getDataSourcePrefix(type), target);
             return  dataSource;
         }
 
@@ -164,6 +160,13 @@ public class PropertySourcesProcessor implements EnvironmentAware, ApplicationCo
             Binder binder = new Binder(ConfigurationPropertySources.from(propertySources),
                     new PropertySourcesPlaceholdersResolver(Arrays.asList(propertySources)));
             binder.bind("ziroom.datasource", target);
+            //设置默认值
+            if (Objects.isNull(dataSourceProperties.getType())){
+                dataSourceProperties.setType(com.zaxxer.hikari.HikariDataSource.class);
+            }
+            if (CommonMixUtils.isBlank(dataSourceProperties.getDriverClassName())){
+                dataSourceProperties.setDriverClassName("com.mysql.cj.jdbc.Driver");
+            }
         }
     }
 
@@ -171,18 +174,6 @@ public class PropertySourcesProcessor implements EnvironmentAware, ApplicationCo
     public void setEnvironment(Environment environment) {
         //it is safe enough to cast as all known environment is derived from ConfigurableEnvironment
         this.environment = (ConfigurableEnvironment) environment;
-    }
-
-    //    @Override
-//    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-//        this.ziroomDataSourceProvider = new ZiroomDataSourceProvider();
-//        this.beanDefinitionRegistry = registry;
-//        ziroomDataSourceProvider.initialize();
-//        initializePropertySources();
-//    }
-
-    //    @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
     }
 
     /**
@@ -201,7 +192,7 @@ public class PropertySourcesProcessor implements EnvironmentAware, ApplicationCo
             }
             return type;
         } catch (Exception e) {
-            throw new IllegalArgumentException("can not resolve class with type: " + typeStr); //无法通过反射获取class对象的情况则抛出异常，该情况一般是写错了，所以此次抛出一个runtimeexception
+            throw new IllegalArgumentException("can not resolve class with type: " + typeStr);
         }
     }
 
@@ -212,16 +203,14 @@ public class PropertySourcesProcessor implements EnvironmentAware, ApplicationCo
     }
 
 
-    private Class<? extends DataSource> genType(String type) {
-        // todo Class.forName
+    private static String getDataSourcePrefix(String type) {
         switch (type) {
             case "org.apache.tomcat.jdbc.pool.DataSource":
-                return org.apache.tomcat.jdbc.pool.DataSource.class;
+                return "tomcat";
             case "org.apache.commons.dbcp2.BasicDataSource":
-                return org.apache.commons.dbcp2.BasicDataSource.class;
-            case "com.zaxxer.hikari.HikariDataSource":
-                return com.zaxxer.hikari.HikariDataSource.class;
+                return "dbcp2";
+            default:
+                return "hikari";
         }
-        return com.zaxxer.hikari.HikariDataSource.class;
     }
 }
