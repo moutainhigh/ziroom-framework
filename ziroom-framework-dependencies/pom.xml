@@ -17,15 +17,17 @@
         <java.encoding>UTF-8</java.encoding>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-
+        <project.reporting.outputEncoding>1.8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!--JAVA ZIROOM Versions -->
         <revision>1.0.0-SNAPSHOT</revision>
-
+        <gamma.version>0.0.5-SNAPSHOT</gamma.version>
+        <sia.version>1.1.0-RELEASE</sia.version>
+        <gelflog.version>1.0.5</gelflog.version>
         <!-- Framework Versions -->
         <spring-boot.version>2.3.2.RELEASE</spring-boot.version>
         <spring.cloud.version>Hoxton.SR12</spring.cloud.version>
         <spring.cloud.alibaba.version>2.2.6.RELEASE</spring.cloud.alibaba.version>
-
         <!-- Other -->
         <swagger.version>2.9.2</swagger.version>
         <swagger-ui.version>1.9.6</swagger-ui.version>
@@ -34,6 +36,17 @@
         <lombok.version>1.18.22</lombok.version>
         <hikaricp.version>3.2.0</hikaricp.version>
         <junit-jupiter.version>5.3.2</junit-jupiter.version>
+        <guava.version>20.0</guava.version>
+        <apollo-client.version>1.2.3-RC4</apollo-client.version>
+        <mybatis.version>2.1.0</mybatis.version>
+        <mybatis-plus.version>3.4.1</mybatis-plus.version>
+        <springfox-swagger.version>2.9.2</springfox-swagger.version>
+        <apache-common.verson>2.6</apache-common.verson>
+        <curator.version>2.11.1</curator.version>
+        <hibernate.version>4.3.1.Final</hibernate.version>
+        <fastjson.version>1.1.26</fastjson.version>
+        <mockito.version>1.10.19</mockito.version>
+        <powermock.version>1.7.1</powermock.version>
     </properties>
 
     <dependencyManagement>
@@ -105,6 +118,30 @@
                 <artifactId>ziroom-framework-starters</artifactId>
                 <version>${revision}</version>
             </dependency>
+
+            <!-- config center -->
+            <dependency>
+                <groupId>com.ziroom.framework.apollo</groupId>
+                <artifactId>apollo-client</artifactId>
+                <version>${apollo-client.version}</version>
+            </dependency>
+
+            <!--gamma-rpc-->
+            <dependency>
+                <groupId>com.ziroom.tech</groupId>
+                <artifactId>gamma-rpc-spring-boot-starter</artifactId>
+                <version>${gamma.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ziroom.tech.sia</groupId>
+                <artifactId>sia-task-hunter</artifactId>
+                <version>${sia.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ziroom.gelflog.spring</groupId>
+                <artifactId>gelflog-spring</artifactId>
+                <version>${gelflog.version}</version>
+            </dependency>
             <!-- 自如内部组件 end -->
 
             <!-- Spring Dependencies -->
@@ -132,6 +169,7 @@
                 <scope>import</scope>
             </dependency>
 
+            <!-- 三方组件 start-->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -148,6 +186,100 @@
                 <version>${junit-jupiter.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-annotation</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${springfox-swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${springfox-swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${apache-common.verson}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${apache-common.verson}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-client</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-api-mockito2</artifactId>
+                <version>${powermock.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>mockito-core</artifactId>
+                        <groupId>org.mockito</groupId>
+                    </exclusion>
+                </exclusions>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.powermock</groupId>
+                <artifactId>powermock-module-junit4</artifactId>
+                <version>${powermock.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
