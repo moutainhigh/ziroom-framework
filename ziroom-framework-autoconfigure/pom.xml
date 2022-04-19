@@ -286,6 +286,13 @@
             <artifactId>thymeleaf-extras-springsecurity5</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <dependency>
             <groupId>javax.jms</groupId>
             <artifactId>javax.jms-api</artifactId>
@@ -437,6 +444,7 @@
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
         </dependency>
+
     </dependencies>
     <profiles>
         <profile>

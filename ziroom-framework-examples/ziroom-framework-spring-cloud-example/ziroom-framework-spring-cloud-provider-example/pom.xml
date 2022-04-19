@@ -35,11 +35,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-
         <!-- ziroom -->
         <dependency>
             <groupId>com.ziroom.framework</groupId>
@@ -51,6 +46,13 @@
             <artifactId>ziroom-framework-starter-swagger</artifactId>
             <version>${version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-framework-starter-zns-discovery</artifactId>
+            <version>${version}</version>
+        </dependency>
+
+
         <!-- 第三方 -->
         <dependency>
             <groupId>org.projectlombok</groupId>

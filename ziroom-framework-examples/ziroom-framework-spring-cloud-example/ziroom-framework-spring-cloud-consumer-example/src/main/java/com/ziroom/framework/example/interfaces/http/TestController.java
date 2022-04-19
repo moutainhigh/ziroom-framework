@@ -38,12 +38,12 @@ public class TestController {
     @Autowired
     private DiscoveryClient discoveryClient;
 
-    @PostMapping("/mycenter-feign/api/mycenter/base/config")
+    @GetMapping("/mycenter-feign/api/mycenter/base/config")
     public Object mycenterFeignConfig() {
         return mycenterService.config();
     }
 
-    @PostMapping("/mycenter-rest/api/mycenter/base/config")
+    @GetMapping("/mycenter-rest/api/mycenter/base/config")
     public String mycenterRestConfig() {
         return restTemplate.postForObject("http://mycenter/api/mycenter/base/config", null,
                 String.class);

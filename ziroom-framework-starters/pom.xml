@@ -22,6 +22,7 @@
         <module>ziroom-framework-starter-swagger-dubbo</module>
         <module>ziroom-framework-starter-web</module>
         <module>ziroom-framework-starter-jdbc</module>
+        <module>ziroom-framework-starter-zns-discovery</module>
     </modules>
 
 </project>
