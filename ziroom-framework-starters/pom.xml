@@ -23,6 +23,7 @@
         <module>ziroom-framework-starter-web</module>
         <module>ziroom-framework-starter-jdbc</module>
         <module>ziroom-framework-starter-zns-discovery</module>
+        <module>ziroom-framework-starter-data-redis</module>
     </modules>
 
 </project>

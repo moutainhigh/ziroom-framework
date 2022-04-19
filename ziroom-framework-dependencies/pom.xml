@@ -47,6 +47,13 @@
         <fastjson.version>1.1.26</fastjson.version>
         <mockito.version>1.10.19</mockito.version>
         <powermock.version>1.7.1</powermock.version>
+        <rocketmq-spring.version>2.0.4</rocketmq-spring.version>
+        <redisson-starter.version>3.16.2</redisson-starter.version>
+        <redisson.version>3.17.0</redisson.version>
+        <hutool.version>5.7.14</hutool.version>
+        <knife4j-starter.version>2.0.2</knife4j-starter.version>
+        <swagger-annotations.version>1.5.22</swagger-annotations.version>
+        <pagehelper.version>5.2.0</pagehelper.version>
     </properties>
 
     <dependencyManagement>
@@ -86,6 +93,12 @@
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-starter-jdbc</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-starter-data-redis</artifactId>
                 <version>${revision}</version>
             </dependency>
 
@@ -287,6 +300,44 @@
                 <version>${powermock.version}</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${rocketmq-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+                <scope>compile</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson-spring-boot-starter</artifactId>
+                <version>${redisson-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>${redisson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
