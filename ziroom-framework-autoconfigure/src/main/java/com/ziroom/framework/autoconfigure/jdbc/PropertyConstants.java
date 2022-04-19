@@ -2,7 +2,7 @@ package com.ziroom.framework.autoconfigure.jdbc;
 
 public interface PropertyConstants {
 
-  String DATA_DRIVER_CLASS_NAME = "driverClassName";
+  String DATA_DRIVER_CLASS_NAME = "driver-class-name";
 
   String DATA_URL = "url";
 

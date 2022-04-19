@@ -1,0 +1,14 @@
+ziroom:
+  datasource:
+    name: merakOmega
+    username: dev_jcpt
+    password: ziroomdb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://10.30.7.135:3306/merak?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8
+    primary: true
+    hikari:
+      minimum-idle: 10
+      idle-timeout: 10
+      maximum-pool-size: 100
+      max-lifetime: 10
