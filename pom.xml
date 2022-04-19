@@ -72,6 +72,7 @@
         <module>ziroom-framework-common</module>
         <module>ziroom-framework-examples</module>
         <module>ziroom-framework-autoconfigure</module>
+        <module>ziroom-framework-module</module>
     </modules>
 
     <dependencyManagement>
