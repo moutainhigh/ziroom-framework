@@ -90,6 +90,12 @@
             </dependency>
 
             <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-starter-zns-discovery</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.ziroom.swagger</groupId>
                 <artifactId>ziroom-swagger-dubbo</artifactId>
                 <version>${revision}</version>
