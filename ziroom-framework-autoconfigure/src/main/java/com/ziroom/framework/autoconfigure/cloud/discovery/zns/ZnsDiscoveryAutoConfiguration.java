@@ -5,14 +5,16 @@ import com.alibaba.cloud.nacos.discovery.NacosDiscoveryAutoConfiguration;
 import com.ziroom.framework.autoconfigure.utils.OmegaEnvLevel;
 import com.ziroom.framework.autoconfigure.utils.OmegaUtils;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @AutoConfigureBefore(value = NacosDiscoveryAutoConfiguration.class)
+@ConditionalOnClass({ NacosDiscoveryAutoConfiguration.class})
 public class ZnsDiscoveryAutoConfiguration implements EnvironmentAware {
 
     public static final String PRODUCTION_ZNS_ENDPOINT = "http://zns.kp.ziroom.com";

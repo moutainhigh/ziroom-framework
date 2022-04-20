@@ -1,5 +1,4 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.ziroom.framework.autoconfigure.jdbc.ZiroomDataSourceAutoConfiguration,\
-com.ziroom.framework.autoconfigure.cloud.discovery.zns.ZnsDiscoveryAutoConfiguration,\
-#com.ziroom.framework.autoconfigure.cloud.discovery.zns.ZiroomRabbitAutoConfiguration
+com.ziroom.framework.autoconfigure.cloud.discovery.zns.ZnsDiscoveryAutoConfiguration
