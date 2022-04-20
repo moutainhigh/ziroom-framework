@@ -21,9 +21,8 @@ import static com.ziroom.framework.autoconfigure.jdbc.PropertyConstants.*;
 
 
 /**
- * @Description
- * @Author lidm
- * @Date 2020/11/4
+ * 自如数据库配置读取
+ * @author zhaoy13,liangrk,kanggh
  */
 public class ZiroomDataSourceProvider{
 

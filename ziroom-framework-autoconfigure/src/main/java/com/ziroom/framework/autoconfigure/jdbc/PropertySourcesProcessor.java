@@ -1,18 +1,5 @@
 /*
- * Copyright 2022 Apollo Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
+ * Copyright ziroom.com.
  */
 package com.ziroom.framework.autoconfigure.jdbc;
 
@@ -55,14 +42,8 @@ import static com.ziroom.framework.autoconfigure.jdbc.PropertyConstants.DATA_TYP
 import static com.ziroom.framework.autoconfigure.jdbc.definition.ZiroomDataSourceProvider.DATASOURCE_PREFIX;
 
 /**
- * Apollo Property Sources processor for Spring Annotation Based Application. <br /> <br />
- * <p>
- * The reason why PropertySourcesProcessor implements {@link BeanFactoryPostProcessor} instead of
- * {@link org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor} is that lower versions of
- * Spring (e.g. 3.1.1) doesn't support registering BeanDefinitionRegistryPostProcessor in ImportBeanDefinitionRegistrar
- * - {@link com.ziroom.framework.autoconfigure.jdbc.OmegaConfigRegistrar}
- *
- * @author Jason Song(song_s@ctrip.com)
+ * 自如数据库自动注册处理
+ * @author zhaoy13,liangrk,kanggh
  */
 public class PropertySourcesProcessor implements EnvironmentAware, ApplicationContextAware, ImportBeanDefinitionRegistrar {
 
