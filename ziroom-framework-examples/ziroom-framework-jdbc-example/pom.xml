@@ -6,7 +6,7 @@
         <groupId>com.ziroom.framework</groupId>
         <artifactId>ziroom-framework-starter-parent</artifactId>
         <version>${revision}</version>
-        <relativePath/>
+        <relativePath>../../ziroom-framework-starters/ziroom-framework-starter-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
