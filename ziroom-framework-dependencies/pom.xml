@@ -73,8 +73,6 @@
         <alibaba-fastjson.version>1.1.26</alibaba-fastjson.version>
         <!-- json -->
         <org.json.version>20180813</org.json.version>
-        <!-- jackson -->
-        <jackson.version>2.9.9</jackson.version>
         <!-- 持久层相关 -->
         <alibaba-druid.version>1.1.22</alibaba-druid.version>
         <mybatis.version>3.4.6</mybatis.version>
