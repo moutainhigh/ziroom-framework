@@ -4,9 +4,9 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.ziroom.framework</groupId>
-        <artifactId>ziroom-framework-starters-parent</artifactId>
+        <artifactId>ziroom-framework-starter-parent</artifactId>
         <version>${revision}</version>
-        <relativePath>../../ziroom-framework-starters/pom.xml</relativePath>
+        <relativePath/>
     </parent>
     <groupId>com.ziroom.framework</groupId>
     <artifactId>ziroom-framework-spring-cloud-example</artifactId>

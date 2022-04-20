@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.ziroom.framework</groupId>
-        <artifactId>ziroom-framework-starters-parent</artifactId>
+        <artifactId>ziroom-framework-starter-parent</artifactId>
         <version>${revision}</version>
-        <relativePath>../../ziroom-framework-starters/pom.xml</relativePath>
+        <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
