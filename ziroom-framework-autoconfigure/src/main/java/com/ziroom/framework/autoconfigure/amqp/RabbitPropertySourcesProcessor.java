@@ -1,28 +1,23 @@
 /*
  * Copyright ziroom.com.
  */
-package com.ziroom.framework.autoconfigure.jdbc;
+package com.ziroom.framework.autoconfigure.amqp;
 
 import com.zaxxer.hikari.HikariDataSource;
 import com.ziroom.framework.autoconfigure.common.CommonMixUtils;
-import com.ziroom.framework.autoconfigure.jdbc.definition.ZiroomDataSourceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionValidationException;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.boot.context.properties.bind.PropertySourcesPlaceholdersResolver;
-import org.springframework.boot.context.properties.source.ConfigurationPropertyNameAliases;
 import org.springframework.boot.context.properties.source.ConfigurationPropertySources;
 import org.springframework.boot.origin.OriginTrackedValue;
 import org.springframework.context.ApplicationContext;
@@ -36,67 +31,62 @@ import org.springframework.core.env.PropertySource;
 import org.springframework.core.type.AnnotationMetadata;
 
 import javax.sql.DataSource;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
-import static com.ziroom.framework.autoconfigure.jdbc.PropertyConstants.DATA_TYPE;
-import static com.ziroom.framework.autoconfigure.jdbc.definition.ZiroomDataSourceProvider.DATASOURCE_PREFIX;
+import static com.ziroom.framework.autoconfigure.amqp.ZiroomRabbitProvider.RABBIT_PREFIX;
 
 /**
- * 自如数据库自动注册处理
+ * 自如rabbitmq自动注册处理
  * @author zhaoy13,liangrk,kanggh
  */
-public class PropertySourcesProcessor implements EnvironmentAware, ApplicationContextAware, ImportBeanDefinitionRegistrar {
+public class RabbitPropertySourcesProcessor implements EnvironmentAware, ApplicationContextAware, ImportBeanDefinitionRegistrar {
 
 
-    private static final Logger log = LoggerFactory.getLogger(PropertySourcesProcessor.class);
-
-    private final static ConfigurationPropertyNameAliases aliases = new ConfigurationPropertyNameAliases();
+    private static final Logger log = LoggerFactory.getLogger(RabbitPropertySourcesProcessor.class);
 
     private ConfigurableEnvironment environment;
-    private ZiroomDataSourceProvider ziroomDataSourceProvider;
+    private ZiroomRabbitProvider ziroomRabbitProvider;
     private BeanDefinitionRegistry beanDefinitionRegistry;
-    private static final String SPRING_JDBC_PREFIX = "spring.datasource.";
+    private static final String SPRING_RABBITMQ_PREFIX = "spring.rabbitmq.";
     private ApplicationContext applicationContext;
-
-    static {
-//        aliases.addAliases("driver-class-name", new String[]{"driverClassName"});
-    }
 
     @Override
     public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
-        this.ziroomDataSourceProvider = new ZiroomDataSourceProvider();
+        this.ziroomRabbitProvider = new ZiroomRabbitProvider();
         this.beanDefinitionRegistry = registry;
-        ziroomDataSourceProvider.initialize();
+        ziroomRabbitProvider.initialize();
         initializePropertySources();
     }
 
     private void initializePropertySources() {
-//        boolean applicationDataSourceFlag = beanFactory.containsBeanDefinition(ExplicitUrl.class.getName());
 
-        Set<Map.Entry<String, PropertySource<?>>> entries = ziroomDataSourceProvider.getZiroomDataSourceMap().entrySet();
+        Set<Map.Entry<String, PropertySource<?>>> entries = ziroomRabbitProvider.getZiroomRabbitMap().entrySet();
         for (Map.Entry<String, PropertySource<?>> entry : entries) {
 
-            if (ziroomDataSourceProvider.getZiroomDataSourceMap().size() == 1) {
+            if (ziroomRabbitProvider.getZiroomRabbitMap().size() == 1) {
                 Properties properties = new Properties();
                 Map<String, OriginTrackedValue> map = (Map<String, OriginTrackedValue>)entry.getValue().getSource();
-                map.forEach((key, value) -> properties.put(key.replace(DATASOURCE_PREFIX,SPRING_JDBC_PREFIX), value.getValue()));
+                map.forEach((key, value) -> properties.put(key.replace(RABBIT_PREFIX,SPRING_RABBITMQ_PREFIX), value.getValue()));
                 environment.getPropertySources().addFirst(new PropertiesPropertySource(entry.getKey(),properties));
             } else {
-
-                Binder binder = new Binder(ConfigurationPropertySources.from(entry.getValue()),
-                        new PropertySourcesPlaceholdersResolver(environment));
-                String type =  binder.bind(DATASOURCE_PREFIX + DATA_TYPE, Bindable.of(String.class)).get();
-                try {
-                    Class.forName(type);
-                } catch (ClassNotFoundException e) {
-                    type = "com.zaxxer.hikari.HikariDataSource";
-                    try {
-                        Class.forName(type);
-                    } catch (ClassNotFoundException ex) {
-                        throw new BeanDefinitionValidationException("DataSource type not found");
-                    }
-                }
-                BeanDefinitionBuilder dataSourceBuilder = BeanDefinitionBuilder.genericBeanDefinition(ZiroomDataSourceFactoryBean.class);
+//
+//                Binder binder = new Binder(ConfigurationPropertySources.from(entry.getValue()),
+//                        new PropertySourcesPlaceholdersResolver(environment));
+//                String type =  binder.bind(DATASOURCE_PREFIX + DATA_TYPE, Bindable.of(String.class)).get();
+//                try {
+//                    Class.forName(type);
+//                } catch (ClassNotFoundException e) {
+//                    type = "com.zaxxer.hikari.HikariDataSource";
+//                    try {
+//                        Class.forName(type);
+//                    } catch (ClassNotFoundException ex) {
+//                        throw new BeanDefinitionValidationException("DataSource type not found");
+//                    }
+//                }
+                BeanDefinitionBuilder dataSourceBuilder = BeanDefinitionBuilder.genericBeanDefinition(ZiroomRabbitFactoryBean.class);
                 dataSourceBuilder.addPropertyValue("propertySources", entry.getValue());
                 dataSourceBuilder.setScope(BeanDefinition.SCOPE_SINGLETON);
                 dataSourceBuilder.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_BY_NAME);
@@ -106,7 +96,7 @@ public class PropertySourcesProcessor implements EnvironmentAware, ApplicationCo
         }
     }
 
-    public static class ZiroomDataSourceFactoryBean implements FactoryBean<DataSource>, InitializingBean {
+    public static class ZiroomRabbitFactoryBean implements FactoryBean<DataSource>, InitializingBean {
 
         DataSourceProperties dataSourceProperties;
 
@@ -116,7 +106,7 @@ public class PropertySourcesProcessor implements EnvironmentAware, ApplicationCo
             this.propertySources = propertySources;
         }
 
-        ZiroomDataSourceFactoryBean() {}
+        ZiroomRabbitFactoryBean() {}
 
         @Override
         public DataSource getObject() throws Exception {
@@ -124,8 +114,8 @@ public class PropertySourcesProcessor implements EnvironmentAware, ApplicationCo
             Bindable<DataSource> target = Bindable.ofInstance(dataSource);
             Binder binder = new Binder(ConfigurationPropertySources.from(propertySources),
                     new PropertySourcesPlaceholdersResolver(Arrays.asList(propertySources)));
-            String type = binder.bind(DATASOURCE_PREFIX + DATA_TYPE, Bindable.of(String.class)).get();
-            binder.bind("ziroom.datasource."+ getDataSourcePrefix(type), target);
+            String type =  "";//binder.bind(DATASOURCE_PREFIX + DATA_TYPE, Bindable.of(String.class)).get();
+            binder.bind("ziroom.rabbitmq."+ getDataSourcePrefix(type), target);
             return  dataSource;
         }
 
@@ -140,14 +130,7 @@ public class PropertySourcesProcessor implements EnvironmentAware, ApplicationCo
             Bindable<DataSourceProperties> target = Bindable.ofInstance(dataSourceProperties);
             Binder binder = new Binder(ConfigurationPropertySources.from(propertySources),
                     new PropertySourcesPlaceholdersResolver(Arrays.asList(propertySources)));
-            binder.bind("ziroom.datasource", target);
-            //设置默认值
-            if (Objects.isNull(dataSourceProperties.getType())){
-                dataSourceProperties.setType(com.zaxxer.hikari.HikariDataSource.class);
-            }
-            if (CommonMixUtils.isBlank(dataSourceProperties.getDriverClassName())){
-                dataSourceProperties.setDriverClassName("com.mysql.cj.jdbc.Driver");
-            }
+            binder.bind("ziroom.rabbitmq", target);
         }
     }
 

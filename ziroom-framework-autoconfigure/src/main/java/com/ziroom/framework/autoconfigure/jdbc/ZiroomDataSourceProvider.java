@@ -1,4 +1,4 @@
-package com.ziroom.framework.autoconfigure.jdbc.definition;
+package com.ziroom.framework.autoconfigure.jdbc;
 
 import com.ziroom.framework.autoconfigure.common.CommonMixUtils;
 import org.slf4j.Logger;
@@ -24,7 +24,7 @@ import static com.ziroom.framework.autoconfigure.jdbc.PropertyConstants.*;
  * 自如数据库配置读取
  * @author zhaoy13,liangrk,kanggh
  */
-public class ZiroomDataSourceProvider{
+public class ZiroomDataSourceProvider {
 
     private static final Logger log = LoggerFactory.getLogger(ZiroomDataSourceProvider.class);
 
@@ -34,9 +34,9 @@ public class ZiroomDataSourceProvider{
 
     private static final String DATASOURCE_SUFFIX_YML = "yml";
 
-    private Map<String, PropertySource<?>> ziRoomDataSourceMap = new HashMap<>();
+    private Map<String, PropertySource<?>> ziroomDataSourceMap = new HashMap<>();
 
-    public void initialize() {
+    protected void initialize() {
         try {
             // todo 支持yaml格式， 该模块单独抽离开， 设计成通用模块
             Resource[] resources = new PathMatchingResourcePatternResolver().getResources("classpath:datasource-*");
@@ -74,7 +74,7 @@ public class ZiroomDataSourceProvider{
                 }
                 String name = binder.bind(DATASOURCE_PREFIX + DATA_NAME, Bindable.of(String.class)).get();
                 log.info("注册数据源[{}][{}]. 加载自: {}", userName, url, resource.getFilename());
-                this.ziRoomDataSourceMap.put(name, ziroomPropertySource);
+                this.ziroomDataSourceMap.put(name, ziroomPropertySource);
             }
         } catch (Throwable ex) {
             log.error("Initialize DefaultApplicationProvider failed.", ex);
@@ -82,7 +82,7 @@ public class ZiroomDataSourceProvider{
     }
 
     public Map<String, PropertySource<?>> getZiroomDataSourceMap() {
-        return this.ziRoomDataSourceMap;
+        return this.ziroomDataSourceMap;
     }
 
     public static void main(String[] args) {
