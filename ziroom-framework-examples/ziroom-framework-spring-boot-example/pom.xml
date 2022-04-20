@@ -11,10 +11,6 @@
     <artifactId>ziroom-framework-spring-boot-example</artifactId>
     <name>ziroom-framework-spring-boot-example</name>
 
-    <properties>
-        <gelflog.version>2.0.8</gelflog.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -49,14 +45,12 @@
         <dependency>
             <groupId>com.ziroom.gelflog.spring</groupId>
             <artifactId>gelflog-spring</artifactId>
-            <version>${gelflog.version}</version>
         </dependency>
 
         <!-- 第三方 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
 

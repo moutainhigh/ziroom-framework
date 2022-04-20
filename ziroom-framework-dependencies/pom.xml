@@ -26,7 +26,6 @@
         <revision>1.0.0-SNAPSHOT</revision>
         <gamma.version>0.0.5-SNAPSHOT</gamma.version>
         <sia.version>1.1.0-RELEASE</sia.version>
-        <gelflog.version>1.0.5</gelflog.version>
         <!-- Apollo -->
         <ziroom.apollo.version>1.2.3-RC3</ziroom.apollo.version>
         <!-- gelf-log -->
@@ -45,7 +44,6 @@
         <hikaricp.version>3.2.0</hikaricp.version>
         <junit-jupiter.version>5.3.2</junit-jupiter.version>
         <guava.version>20.0</guava.version>
-        <apollo-client.version>1.2.3-RC4</apollo-client.version>
         <mybatis-plus.version>3.4.1</mybatis-plus.version>
         <springfox-swagger.version>2.9.2</springfox-swagger.version>
         <apache-common.verson>2.6</apache-common.verson>
@@ -171,13 +169,6 @@
                 <version>${revision}</version>
             </dependency>
 
-            <!-- config center -->
-            <dependency>
-                <groupId>com.ziroom.framework.apollo</groupId>
-                <artifactId>apollo-client</artifactId>
-                <version>${apollo-client.version}</version>
-            </dependency>
-
             <!--gamma-rpc-->
             <dependency>
                 <groupId>com.ziroom.tech</groupId>
@@ -188,11 +179,6 @@
                 <groupId>com.ziroom.tech.sia</groupId>
                 <artifactId>sia-task-hunter</artifactId>
                 <version>${sia.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.ziroom.gelflog.spring</groupId>
-                <artifactId>gelflog-spring</artifactId>
-                <version>${gelflog.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.ziroom.framework.apollo</groupId>
