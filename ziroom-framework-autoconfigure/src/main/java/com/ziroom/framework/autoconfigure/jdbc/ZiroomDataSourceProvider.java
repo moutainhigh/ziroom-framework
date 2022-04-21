@@ -1,18 +1,15 @@
 package com.ziroom.framework.autoconfigure.jdbc;
 
-import com.ziroom.framework.autoconfigure.common.CommonMixUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.context.properties.bind.Bindable;
-import org.springframework.boot.context.properties.bind.Binder;
-import org.springframework.boot.context.properties.bind.PropertySourcesPlaceholdersResolver;
-import org.springframework.boot.context.properties.source.ConfigurationPropertySources;
+import org.springframework.boot.env.OriginTrackedMapPropertySource;
 import org.springframework.boot.env.YamlPropertySourceLoader;
 import org.springframework.core.env.PropertySource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.util.StringUtils;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,30 +48,39 @@ public class ZiroomDataSourceProvider {
                     continue;
                 }
                 PropertySource<?> ziroomPropertySource = ziroomPropertySources.get(0);
-                Binder binder = new Binder(ConfigurationPropertySources.from(ziroomPropertySources),
-						new PropertySourcesPlaceholdersResolver(ziroomPropertySources));
+                Map<String, Object> mapPropertySource = (Map<String, Object>)ziroomPropertySource.getSource();
 
-                String userName = binder.bind(DATASOURCE_PREFIX + DATA_USERNAME, Bindable.of(String.class)).get();
-                if (CommonMixUtils.isBlank(userName)) {
+                Object userName = mapPropertySource.get(DATASOURCE_PREFIX + DATA_USERNAME);
+                if (StringUtils.isEmpty(userName)) {
                     log.warn("无效数据库配置[datasource.username 为空]，请检查配置文件：" + resource.getFilename());
                     continue;
                 }
-                String url = binder.bind(DATASOURCE_PREFIX + DATA_URL, Bindable.of(String.class)).get();
-                if (CommonMixUtils.isBlank(url)) {
+                Object url = mapPropertySource.get(DATASOURCE_PREFIX + DATA_URL);
+                if (StringUtils.isEmpty(url)) {
                     log.warn("无效数据库配置[datasource.url 为空]，请检查配置文件：" + resource.getFilename());
                     continue;
                 }
-                String driverClassName = binder.bind(DATASOURCE_PREFIX + DATA_DRIVER_CLASS_NAME, Bindable.of(String.class)).get();
+                Object name = mapPropertySource.get(DATASOURCE_PREFIX + DATA_NAME);
+                String sourceName = String.valueOf(name);
+                if (StringUtils.isEmpty(name)) {
+                    String fileName = resource.getFilename();
+                    String dataName = fileName.substring(fileName.indexOf("datasource-")+"datasource-".length(),fileName.lastIndexOf("."));
+                    if (StringUtils.isEmpty(dataName)) {
+                        log.warn("无效数据库配置[datasource.name 为空]，请检查配置文件：" + resource.getFilename());
+                        continue;
+                    }
+                    sourceName = dataName;
+                }
+                Object driverClassName = mapPropertySource.get(DATASOURCE_PREFIX + DATA_DRIVER_CLASS_NAME);
                 if (StringUtils.isEmpty(driverClassName)) {
                     log.info("注册数据源[{}]. 加载自: {} driver-class-name设置为空,使用默认值：com.mysql.cj.jdbc.Driver", userName, resource.getFilename());
                 }
-                String type = binder.bind(DATASOURCE_PREFIX + DATA_TYPE, Bindable.of(String.class)).get();
+                Object type = mapPropertySource.get(DATASOURCE_PREFIX + DATA_TYPE);
                 if (StringUtils.isEmpty(type)) {
                     log.info("注册数据源[{}]. 加载自: {} type设置为空,使用默认值：com.zaxxer.hikari.HikariDataSource", userName, resource.getFilename());
                 }
-                String name = binder.bind(DATASOURCE_PREFIX + DATA_NAME, Bindable.of(String.class)).get();
                 log.info("注册数据源[{}][{}]. 加载自: {}", userName, url, resource.getFilename());
-                this.ziroomDataSourceMap.put(name, ziroomPropertySource);
+                this.ziroomDataSourceMap.put(sourceName, ziroomPropertySource);
             }
         } catch (Throwable ex) {
             log.error("Initialize DefaultApplicationProvider failed.", ex);

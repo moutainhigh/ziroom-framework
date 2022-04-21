@@ -79,10 +79,8 @@ public class DataSourcePropertySourcesProcessor implements EnvironmentAware, App
                 map.forEach((key, value) -> properties.put(key.replace(DATASOURCE_PREFIX,SPRING_JDBC_PREFIX), value.getValue()));
                 environment.getPropertySources().addFirst(new PropertiesPropertySource(entry.getKey(),properties));
             } else {
-
-                Binder binder = new Binder(ConfigurationPropertySources.from(entry.getValue()),
-                        new PropertySourcesPlaceholdersResolver(environment));
-                String type =  binder.bind(DATASOURCE_PREFIX + DATA_TYPE, Bindable.of(String.class)).get();
+                Map<String, Object> mapPropertySource = (Map<String, Object>)entry.getValue().getSource();
+                String type =  String.valueOf(mapPropertySource.get(DATASOURCE_PREFIX + DATA_TYPE));
                 try {
                     Class.forName(type);
                 } catch (ClassNotFoundException e) {
@@ -121,7 +119,8 @@ public class DataSourcePropertySourcesProcessor implements EnvironmentAware, App
             Bindable<DataSource> target = Bindable.ofInstance(dataSource);
             Binder binder = new Binder(ConfigurationPropertySources.from(propertySources),
                     new PropertySourcesPlaceholdersResolver(Arrays.asList(propertySources)));
-            String type = binder.bind(DATASOURCE_PREFIX + DATA_TYPE, Bindable.of(String.class)).get();
+            Map<String, Object> mapPropertySource = (Map<String, Object>)propertySources.getSource();
+            String type =  String.valueOf(mapPropertySource.get(DATASOURCE_PREFIX + DATA_TYPE));
             binder.bind("ziroom.datasource."+ getDataSourcePrefix(type), target);
             return  dataSource;
         }

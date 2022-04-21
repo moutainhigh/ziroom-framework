@@ -1,4 +1,6 @@
-prefix: jdbc
-properties:
-  name: db2
-  url: jdbc:h2:mem:db2
+ziroom:
+  datasource:
+    username: db2
+    url: jdbc:h2:mem:db2
+    hikari:
+      connectionTimeout: 1000000
