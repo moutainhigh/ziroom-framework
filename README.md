@@ -87,6 +87,4 @@
 3. develop 和 master为保护分支，push代码需要request merge，审批人赵耀、张宗启、梁仁凯
 4. 验证通过后，推release包到maven仓库。
 
-develop 和 master均为保护分支， push代码，在gitlab上提交request merge。
-审批人： 赵耀，张宗启，梁仁凯
-
+push代码需要至少2名成员code review
