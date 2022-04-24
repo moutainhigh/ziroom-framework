@@ -84,7 +84,7 @@
 ## 提交代码规范
 1. 该项目需要编写单元测试，通过关联模块的单元测试，才可提交代码。
 2. 功能复杂的模块，请添加readme.md文件
-3. develop 和 master为保护分支，push代码需要request merge，审批人赵耀、张宗启、梁仁凯
+3. 为保证质量，push代码需要至少2名成员code review。
 4. 验证通过后，推release包到maven仓库。
 
 push代码需要至少2名成员code review
