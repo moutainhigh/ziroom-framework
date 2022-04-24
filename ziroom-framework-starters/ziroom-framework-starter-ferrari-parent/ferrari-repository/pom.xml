@@ -4,29 +4,25 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.ziroom.framework</groupId>
-        <artifactId>ziroom-framework-starter-ferrari</artifactId>
-        <version>${revision}</version>
+        <artifactId>ziroom-framework-starter-ferrari-parent</artifactId>
+        <!--        <version>${revision}</version>-->
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
-        <module>ferrari-rabbit-producer</module>
-        <module>ferrari-rabbit-consumer</module>
+        <module>ferrari-repository-producer</module>
+        <module>ferrari-repository-consumer</module>
+        <module>ferrari-repository-common</module>
+        <module>ferrari-repository-core</module>
     </modules>
-    <artifactId>ferrari-rabbit</artifactId>
 
+    <artifactId>ferrari-repository</artifactId>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.amqp</groupId>
-                <artifactId>spring-rabbit</artifactId>
-                <version>${spring-rabbit.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
+
 </project>

@@ -3,13 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>ferrari-rabbit</artifactId>
-        <groupId>com.ziroom.ferrari</groupId>
-        <version>${revision}</version>
+        <artifactId>ziroom-framework-starter-ferrari-rabbit</artifactId>
+        <groupId>com.ziroom.framework</groupId>
+        <!--        <version>${revision}</version>-->
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ferrari-rabbit-consumer</artifactId>
+    <artifactId>ziroom-framework-starter-ferrari-rabbit-consumer</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -23,7 +25,8 @@
         </dependency>
         <dependency>
             <artifactId>ferrari-repository-consumer</artifactId>
-            <groupId>com.ziroom.ferrari</groupId>
+            <groupId>com.ziroom.framework</groupId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
