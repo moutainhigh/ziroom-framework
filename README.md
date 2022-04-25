@@ -78,21 +78,36 @@ http://start.kt.ziroom.com/
 </build>
 ```
 
+## 开发指南
+### 项目结构
+```
+.
+├── ziroom-framework-autoconfigure: 自动配置包，如jdbc，redis，mq等自动配置的逻辑
+├── ziroom-framework-common: 一些通用的类， 如utils，接口vo，dto等等
+├── ziroom-framework-dependencies: 全局依赖版本管理，包含了本项目的版本管理。以及依赖第三方的版本
+├── ziroom-framework-examples：starter的示例代码
+├── ziroom-framework-staters：用户依赖的starter
+└── ziroom-framework-modules: 需要独立开发， 且相对复杂的模块
+```
 
+### 如何贡献代码
 
-## 项目结构
-1. ziroom-framework-autoconfigure: 自动配置包，如jdbc，redis，mq等自动配置的逻辑
-2. ziroom-framework-common: 一些通用的类， 如utils，接口vo，dto等等
-3. ziroom-ziroom-framework-dependencies: 全局依赖版本管理，包含了本项目的版本管理。以及依赖第三方的版本管理。
-   1. 通过springboot-dependencies管理常用包版本， 
-   2. springboot-dependencies未管理到的，单独添加。
-4. ziroom-framework-examples：starter的示例代码
-5. ziroom-framework-staters：用户依赖的starter
-6. ziroom-framework-modules: 需要独立开发， 且相对复杂的模块
+#### 分支模型
+采用[主干开发模型](https://trunkbaseddevelopment.com/)，可发布的代码应直接提交进入主干。
 
-## 提交代码规范
-1. 该项目需要编写单元测试，通过关联模块的单元测试，才可提交代码。
-2. 功能复杂的模块，请添加readme.md文件
-3. 为保证质量，push代码需要至少2名成员code review。
-4. 验证通过后，推release包到maven仓库。
+#### 如何保证主干代码质量
+项目维护者通常不应当直接向[主仓库](https://gitlab.ziroom.com/ziroom/framework/ziroom-framework) 提交代码，而应当通过主项目派生出个人项目（例如 [zhaoy13/ziroom-framework](https://gitlab.ziroom.com/zhaoy13/ziroom-framework)），并在个人项目中进行开发。代码开发完成后，通过 MergeRequest 申请合并到主仓库的 master 分支。
 
+#### Review 流程
+1. CI: 发起 MR 后会触发自动化 CI，等待 CI 运行完成，如有严重问题，请提交人先进行修改，直至满足代码检查要求。
+1. Review：在发起 MR 后，需通过 1-2 位 Reviewer （当前主仓库 Maintainer 权限人） 审核，完成所有修改建议。
+2. Merge：审核通过后，由 Repo Master（当前轮值人：@zhaoy13 @zhangzq8 @liangrk）负责合并到主干。
+
+#### 版本发布
+TODO
+
+#### 代码规范
+代码提交前应满足:
+- [] 通过所有 checkstyle 风格检查
+- [] 接入 SonarQube 扫描，没有 Blocker 级别的 issue
+- [] TODO 单元测试规范
