@@ -12,7 +12,7 @@
     </appender>
 
     <!-- 按照每天生成日志文件 -->
-    <appender name="allAppender"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="allAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>${log.base}/all_data.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--日志文件输出的文件名-->
@@ -45,10 +45,10 @@
     </appender>
 
     <root level="INFO">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="allAppender" />
-        <appender-ref ref="errorAppender" />
-       <!-- <appender-ref ref="gelfFile"/>-->
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="allAppender"/>
+        <appender-ref ref="errorAppender"/>
+        <!-- <appender-ref ref="gelfFile"/>-->
     </root>
 
 </configuration>

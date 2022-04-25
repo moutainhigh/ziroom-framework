@@ -21,7 +21,7 @@
 |Spring5.x|V5-1.2.RELEASE|5.2.15.RELEASE|
 
 ## 1.2 新建表
-    
+
     CREATE TABLE `ferrari_lock` (
         `id` bigint(20) NOT NULL AUTO_INCREMENT,
         `unique_key` varchar(32) NOT NULL COMMENT '唯一键',
@@ -72,6 +72,7 @@
 #### a. 引入Ferrari配置
 
     @Import(FerrariConf.class)
+
 [引入Ferrari配置示例](https://gitlab.ziroom.com/rent-back/Ferrari/blob/master-4.0/ferrari-test/src/main/java/com/ziroom/ferrari/test/FerrariTestServer.java)
 
 #### b. 配置数据源
@@ -103,10 +104,13 @@
         }
 
 ### 1.3.2 SpringMvc
+
 ## 1.4 其他
+
     注意事项:
     使用MessagePostProcessor发送消息只会持久化,发送失败不会重试发送！不会重试发送！不会重试发送！
     目前Ferrari 支持发送消息最大长度为4096个字符
+
 # 2. 设计文档:
 
     http://wiki.ziroom.com/pages/viewpage.action?pageId=661762955

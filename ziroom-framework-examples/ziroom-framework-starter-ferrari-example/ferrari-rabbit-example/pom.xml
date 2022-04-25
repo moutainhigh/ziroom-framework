@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>com.ziroom.framework</groupId>
-        <artifactId>ziroom-framework-starter-ferrari-rabbit-example</artifactId>
+        <artifactId>ziroom-framework-starter-parent</artifactId>
         <version>${revision}</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../../ziroom-framework-starters/ziroom-framework-starter-parent/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -20,20 +20,34 @@
         </dependency>
 
         <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-framework-starter-ferrari-rabbit-producer</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-framework-starter-ferrari-rabbit-consumer</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-            <version>2.5.2</version>
+            <artifactId>spring-boot</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-            <version>2.1.8.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -45,38 +59,37 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.20</version>
         </dependency>
+
+        <!-- ziroom -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.5.2</version>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-framework-starter-exception</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-framework-starter-http</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-framework-starter-swagger</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-            <version>2.5.2</version>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-framework-starter-dubbo</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.ziroom.gelflog.spring</groupId>
+            <artifactId>gelflog-spring</artifactId>
+        </dependency>
+
+        <!-- 第三方 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
             <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-            <version>2.6.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ziroom.framework</groupId>
-            <artifactId>ziroom-framework-starter-ferrari-rabbit-producer</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.ziroom.framework</groupId>
-            <artifactId>ziroom-framework-starter-ferrari-rabbit-consumer</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>5.3.4</version>
         </dependency>
 
     </dependencies>
