@@ -100,8 +100,8 @@ http://start.kt.ziroom.com/
 
 #### Review 流程
 1. CI: 发起 MR 后会触发自动化 CI，等待 CI 运行完成，如有严重问题，请提交人先进行修改，直至满足代码检查要求。
-1. Review：在发起 MR 后，需通过 1-2 位 Reviewer （当前主仓库 Maintainer 权限人） 审核，完成所有修改建议。
-2. Merge：审核通过后，由 Repo Master（当前轮值人：@zhaoy13 @zhangzq8 @liangrk）负责合并到主干。
+2. Review：在发起 MR 后，需通过 1-2 位 Reviewer 审核，完成所有修改建议。
+3. Merge：审核通过后，由 Repo Master（当前轮值人：@zhaoy13 @zhangzq8 @liangrk）负责合并到主干。
 
 #### 版本发布
 TODO
