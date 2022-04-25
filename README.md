@@ -4,70 +4,79 @@
 自如基础组件，提供了常用工具类，常用框架，并且打通的自如内部系统。
 
 ## quick start
+
 两种集成方式 
-### 1. 继承ziroom-framework-staters-parent
-该方式可获取对dependencies和plugin版本的管理
+
+### 方式1
+该方式可对常见的***dependencies***和***plugin***进行版本的管理
+
+
+步骤 1) 继承ziroom-framework-staters-parent
 ```xml
     <parent>
         <artifactId>ziroom-framework-starter-parent</artifactId>
         <groupId>com.ziroom.framework</groupId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 ```
-引入依赖与build插件
+步骤2）引入ziroom-framework-starter-web依赖
 ```xml
-<project>
     <dependencies>
       <dependency>
         <groupId>com.ziroom.framework</groupId>
         <artifactId>ziroom-framework-starter-web</artifactId>
       </dependency>
     </dependencies>
-    <build>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <configuration>
-            <skip>true</skip>
-          </configuration>
-        </plugin>
-      </plugins>
-    </build>
-</project>
 ```
-通过脚手架可以直接构建。
-
-### 2. 依赖ziroom-framework-dependencies 
-引入依赖与build插件  
+步骤3）引入build插件
 ```xml
-<project>
-    <dependencies>
-      <dependency>
-        <groupId>com.ziroom.framework</groupId>
-        <artifactId>ziroom-framework-starter-web</artifactId>
-      </dependency>
+  <build>
+   <plugins>
+      <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-deploy-plugin</artifactId>
+      </plugin>
+   </plugins>
+</build>
+```
+后续可通过脚手架可以直接构建。
+http://start.kt.ziroom.com/
+
+### 方式2 
+该方式可对常见的***dependencies***进行版本的管理。与方式1的区别是，未对plugin的版本进行管理
+
+步骤 1） 依赖ziroom-framework-dependencies
+```xml
+    <dependencyManagement>
       <dependency>
         <groupId>com.ziroom.framework</groupId>
         <artifactId>ziroom-framework-dependencies</artifactId>
         <version>1.0.0-SNAPSHOT</version>
       </dependency>
+    </dependencyManagement>
+```
+步骤2）引入ziroom-framework-starter-web依赖
+```xml
+    <dependencies>
+      <dependency>
+        <groupId>com.ziroom.framework</groupId>
+        <artifactId>ziroom-framework-starter-web</artifactId>
+      </dependency>
     </dependencies>
-    <build>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <configuration>
-            <skip>true</skip>
-          </configuration>
-        </plugin>
-      </plugins>
-    </build>
-</project>
 ```
 
+步骤3）引入build插件（包含版本号）
+```xml
+  <build>
+   <plugins>
+      <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-deploy-plugin</artifactId>
+         <version>2.3.2.RELEASE</version>
+      </plugin>
+   </plugins>
+</build>
+```
 
 
 
@@ -87,4 +96,3 @@
 3. 为保证质量，push代码需要至少2名成员code review。
 4. 验证通过后，推release包到maven仓库。
 
-push代码需要至少2名成员code review
