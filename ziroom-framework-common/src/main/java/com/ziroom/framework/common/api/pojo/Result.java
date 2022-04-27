@@ -10,6 +10,13 @@ public class Result<T> {
     private Result() {
     }
 
+    public Result(boolean isSuccess, Integer code, String message, T data) {
+        this.isSuccess = isSuccess;
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+
     public boolean isSuccess() {
         return this.isSuccess;
     }

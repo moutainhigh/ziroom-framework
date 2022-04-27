@@ -26,6 +26,10 @@
             <artifactId>ziroom-framework-autoconfigure</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ziroom-framework-common</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-annotations</artifactId>
             <scope>compile</scope>
