@@ -5,13 +5,12 @@ import com.ziroom.framework.common.exception.IllegalAccessRuntimeException;
 import com.ziroom.framework.common.exception.InstantiationRuntimeException;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import org.springframework.beans.BeanUtils;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import lombok.Data;
+import java.io.Serializable;
 import java.util.List;
+import org.springframework.beans.BeanUtils;
 
 /**
  * 通用分页查询响应实体
@@ -36,7 +35,8 @@ public class PageResponse<T> implements Serializable {
     private Integer pages;
 
     /**
-     * 封装通用分页响应
+     * 目前只支持PageHelper
+     *
      * @param list 分页数据
      * @return 封装后数据
      */
@@ -50,6 +50,8 @@ public class PageResponse<T> implements Serializable {
     }
 
     /**
+     * 目前只支持PageHelper
+     *
      * 通用分页响应，转换为目标类
      * @param list 待转换的数据
      * @param targetType 目标类
