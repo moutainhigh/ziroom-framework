@@ -175,6 +175,16 @@
                 <artifactId>ziroom-framework-starter-parent</artifactId>
                 <version>${revision}</version>
             </dependency>
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-module-distributedlock</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-module-executemanager</artifactId>
+                <version>${revision}</version>
+            </dependency>
             <!--gamma-rpc-->
             <dependency>
                 <groupId>com.ziroom.tech</groupId>
