@@ -86,6 +86,7 @@
         <!-- old ES 兼容 数据中心2.0 ES 版本-->
         <io.searchbox.jest.version>2.4.0</io.searchbox.jest.version>
         <org.elasticsearch.elasticsearch.version>2.0.1</org.elasticsearch.elasticsearch.version>
+
     </properties>
 
     <dependencyManagement>
@@ -482,6 +483,11 @@
                 </exclusions>
             </dependency>
             <!-- end of old es -->
+            <dependency>
+                <groupId>com.googlecode.libphonenumber</groupId>
+                <artifactId>libphonenumber</artifactId>
+                <version>${com.googlecode.libphonenumber.libphonenumber}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
