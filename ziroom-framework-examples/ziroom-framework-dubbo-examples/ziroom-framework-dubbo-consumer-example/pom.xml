@@ -60,7 +60,6 @@
             <artifactId>dubbo-dependencies-bom</artifactId>
             <version>${dubbo.version}</version>
             <type>pom</type>
-            <scope>import</scope>
             <exclusions>
                 <exclusion>
                     <groupId>com.google.guava</groupId>
