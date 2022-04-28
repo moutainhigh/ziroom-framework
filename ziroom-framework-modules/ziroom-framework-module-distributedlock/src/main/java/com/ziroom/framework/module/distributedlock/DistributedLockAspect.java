@@ -1,4 +1,4 @@
-package com.ziroom.framework.modules.distributedlock;
+package com.ziroom.framework.module.distributedlock;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ArrayUtil;
@@ -28,7 +28,7 @@ public class DistributedLockAspect {
     @Resource
     private Redisson redisson;
 
-    @Pointcut("@annotation(com.ziroom.framework.modules.distributedlock.DistributedLock)")
+    @Pointcut("@annotation(com.ziroom.framework.module.distributedlock.DistributedLock)")
     public void pointCut() {
 
     }

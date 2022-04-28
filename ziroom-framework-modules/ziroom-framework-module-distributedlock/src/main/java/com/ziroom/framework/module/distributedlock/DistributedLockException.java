@@ -1,4 +1,4 @@
-package com.ziroom.framework.modules.distributedlock;
+package com.ziroom.framework.module.distributedlock;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

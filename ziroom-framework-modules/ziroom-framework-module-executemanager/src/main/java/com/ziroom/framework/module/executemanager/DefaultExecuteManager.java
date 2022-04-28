@@ -1,4 +1,4 @@
-package com.ziroom.framework.modules.executemanager;
+package com.ziroom.framework.module.executemanager;
 
 import cn.hutool.core.lang.Assert;
 import org.springframework.scheduling.annotation.Async;

@@ -1,5 +1,5 @@
 
-package com.ziroom.framework.modules.distributedlock;
+package com.ziroom.framework.module.distributedlock;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
