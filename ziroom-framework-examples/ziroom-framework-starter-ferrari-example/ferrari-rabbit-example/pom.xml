@@ -20,19 +20,68 @@
         </dependency>
 
         <dependency>
-            <groupId>com.ziroom.framework</groupId>
-            <artifactId>ziroom-framework-starter-ferrari-rabbit-producer</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-spring-boot-starter</artifactId>
+            <version>2.0.2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-databind</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
+
         </dependency>
+
         <dependency>
-            <groupId>com.ziroom.framework</groupId>
-            <artifactId>ziroom-framework-starter-ferrari-rabbit-consumer</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot</artifactId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>1.9.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.0</version>
+
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>2.1.8.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>6.0.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.20</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -45,50 +94,44 @@
         </dependency>
 
         <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>6.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.20</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <scope>compile</scope>
         </dependency>
 
-        <!-- ziroom -->
         <dependency>
-            <groupId>com.ziroom.framework</groupId>
-            <artifactId>ziroom-framework-starter-exception</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+            <version>2.6.1</version>
         </dependency>
         <dependency>
             <groupId>com.ziroom.framework</groupId>
-            <artifactId>ziroom-framework-starter-http</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.ziroom.framework</groupId>
-            <artifactId>ziroom-framework-starter-swagger</artifactId>
+            <artifactId>ferrari-rabbit-producer</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.ziroom.framework</groupId>
-            <artifactId>ziroom-framework-starter-dubbo</artifactId>
+            <artifactId>ferrari-rabbit-consumer</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
-
 
         <dependency>
-            <groupId>com.ziroom.gelflog.spring</groupId>
-            <artifactId>gelflog-spring</artifactId>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ferrari-rocketmq-producer</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
 
-        <!-- 第三方 -->
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ferrari-rocketmq-consumer</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
 

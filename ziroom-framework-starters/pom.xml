@@ -25,7 +25,7 @@
         <module>ziroom-framework-starter-zns-discovery</module>
         <module>ziroom-framework-starter-data-redis</module>
         <module>ziroom-framework-starter-amqp</module>
-        <module>ziroom-framework-starter-ferrari-parent</module>
+        <module>ziroom-framework-starter-ferrari</module>
     </modules>
 
 </project>

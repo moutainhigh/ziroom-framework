@@ -3,8 +3,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.ziroom.framework</groupId>
-    <artifactId>ziroom-framework-starter-ferrari-rabbit-example</artifactId>
-    <name>ziroom-framework-starter-ferrari-rabbit-example</name>
+    <artifactId>ziroom-framework-starter-ferrari-example</artifactId>
+    <name>ziroom-framework-starter-ferrari-example</name>
     <packaging>pom</packaging>
 
     <modules>
