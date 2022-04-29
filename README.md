@@ -4,87 +4,110 @@
 自如基础组件，提供了常用工具类，常用框架，并且打通的自如内部系统。
 
 ## quick start
+
 两种集成方式 
-### 1. 继承ziroom-framework-staters-parent
-该方式可获取对dependencies和plugin版本的管理
+
+### 方式1
+该方式可对常见的***dependencies***和***plugin***进行版本的管理
+
+
+步骤 1) 继承ziroom-framework-staters-parent
 ```xml
     <parent>
         <artifactId>ziroom-framework-starter-parent</artifactId>
         <groupId>com.ziroom.framework</groupId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 ```
-引入依赖与build插件
+步骤2）引入ziroom-framework-starter-web依赖
 ```xml
-<project>
     <dependencies>
       <dependency>
         <groupId>com.ziroom.framework</groupId>
         <artifactId>ziroom-framework-starter-web</artifactId>
       </dependency>
     </dependencies>
-    <build>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <configuration>
-            <skip>true</skip>
-          </configuration>
-        </plugin>
-      </plugins>
-    </build>
-</project>
 ```
-通过脚手架可以直接构建。
-
-### 2. 依赖ziroom-framework-dependencies 
-引入依赖与build插件  
+步骤3）引入build插件
 ```xml
-<project>
-    <dependencies>
-      <dependency>
-        <groupId>com.ziroom.framework</groupId>
-        <artifactId>ziroom-framework-starter-web</artifactId>
-      </dependency>
+  <build>
+   <plugins>
+      <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-deploy-plugin</artifactId>
+      </plugin>
+   </plugins>
+</build>
+```
+后续可通过脚手架可以直接构建。
+http://start.kt.ziroom.com/
+
+### 方式2 
+该方式可对常见的***dependencies***进行版本的管理。与方式1的区别是，未对plugin的版本进行管理
+
+步骤 1） 依赖ziroom-framework-dependencies
+```xml
+    <dependencyManagement>
       <dependency>
         <groupId>com.ziroom.framework</groupId>
         <artifactId>ziroom-framework-dependencies</artifactId>
         <version>1.0.0-SNAPSHOT</version>
       </dependency>
+    </dependencyManagement>
+```
+步骤2）引入ziroom-framework-starter-web依赖
+```xml
+    <dependencies>
+      <dependency>
+        <groupId>com.ziroom.framework</groupId>
+        <artifactId>ziroom-framework-starter-web</artifactId>
+      </dependency>
     </dependencies>
-    <build>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <configuration>
-            <skip>true</skip>
-          </configuration>
-        </plugin>
-      </plugins>
-    </build>
-</project>
 ```
 
+步骤3）引入build插件（包含版本号）
+```xml
+  <build>
+   <plugins>
+      <plugin>
+         <groupId>org.apache.maven.plugins</groupId>
+         <artifactId>maven-deploy-plugin</artifactId>
+         <version>2.3.2.RELEASE</version>
+      </plugin>
+   </plugins>
+</build>
+```
 
+## 开发指南
+### 项目结构
+```
+.
+├── ziroom-framework-autoconfigure: 自动配置包，如jdbc，redis，mq等自动配置的逻辑
+├── ziroom-framework-common: 一些通用的类， 如utils，接口vo，dto等等
+├── ziroom-framework-dependencies: 全局依赖版本管理，包含了本项目的版本管理。以及依赖第三方的版本
+├── ziroom-framework-examples：starter的示例代码
+├── ziroom-framework-staters：用户依赖的starter
+└── ziroom-framework-modules: 需要独立开发， 且相对复杂的模块
+```
 
+### 如何贡献代码
 
-## 项目结构
-1. ziroom-framework-autoconfigure: 自动配置包，如jdbc，redis，mq等自动配置的逻辑
-2. ziroom-framework-common: 一些通用的类， 如utils，接口vo，dto等等
-3. ziroom-ziroom-framework-dependencies: 全局依赖版本管理，包含了本项目的版本管理。以及依赖第三方的版本管理。
-   1. 通过springboot-dependencies管理常用包版本， 
-   2. springboot-dependencies未管理到的，单独添加。
-4. ziroom-framework-examples：starter的示例代码
-5. ziroom-framework-staters：用户依赖的starter
-6. ziroom-framework-modules: 需要独立开发， 且相对复杂的模块
+#### 分支模型
+采用[主干开发模型](https://trunkbaseddevelopment.com/)，可发布的代码应直接提交进入主干。
 
-## 提交代码规范
-1. 该项目需要编写单元测试，通过关联模块的单元测试，才可提交代码。
-2. 功能复杂的模块，请添加readme.md文件
-3. develop 和 master为保护分支，push代码需要request merge，审批人赵耀、张宗启、梁仁凯
-4. 验证通过后，推release包到maven仓库。
+#### 如何保证主干代码质量
+项目维护者通常不应当直接向[主仓库](https://gitlab.ziroom.com/ziroom/framework/ziroom-framework) 提交代码，而应当通过主项目派生出个人项目（例如 [zhaoy13/ziroom-framework](https://gitlab.ziroom.com/zhaoy13/ziroom-framework)），并在个人项目中进行开发。代码开发完成后，通过 MergeRequest 申请合并到主仓库的 master 分支。
 
-push代码需要至少2名成员code review
+#### Review 流程
+1. CI: 发起 MR 后会触发自动化 CI，等待 CI 运行完成，如有严重问题，请提交人先进行修改，直至满足代码检查要求。
+2. Review：在发起 MR 后，需通过 1-2 位 Reviewer 审核，完成所有修改建议。
+3. Merge：审核通过后，由 Repo Master（当前轮值人：@zhaoy13 @zhangzq8 @liangrk）负责合并到主干。
+
+#### 版本发布
+TODO
+
+#### 代码规范
+代码提交前应满足:
+- [] 通过所有 checkstyle 风格检查
+- [] 接入 SonarQube 扫描，没有 Blocker 级别的 issue
+- [] TODO 单元测试规范
