@@ -3,18 +3,16 @@ package com.ziroom.framework.module.distributedlock;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.StrUtil;
+import com.ziroom.framework.module.distributedlock.annotation.DistributedLock;
+import java.util.concurrent.locks.Lock;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.redisson.Redisson;
-import org.redisson.api.RLock;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -22,13 +20,15 @@ import java.util.List;
  */
 @Slf4j
 @Aspect
-@Component
 public class DistributedLockAspect {
 
-    @Resource
-    private Redisson redisson;
+    LockGetter lockGetter;
 
-    @Pointcut("@annotation(com.ziroom.framework.module.distributedlock.DistributedLock)")
+    public DistributedLockAspect(LockGetter lockGetter) {
+        this.lockGetter = lockGetter;
+    }
+
+    @Pointcut("@annotation(com.ziroom.framework.module.distributedlock.annotation.DistributedLock)")
     public void pointCut() {
 
     }
@@ -60,7 +60,7 @@ public class DistributedLockAspect {
         }
 
         log.info("加分布式锁，lockName = {}", lockName);
-        RLock lock = redisson.getLock(lockName);
+        Lock lock = lockGetter.getLock(lockName);
         if (!lock.tryLock()) {
             throw new DistributedLockException(DistributedLockCode.TRY_LOCK_FAIL.getCode(), "资源正在使用，请稍后再试");
         }
