@@ -17,4 +17,10 @@ public class TestController1 {
         return "1";
     }
 
+    @GetMapping("test2")
+    public String test2() throws InterruptedException {
+        Thread.sleep(5000);
+        return "1";
+    }
+
 }
