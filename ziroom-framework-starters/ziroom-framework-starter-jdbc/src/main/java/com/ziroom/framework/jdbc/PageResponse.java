@@ -67,7 +67,7 @@ public class PageResponse<T> implements Serializable {
             response.setList(Collections.emptyList());
             return response;
         }
-        PageInfo<U> pageInfo = new PageInfo<>();
+        PageInfo<T> pageInfo = new PageInfo<>(list);
         List<U> targetList = new ArrayList<>();
         for (T element : list) {
             U target = null;
