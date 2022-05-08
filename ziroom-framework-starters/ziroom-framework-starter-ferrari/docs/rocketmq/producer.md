@@ -3,14 +3,14 @@
 ## 使用示例
 
     @Resource
-    private FerrariRabbitTemplate ferrariRabbitTemplate;
+    private FerrariRocketmqTemplate ferrariRocketmqTemplate;
     
     ferrariRocketmqTemplate.syncSend(topic, tags, message);
 
 ## 1.1 引入jia包
 
           <dependency>
-            <groupId>com.ziroom.ferrari</groupId>
+            <groupId>com.ziroom.framework</groupId>
             <artifactId>ferrari-rocketmq-producer</artifactId>
             <version>${version}</version>
           </dependency>
@@ -90,18 +90,34 @@
             return jdbcSettings;
         }
 
-#### c. 配置FerrariRabbitTemplate
+#### c. 配置FerrariRocketmqTemplate
 
 [配置示例](https://gitlab.ziroom.com/rent-back/Ferrari/blob/master-4.0/ferrari-test/src/main/java/com/ziroom/ferrari/test/conf/TestConfig.java)
 
-        @Bean
-        public FerrariRabbitTemplate ferrariRabbitTemplate(@Qualifier("connectionFactory") ConnectionFactory connectionFactory, RetryTemplate retryTemplate) {
-            FerrariRabbitTemplate template = new FerrariRabbitTemplate();
-            template.setConnectionFactory(connectionFactory);
-            template.setRetryTemplate(retryTemplate);
-            template.setMessageConverter(new Jackson2JsonMessageConverter());
-            return template;
-        }
+private String nameServer = "10.216.9.189:9876";
+
+    @Bean
+    public DefaultMQProducer rocketMqProducer() {
+        String producerGroup = "rmq-producer";
+        DefaultMQProducer producer = new DefaultMQProducer(producerGroup);
+
+        producer.setNamesrvAddr(nameServer);
+        producer.setSendMsgTimeout(3000);
+        producer.setRetryTimesWhenSendFailed(3);
+        producer.setRetryTimesWhenSendAsyncFailed(3);
+        producer.setMaxMessageSize(1024 * 1024 * 4);
+        producer.setCompressMsgBodyOverHowmuch(2);
+        producer.setRetryAnotherBrokerWhenNotStoreOK(false);
+        return producer;
+    }
+
+    @Bean
+    public FerrariRocketmqTemplate ferrariRocketmqTemplate(@Qualifier("rocketMqProducer") DefaultMQProducer defaultMQProducer, ObjectMapper rocketMQMessageObjectMapper) {
+        FerrariRocketmqTemplate template = new FerrariRocketmqTemplate();
+        template.setProducer(defaultMQProducer);
+        template.setObjectMapper(rocketMQMessageObjectMapper);
+        return template;
+    }
 
 ### 1.3.2 SpringMvc
 

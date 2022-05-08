@@ -6,9 +6,9 @@
     <artifactId>ziroom-framework-starter-ferrari-example</artifactId>
     <name>ziroom-framework-starter-ferrari-example</name>
     <packaging>pom</packaging>
+    <version>${revision}</version>
 
     <modules>
-        <module>ferrari-rabbit-example</module>
-        <!--        <module>ferrari-rocketmq-example</module>-->
+        <module>ferrari-example</module>
     </modules>
 </project>

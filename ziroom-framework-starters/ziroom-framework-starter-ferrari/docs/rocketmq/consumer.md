@@ -5,8 +5,8 @@
 ## 1.1 引入jia包
 
           <dependency>
-            <groupId>com.ziroom.ferrari</groupId>
-            <artifactId>ferrari-rabbit-consumer</artifactId>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ferrari-rocketmq-consumer</artifactId>
             <version>${version}</version>
           </dependency>
 
@@ -56,6 +56,35 @@
             return jdbcSettings;
         }
 
+#### b. 配置RocketMQMessageListener
+
+    ```
+    @Component
+    @RocketMQMessageListener(
+            topic = TestRocketmqService.NOTICE_TOPIC,
+            consumerGroup = TestRocketmqService.CONSUMER_GROUP_LISTENTER
+    )
+    public class RocketMqExampleAnnotionListner<T> implements RocketMQListener<NoticeReq> {
+    
+        @Override
+        public void onMessage(NoticeReq noticeReq) {
+            try {
+                handelMessage(noticeReq);
+            } catch (Exception e) {
+                log.error("消息变更Mq处理系统异常,e:{}", e);
+            }
+        }
+    
+        private void handelMessage(NoticeReq noticeReq) {
+            log.info("消息变更Mq通知: [{}]", noticeReq);
+        }
+    }
+    ```
+> 只支持@RocketMQMessageListener方式注入消费者
+> 暂不支持DefaultMQPushConsumer方式注入消费者
+    
+
 ### 1.3.2 SpringMvc
+
 
 ## 1.4 其他
