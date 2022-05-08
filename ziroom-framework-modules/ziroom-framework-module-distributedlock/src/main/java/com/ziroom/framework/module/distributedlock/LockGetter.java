@@ -5,11 +5,8 @@ import java.util.concurrent.locks.Lock;
 /**
  * Created by liangrk on 2022/5/4.
  */
-public interface DistributedLock extends Lock {
+public interface LockGetter {
 
-    /**
-     * get lock name
-     */
-    String getName();
+    Lock getLock(String name);
 
 }

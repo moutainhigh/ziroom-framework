@@ -21,7 +21,11 @@
         <module>ziroom-framework-spring-cloud-example</module>
         <module>ziroom-framework-jdbc-example</module>
         <module>ziroom-framework-dependencies-example</module>
+<<<<<<< HEAD
         <module>ziroom-framework-starter-ferrari-example</module>
+=======
+        <module>ziroom-framework-distributedlock-example</module>
+>>>>>>> origin/develop
     </modules>
 
     <properties>

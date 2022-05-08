@@ -15,8 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 public class DefaultExecuteManager implements ExecuteManager {
 
+
+    /**
+     * 若不存在事务管理器，则无法使用事务
+     * @param runnable 运行参数
+     */
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = RuntimeException.class)
     public void transactionExe(Runnable runnable) {
         Assert.notNull(runnable, "runnable不能为null！");
         runnable.run();

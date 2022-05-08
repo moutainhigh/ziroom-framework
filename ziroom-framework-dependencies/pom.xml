@@ -183,6 +183,11 @@
             </dependency>
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-starter-distributedlock</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-module-executemanager</artifactId>
                 <version>${revision}</version>
             </dependency>
