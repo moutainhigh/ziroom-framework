@@ -23,20 +23,14 @@
             <version>${revision}</version>
             <scope>compile</scope>
         </dependency>
-
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ferrari-common</artifactId>
             <version>${revision}</version>
         </dependency>
-
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.ziroom.framework</groupId>
-            <artifactId>ferrari-repository-producer</artifactId>
         </dependency>
     </dependencies>
 </project>

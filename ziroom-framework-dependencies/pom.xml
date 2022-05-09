@@ -33,6 +33,8 @@
         <ziroom.apollo.version>1.2.3-RC3</ziroom.apollo.version>
         <!-- gelf-log -->
         <ziroom.gelf.version>2.2.3</ziroom.gelf.version>
+        <!-- ferrari-log -->
+        <ziroom.ferrari.version>1.0.0-SNAPSHOT</ziroom.ferrari.version>
         <!-- Framework Versions -->
         <spring.version>5.2.8.RELEASE</spring.version>
         <spring-boot.version>2.3.2.RELEASE</spring-boot.version>
@@ -206,6 +208,17 @@
                 <groupId>com.ziroom.framework.apollo</groupId>
                 <artifactId>apollo-client</artifactId>
                 <version>${ziroom.apollo.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ferrari-rocketmq-producer</artifactId>
+                <version>${ziroom.ferrari.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ferrari-rocketmq-consumer</artifactId>
+                <version>${ziroom.ferrari.version}</version>
             </dependency>
 
             <!-- 对接日志平台 -->

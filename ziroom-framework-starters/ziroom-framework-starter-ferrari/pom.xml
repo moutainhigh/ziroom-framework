@@ -25,7 +25,6 @@
     <properties>
         <spring-rabbit.version>2.2.9.RELEASE</spring-rabbit.version>
         <spring-rocketmq.version>2.0.2</spring-rocketmq.version>
-
         <spring.version>5.2.8.RELEASE</spring.version>
 
     </properties>
@@ -72,7 +71,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <build>
         <plugins>
             <plugin>
