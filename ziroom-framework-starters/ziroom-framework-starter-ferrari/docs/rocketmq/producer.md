@@ -17,8 +17,8 @@
 
 |Spring版本|ferrari版本|Ferrari依赖Spring版本|
 |----|----|----|
-|Spring4.x|V4-1.2.RELEASE|4.2.6.RELEASE|
-|Spring5.x|V5-1.2.RELEASE|5.2.15.RELEASE|
+|Spring4.x|1.0.0-SNAPSHOT|4.2.6.RELEASE|
+|Spring5.x|1.0.0-SNAPSHOT|5.2.15.RELEASE|
 
 ## 1.2 新建表
 
