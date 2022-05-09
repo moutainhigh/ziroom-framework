@@ -107,25 +107,25 @@
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ferrari-rabbit-producer</artifactId>
-            <version>${revision}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ferrari-rabbit-consumer</artifactId>
-            <version>${revision}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ferrari-rocketmq-producer</artifactId>
-            <version>${revision}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ferrari-rocketmq-consumer</artifactId>
-            <version>${revision}</version>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
