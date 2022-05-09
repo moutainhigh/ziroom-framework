@@ -21,6 +21,7 @@
     <modules>
         <module>ziroom-framework-module-distributedlock</module>
         <module>ziroom-framework-module-executemanager</module>
+        <module>ziroom-framework-module-ferrari</module>
     </modules>
 
     <dependencies>

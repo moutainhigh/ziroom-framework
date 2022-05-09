@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.ziroom.framework</groupId>
+        <artifactId>ziroom-framework-modules</artifactId>
+        <version>${revision}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <artifactId>ziroom-framework-module-ferrari</artifactId>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <spring-rabbit.version>2.2.9.RELEASE</spring-rabbit.version>
+        <spring-rocketmq.version>2.0.2</spring-rocketmq.version>
+        <spring.version>5.2.8.RELEASE</spring.version>
+    </properties>
+
+    <modules>
+        <module>ferrari-common</module>
+        <module>ferrari-rabbit</module>
+        <module>ferrari-repository</module>
+        <module>ferrari-rocketmq</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- ferrari-common -->
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ferrari-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- ferrari-rocketmq -->
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ferrari-rocketmq-consumer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ferrari-rocketmq-producer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- ferrari-rabbit -->
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ferrari-rabbit-producer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ferrari-rabbit-consumer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- ferrari-repository -->
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ferrari-repository-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ferrari-repository-consumer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ferrari-repository-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ferrari-repository-producer</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+        </dependencies>
+    </dependencyManagement>
+</project>
