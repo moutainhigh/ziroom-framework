@@ -1,8 +1,5 @@
 package com.ziroom.framework.module.distributedlock;
 
-import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.ArrayUtil;
-import cn.hutool.core.util.StrUtil;
 import com.ziroom.framework.module.distributedlock.annotation.DistributedLock;
 import java.util.concurrent.locks.Lock;
 import lombok.extern.slf4j.Slf4j;
@@ -11,9 +8,14 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.AnnotationUtils;
 
-import java.util.List;
+import org.springframework.expression.EvaluationContext;
+import org.springframework.expression.Expression;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 /**
  * @author zhangkx1
@@ -24,6 +26,9 @@ public class DistributedLockAspect {
 
     LockGetter lockGetter;
 
+    @Value("${spring.application.name:}")
+    public String applicationName;
+
     public DistributedLockAspect(LockGetter lockGetter) {
         this.lockGetter = lockGetter;
     }
@@ -33,31 +38,33 @@ public class DistributedLockAspect {
 
     }
 
+//    PropertyPlaceholderHelper helper = new PropertyPlaceholderHelper("${", "}", ":",  true);
+    ExpressionParser parser = new SpelExpressionParser();
+
     @Around("pointCut()")
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         DistributedLock distributedLockAnnotation = AnnotationUtils.getAnnotation(methodSignature.getMethod(), DistributedLock.class);
 
         assert distributedLockAnnotation != null;
-        String lockNameExpression = distributedLockAnnotation.lockName();
-        List<String> expressionList = StrUtil.split(lockNameExpression, ".");
-        String firstExpression = expressionList.get(0);
-        String[] parameterNames = methodSignature.getParameterNames();
+        String lockNameExpression = distributedLockAnnotation.lockNameExpression();
+
+        Expression expression = parser.parseExpression(lockNameExpression);
+        EvaluationContext context = new StandardEvaluationContext();
         Object[] args = joinPoint.getArgs();
-        int index = ArrayUtil.indexOf(parameterNames, firstExpression);
-        if (index == ArrayUtil.INDEX_NOT_FOUND) {
-            throw new DistributedLockException(DistributedLockCode.TRY_LOCK_FAIL.getCode(), "DistributedLockAspect：获取锁名称失败");
+        String[] parameterNames = methodSignature.getParameterNames();
+        for (int i = 0; i < parameterNames.length; i++) {
+            Object value = args[i] == null ? "" : args[i];
+            context.setVariable(parameterNames[i], value);
+            if (context.lookupVariable("param" + (i + 1)) == null) {
+                context.setVariable("param" + (i + 1), value);
+            }
         }
-        Object arg = args[index];
-        String lockName = methodSignature.getDeclaringType().getName()+":"+methodSignature.getMethod().getName() + ":";
-        if (expressionList.size() > 1) {
-            lockName = lockName + BeanUtil.getProperty(arg, expressionList.get(1));
-        } else {
-            lockName = lockName + arg.toString();
-        }
-        if (StrUtil.isBlank(lockName)) {
-            throw new DistributedLockException(DistributedLockCode.TRY_LOCK_FAIL.getCode(), "DistributedLockAspect：锁名称为空");
-        }
+        context.setVariable("applicationName", applicationName);
+        context.setVariable("className", methodSignature.getDeclaringType().getName());
+        context.setVariable("method", methodSignature.getName());
+
+        String lockName = expression.getValue(context, String.class);
 
         log.info("加分布式锁，lockName = {}", lockName);
         Lock lock = lockGetter.getLock(lockName);

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController1 {
 
     @GetMapping("test1")
-    @DistributedLock(lockName = "ssss")
+    @DistributedLock(lockNameExpression = "ssss11")
     public String test(String ssss) throws InterruptedException {
         Thread.sleep(5000);
         return "1";
