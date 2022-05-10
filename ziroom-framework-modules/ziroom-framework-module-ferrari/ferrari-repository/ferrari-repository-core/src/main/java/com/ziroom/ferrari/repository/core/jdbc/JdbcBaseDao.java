@@ -10,10 +10,8 @@ import com.ziroom.ferrari.repository.core.constant.DialectEnum;
 import com.ziroom.ferrari.repository.core.entity.IdEntity;
 import com.ziroom.ferrari.repository.core.exception.DaoException;
 import com.ziroom.ferrari.repository.core.query.*;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.SqlTypeValue;
-import org.springframework.jdbc.core.StatementCreatorUtils;
+import java.lang.reflect.Field;
+import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.util.CollectionUtils;
@@ -157,6 +155,78 @@ public class JdbcBaseDao<T> implements IBaseDao<T> {
             entityList.add(map2Entity(map, entityMapper, entityClass));
         }
         return entityList;
+    }
+
+    /**
+     * todo 未开发完成，暂时不开放
+     * @param entityList
+     * @return
+     * @throws DaoException
+     */
+    private int batchInsert(List<T> entityList) throws DaoException {
+        if (entityList == null || entityList.size() == 0) {
+            return 0;
+        }
+        // 不支持oracle
+        if (DialectEnum.ORACLE.equals(jdbcSettings.getDialectEnum())) {
+            return 0;
+        }
+
+        final IdEntity idEntity = (IdEntity) entityList.get(0);
+        Class beanClass = idEntity.getClass();
+        Field[] fields = beanClass.getDeclaredFields();
+        List<Field> fieldList = Lists.newArrayList();
+        fieldList.addAll(Arrays.asList(fields));
+
+        final List<Object> valueList = Lists.newArrayList();
+
+        String insert = INSERT(idEntity, valueList, entityMapper, entityClass, jdbcSettings.getDialectEnum(), null);
+
+        PreparedStatement[] preparedStatements = new PreparedStatement[1];
+
+        ((JdbcTemplate) router.writeRoute()).batchUpdate(insert, new BatchPreparedStatementSetter() {
+
+            @Override
+            public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
+                final IdEntity idEntity = (IdEntity) entityList.get(i);;
+
+
+                for (Field field : fieldList) {
+                    String propertyName = field.getName();
+                    // Ignore fields by final, static, and primary key.
+                    if (DaoHelper.isFinalOrStatic(field)) {
+                        continue;
+                    }
+
+                    if (propertyName.equals(DBConstant.PK_NAME) && idEntity.getId() > LONG_0) {
+                        try {
+                            valueList.add(DaoHelper.getColumnValue(IdEntity.class.getDeclaredField(DBConstant.PK_NAME), idEntity));
+                        } catch (NoSuchFieldException e) {
+                            throw new DaoException("insert error", e);
+                        }
+                    }
+
+                    // Ignore fields by isTransient=false which have been set in notNeedTransientPropertySet.
+                    if (entityMapper.getNotNeedTransientPropertySet().contains(propertyName)) {
+                        continue;
+                    }
+
+                    valueList.add(DaoHelper.getColumnValue(field, idEntity));
+                }
+
+                int index = INT_0;
+                for (Object value : valueList) {
+                    StatementCreatorUtils.setParameterValue(preparedStatement, ++index, SqlTypeValue.TYPE_UNKNOWN, value);
+                }
+            }
+
+            @Override
+            public int getBatchSize() {
+                return entityList.size();
+            }
+        });
+
+        return entityList.size();
     }
 
     @Override
