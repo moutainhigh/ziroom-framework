@@ -9,7 +9,6 @@ import org.springframework.core.annotation.AliasFor;
 
 /**
  * <pre>
- * 下面的例子会把account取出来当做锁的名称
  * lockNameExpression：spel表达式
  * 可取值如下
  * 静态字符串: 'abcd', 需要单引号，
