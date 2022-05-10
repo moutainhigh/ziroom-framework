@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 import org.springframework.core.annotation.AliasFor;
 
 /**
+ * <pre>
  * 下面的例子会把account取出来当做锁的名称
  * lockNameExpression：spel表达式
  * 可取值如下
@@ -26,7 +27,7 @@ import org.springframework.core.annotation.AliasFor;
  * 动态参数型 ： @DistributedLock("#user.name")
  * 字符串+参数： @DistributedLock("'aa' + #user.name")
  * 类名+方法名+参数： @DistributedLock("#className+ #method + 'aa' + #user.name")
- *
+ * <pre>
  * @author liangrk
  */
 @Target(ElementType.METHOD)
