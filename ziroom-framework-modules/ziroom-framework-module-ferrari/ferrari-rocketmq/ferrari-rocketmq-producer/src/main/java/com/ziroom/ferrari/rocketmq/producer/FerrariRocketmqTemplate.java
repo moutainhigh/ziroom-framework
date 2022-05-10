@@ -7,6 +7,8 @@ import com.ziroom.ferrari.repository.common.FerrariMessageStatus;
 import com.ziroom.ferrari.repository.producer.FerrariMessageDao;
 import com.ziroom.ferrari.repository.producer.entity.FerrariMessage;
 import com.ziroom.ferrari.rocketmq.producer.vo.FerrariMessageVo;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +54,58 @@ public class FerrariRocketmqTemplate extends RocketMQTemplate implements Initial
             });
         } else {
             syncSendAndUpdate(topic, tags, ferrariMessage);
+        }
+    }
+
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
+    public <T> void batchSyncSend(String topic, String tags, List<T> messageList) throws JsonProcessingException {
+        if (messageList == null || messageList.size() == 0) {
+            return;
+        }
+        List<FerrariMessageVo> messageVoList = new ArrayList<>(messageList.size());
+        for (T message : messageList) {
+            FerrariMessageVo ferrariMessage = buildFerrariMessage(topic, tags, message);
+            FerrariMessage entity = ferrariMessage.findEntity();
+            ferrariMessageDao.insert(entity);
+
+            messageVoList.add(ferrariMessage);
+        }
+
+        if (TransactionSynchronizationManager.isSynchronizationActive()) {
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
+                @Override
+                public void afterCommit() {
+                    batchSyncSendAndUpdate(topic, tags, messageVoList);
+                }
+            });
+        } else {
+            batchSyncSendAndUpdate(topic, tags, messageVoList);
+        }
+    }
+
+    private <T> void batchSyncSendAndUpdate(String topic, String tags, List<FerrariMessageVo> ferrariMessageList) {
+        FerrariMessageStatus status = FerrariMessageStatus.SUCCESS;
+        RuntimeException throwExp = null;
+
+        for (FerrariMessageVo ferrariMessageVo : ferrariMessageList) {
+            try {
+                String destination = null;
+                if (StringUtils.isEmpty(tags)) {
+                    destination = topic;
+                } else {
+                    destination = topic + ":" + tags;
+                }
+                super.syncSend(destination, ferrariMessageVo.getOriginalMessage());
+            } catch (RuntimeException e) {
+                logger.error("投递消息失败, topic:{} tags:{}, message:{}", topic, tags, ferrariMessageVo, e);
+                status = FerrariMessageStatus.FAILED;
+                throwExp = e;
+            } finally {
+                updateFerrariMessage(ferrariMessageVo.findEntity(), status);
+            }
+        }
+        if (status == FerrariMessageStatus.FAILED) {
+            throw throwExp;
         }
     }
 
