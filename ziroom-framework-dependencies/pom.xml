@@ -52,7 +52,7 @@
         <redisson.version>3.17.0</redisson.version>
 
         <pagehelper.version>5.2.0</pagehelper.version>
-        <dubbo.version>2.7.5</dubbo.version>
+        <dubbo.version>2.7.7</dubbo.version>
 
         <okhttp3.version>4.0.1</okhttp3.version>
 
