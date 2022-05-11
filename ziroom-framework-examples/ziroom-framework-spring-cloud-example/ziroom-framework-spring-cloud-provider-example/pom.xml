@@ -29,6 +29,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -39,17 +40,16 @@
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ziroom-framework-starter-http</artifactId>
-            <version>${version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ziroom-framework-starter-swagger</artifactId>
-            <version>${version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ziroom-framework-starter-zns-discovery</artifactId>
-            <version>${version}</version>
         </dependency>
 
 
@@ -57,8 +57,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
         </dependency>
 
     </dependencies>
