@@ -16,10 +16,9 @@
     <packaging>pom</packaging>
 
     <properties>
-        <!-- Framework Versions -->
-        <spring-boot.version>2.3.2.RELEASE</spring-boot.version>
-        <spring.cloud.version>Hoxton.SR12</spring.cloud.version>
-        <spring.cloud.alibaba.version>2.2.6.RELEASE</spring.cloud.alibaba.version>
+        <java.source.version>8</java.source.version>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
 
         <!-- Maven Plugin Versions -->
         <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
@@ -31,6 +30,7 @@
         <flatten-maven-plugin.version>1.1.0</flatten-maven-plugin.version>
         <gmavenplus-plugin.version>1.6</gmavenplus-plugin.version>
         <jacoco.version>0.8.3</jacoco.version>
+
         <java.version>1.8</java.version>
 
 
@@ -45,7 +45,6 @@
         </developerConnection>
         <url>https://gitlab.ziroom.com/ziroom/framework/ziroom-framework.git</url>
     </scm>
-
 
     <developers>
         <developer>
@@ -75,20 +74,6 @@
         <module>ziroom-framework-modules</module>
     </modules>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.ziroom.framework</groupId>
-                <artifactId>ziroom-framework-dependencies</artifactId>
-                <version>${revision}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-
-    </dependencyManagement>
-
-
     <build>
         <plugins>
             <plugin>
@@ -104,33 +89,6 @@
                     </execution>
                 </executions>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-javadoc-plugin</artifactId>-->
-<!--                <version>${maven-javadoc-plugin.version}</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>jar</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-gpg-plugin</artifactId>-->
-<!--                <version>${maven-gpg-plugin.version}</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>verify</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>sign</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>flatten-maven-plugin</artifactId>
@@ -162,11 +120,11 @@
     <distributionManagement>
         <snapshotRepository>
             <id>framework-snapshots</id>
-            <url>http://mvn.ziroom.com/framework-snapshot/</url>
+            <url>https://mvn.ziroom.com/framework-snapshot/</url>
         </snapshotRepository>
         <repository>
             <id>framework-release</id>
-            <url>http://mvn.ziroom.com/framework-release/</url>
+            <url>https://mvn.ziroom.com/framework-release/</url>
         </repository>
     </distributionManagement>
 

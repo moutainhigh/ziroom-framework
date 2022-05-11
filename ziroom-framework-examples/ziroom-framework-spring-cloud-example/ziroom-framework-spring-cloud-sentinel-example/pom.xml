@@ -16,14 +16,6 @@
     <properties>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.ziroom.framework</groupId>
-                <artifactId>ziroom-exception-starter</artifactId>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -55,12 +47,10 @@
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ziroom-framework-starter-http</artifactId>
-            <version>${version}</version>
         </dependency>
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ziroom-framework-starter-swagger</artifactId>
-            <version>${version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>javax.validation</groupId>
@@ -71,7 +61,6 @@
         <dependency>
             <groupId>com.ziroom.gelflog.spring</groupId>
             <artifactId>gelflog-spring</artifactId>
-            <version>${gelflog.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>javax.validation</groupId>
@@ -83,8 +72,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 
