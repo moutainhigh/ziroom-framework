@@ -58,7 +58,7 @@ public class MessageSendTask extends AbstractFerrariTask implements Initializing
                 return;
             }
             FerrariRocketmqTemplate ferrariRocketmqTemplate = (FerrariRocketmqTemplate) bean;
-//            ferrariRocketmqTemplate.sendAndUpdate(ferrariMessage);
+            ferrariRocketmqTemplate.sendAndUpdate(ferrariMessage);
         } catch (Exception ignored) {
 
         }

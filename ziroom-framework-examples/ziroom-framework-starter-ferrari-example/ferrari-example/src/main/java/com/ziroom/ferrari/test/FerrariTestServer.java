@@ -1,6 +1,7 @@
 package com.ziroom.ferrari.test;
 
 import com.ziroom.ferrari.repository.common.conf.FerrariConf;
+import org.apache.rocketmq.spring.autoconfigure.RocketMQAutoConfiguration;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @Version 1.0
  */
 @Import({FerrariConf.class})
-@SpringBootApplication
+@SpringBootApplication()
 @EnableTransactionManagement
 @MapperScan(basePackages = "com.ziroom.ferrari.test.dao")
 @ComponentScan({"com.ziroom.ferrari.*"})

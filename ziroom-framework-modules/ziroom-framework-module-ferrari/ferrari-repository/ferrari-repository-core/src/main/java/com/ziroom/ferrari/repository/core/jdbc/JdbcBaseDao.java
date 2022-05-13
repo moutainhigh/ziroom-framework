@@ -11,19 +11,21 @@ import com.ziroom.ferrari.repository.core.entity.IdEntity;
 import com.ziroom.ferrari.repository.core.exception.DaoException;
 import com.ziroom.ferrari.repository.core.query.*;
 import java.lang.reflect.Field;
+
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.JdbcUtils;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.ziroom.ferrari.repository.core.constant.ApplicationConstant.*;
 import static com.ziroom.ferrari.repository.core.jdbc.JdbcHelper.*;
@@ -158,12 +160,12 @@ public class JdbcBaseDao<T> implements IBaseDao<T> {
     }
 
     /**
-     * todo 未开发完成，暂时不开放
+     * 批量插入
      * @param entityList
      * @return
      * @throws DaoException
      */
-    private int batchInsert(List<T> entityList) throws DaoException {
+    public int batchInsert(List<T> entityList) throws DaoException {
         if (entityList == null || entityList.size() == 0) {
             return 0;
         }
@@ -178,17 +180,12 @@ public class JdbcBaseDao<T> implements IBaseDao<T> {
         List<Field> fieldList = Lists.newArrayList();
         fieldList.addAll(Arrays.asList(fields));
 
-        final List<Object> valueList = Lists.newArrayList();
-
-        String insert = INSERT(idEntity, valueList, entityMapper, entityClass, jdbcSettings.getDialectEnum(), null);
-
-        PreparedStatement[] preparedStatements = new PreparedStatement[1];
-
-        ((JdbcTemplate) router.writeRoute()).batchUpdate(insert, new BatchPreparedStatementSetter() {
+        BatchPreparedStatementSetter pss = new BatchPreparedStatementSetter() {
 
             @Override
             public void setValues(PreparedStatement preparedStatement, int i) throws SQLException {
-                final IdEntity idEntity = (IdEntity) entityList.get(i);;
+                final IdEntity idEntity = (IdEntity) entityList.get(i);
+                List<Object> valueList = new ArrayList<>();
 
 
                 for (Field field : fieldList) {
@@ -223,6 +220,58 @@ public class JdbcBaseDao<T> implements IBaseDao<T> {
             @Override
             public int getBatchSize() {
                 return entityList.size();
+            }
+        };
+
+        PreparedStatementCreator psc = new PreparedStatementCreator() {
+            @Override
+            public PreparedStatement createPreparedStatement(Connection connection) throws SQLException {
+                String insertSqlToUse = INSERT(idEntity, new ArrayList<>(), entityMapper, entityClass, jdbcSettings.getDialectEnum(), connection);
+                PreparedStatement ps;
+                if (idEntity.getId() > LONG_0) {
+                    ps = connection.prepareStatement(insertSqlToUse);
+                } else {
+                    ps = connection.prepareStatement(insertSqlToUse, new String[]{DBConstant.PK_NAME});
+                }
+                return ps;
+            }
+        };
+
+        ((JdbcTemplate) router.writeRoute()).execute(psc, ps -> {
+            int batchSize = pss.getBatchSize();
+            if (JdbcUtils.supportsBatchUpdates(ps.getConnection())) {
+                for (int i = 0; i < batchSize; i++) {
+                    pss.setValues(ps, i);
+                    ps.addBatch();
+                }
+                int[] rowsAffectedArray = ps.executeBatch();
+
+                ResultSet generatedKeysRs = ps.getGeneratedKeys();
+                int i = 0;
+                while (generatedKeysRs.next()) {
+                    Number id = (Number) generatedKeysRs.getObject(1);
+                    ((IdEntity)entityList.get(i)).setId(id.longValue());
+                    i++;
+                }
+
+                return rowsAffectedArray;
+            } else {
+                List<Integer> rowsAffected = new ArrayList<>();
+                for (int i = 0; i < batchSize; i++) {
+                    pss.setValues(ps, i);
+                    rowsAffected.add(ps.executeUpdate());
+
+                    ResultSet generatedKeysRs = ps.getGeneratedKeys();
+                    while (generatedKeysRs.next()) {
+                        Number id = (Number) generatedKeysRs.getObject(1);
+                        ((IdEntity)entityList.get(i)).setId(id.longValue());
+                    }
+                }
+                int[] rowsAffectedArray = new int[rowsAffected.size()];
+                for (int i = 0; i < rowsAffectedArray.length; i++) {
+                    rowsAffectedArray[i] = rowsAffected.get(i);
+                }
+                return rowsAffectedArray;
             }
         });
 

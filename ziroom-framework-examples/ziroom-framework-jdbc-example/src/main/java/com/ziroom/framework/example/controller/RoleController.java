@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author donghao
@@ -26,7 +32,6 @@ public class RoleController {
     @Autowired
     private MerakServiceImpl merakService;
 
-    @Qualifier("merak")
     @Autowired
     DataSource dataSource;
 
@@ -52,8 +57,35 @@ public class RoleController {
 //    }
 //
     @GetMapping("/merak2")
-    public ResponseEntity<Long> merak2() {
-
-        return ResponseEntity.ok(merakService.merakData2());
+    public ResponseEntity<Object> merak2() throws Exception {
+        return ResponseEntity.ok(testBatchIds());
     }
+
+    public List<Object> testBatchIds() throws Exception {
+        Connection connection = dataSource.getConnection();
+
+        PreparedStatement statement = connection.prepareStatement("insert into test_t (c1) values (?)", new String[]{"id"});
+
+        for (int i = 0; i < 10; i++) {
+            statement.setString(1, "0");
+            statement.addBatch();
+        }
+
+        statement.executeBatch();
+        ResultSet generatedKeys = statement.getGeneratedKeys();
+
+        List<Object> ids = new ArrayList<>();
+        try {
+            while (generatedKeys.next()) {
+                Object object = generatedKeys.getObject(1);
+                ids.add(object);
+            }
+
+        } finally {
+            generatedKeys.close();
+        }
+
+        return ids;
+    }
+
 }

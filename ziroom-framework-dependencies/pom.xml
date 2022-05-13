@@ -46,7 +46,7 @@
 
         <junit-jupiter.version>5.3.2</junit-jupiter.version>
         <apache-common.verson>2.6</apache-common.verson>
-        <rocketmq-spring.version>2.0.4</rocketmq-spring.version>
+        <rocketmq-spring.version>2.0.2</rocketmq-spring.version>
 
         <redisson-starter.version>3.16.2</redisson-starter.version>
         <redisson.version>3.17.0</redisson.version>
@@ -85,12 +85,12 @@
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ferrari-rocketmq-producer</artifactId>
-                <version>${ziroom.ferrari.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ferrari-rocketmq-consumer</artifactId>
-                <version>${ziroom.ferrari.version}</version>
+                <version>${project.version}</version>
             </dependency>
 
             <!-- region 自如内部组件 -->

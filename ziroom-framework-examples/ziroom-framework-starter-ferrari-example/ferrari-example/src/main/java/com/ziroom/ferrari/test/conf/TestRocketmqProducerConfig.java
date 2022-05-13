@@ -3,9 +3,11 @@ package com.ziroom.ferrari.test.conf;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ziroom.ferrari.rocketmq.producer.FerrariRocketmqTemplate;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 
 /**
  * @Author: J.T.
@@ -37,6 +39,7 @@ public class TestRocketmqProducerConfig {
         FerrariRocketmqTemplate template = new FerrariRocketmqTemplate();
         template.setProducer(defaultMQProducer);
         template.setObjectMapper(rocketMQMessageObjectMapper);
+//        template.setMessageConverter(new MappingJackson2MessageConverter());
         return template;
     }
 }

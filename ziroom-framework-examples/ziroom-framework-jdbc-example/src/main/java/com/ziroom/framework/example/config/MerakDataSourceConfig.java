@@ -33,7 +33,6 @@ public class MerakDataSourceConfig  {
     private DataSource dataSource;
 
     @Autowired(required = false)
-    @Qualifier("merak")
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
@@ -42,7 +41,7 @@ public class MerakDataSourceConfig  {
 
     @Primary
     @Bean(name = "merakSqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactory(@Autowired @Qualifier("merak") DataSource dataSource) throws Exception {
+    public SqlSessionFactory sqlSessionFactory(@Autowired  DataSource dataSource) throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(dataSource);
         bean.setMapperLocations(new ClassPathResource("mapper/RoleMapper.xml"));

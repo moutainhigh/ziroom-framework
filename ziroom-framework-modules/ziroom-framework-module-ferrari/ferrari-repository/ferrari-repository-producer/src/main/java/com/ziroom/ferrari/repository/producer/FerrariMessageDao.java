@@ -3,6 +3,7 @@ package com.ziroom.ferrari.repository.producer;
 import com.ziroom.ferrari.repository.core.BaseDao;
 import com.ziroom.ferrari.repository.core.annotation.DaoDescription;
 import com.ziroom.ferrari.repository.core.constant.OrmFrameEnum;
+import com.ziroom.ferrari.repository.core.exception.DaoException;
 import com.ziroom.ferrari.repository.core.query.Criteria;
 import com.ziroom.ferrari.repository.producer.entity.FerrariMessage;
 import org.springframework.stereotype.Repository;
@@ -42,4 +43,6 @@ public class FerrariMessageDao extends BaseDao<FerrariMessage> {
         }
         return super.findList(Criteria.where("msgStatus", messageStatus).lt("sendTime", sendDate));
     }
+
+
 }

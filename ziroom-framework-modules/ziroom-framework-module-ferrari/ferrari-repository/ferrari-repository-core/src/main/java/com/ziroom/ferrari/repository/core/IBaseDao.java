@@ -42,6 +42,8 @@ public interface IBaseDao<T> {
 
     int insert(T entity) throws DaoException;
 
+    int batchInsert(List<T> entity) throws DaoException;
+
     //更新实体所有属性
     int update(T entity) throws DaoException;
 

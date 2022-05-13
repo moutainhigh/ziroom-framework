@@ -62,14 +62,17 @@ public class FerrariRocketmqTemplate extends RocketMQTemplate implements Initial
         if (messageList == null || messageList.size() == 0) {
             return;
         }
+
         List<FerrariMessageVo> messageVoList = new ArrayList<>(messageList.size());
+        List<FerrariMessage> entityList = new ArrayList<>(messageList.size());
+
         for (T message : messageList) {
             FerrariMessageVo ferrariMessage = buildFerrariMessage(topic, tags, message);
             FerrariMessage entity = ferrariMessage.findEntity();
-            ferrariMessageDao.insert(entity);
-
+            entityList.add(entity);
             messageVoList.add(ferrariMessage);
         }
+        ferrariMessageDao.batchInsert(entityList);
 
         if (TransactionSynchronizationManager.isSynchronizationActive()) {
             TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
@@ -176,5 +179,12 @@ public class FerrariRocketmqTemplate extends RocketMQTemplate implements Initial
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         springApplicationContext = applicationContext;
+    }
+
+    public void sendAndUpdate(FerrariMessage ferrariMessage) throws ClassNotFoundException {
+        FerrariMessageVo ferrariMessageVo = new FerrariMessageVo(ferrariMessage);
+        String topic = ferrariMessage.getExchangeKey();
+        String tags = ferrariMessage.getRoutingKey();
+        syncSendAndUpdate(topic, tags, ferrariMessageVo);
     }
 }

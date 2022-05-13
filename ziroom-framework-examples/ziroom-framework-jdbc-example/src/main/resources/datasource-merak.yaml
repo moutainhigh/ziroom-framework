@@ -7,7 +7,7 @@ ziroom:
   datasource:
     name: merak
     password: ziroomdb
-    url: jdbc:mysql://10.30.7.135:3306/merak?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8
+    url: jdbc:mysql://10.30.7.107:3306/ump?useUnicode=true&serverTimezone=GMT&useSSL=false&characterEncoding=utf8
     username: dev_jcpt
     type: com.zaxxer.hikari.HikariDataSource
 #  driver-class-name: com.mysql.cj.jdbc.driver

@@ -194,6 +194,16 @@ public abstract class BaseDao<T> implements IBaseDao<T>, ApplicationContextAware
     }
 
     @Override
+    public int batchInsert(List<T> entityList) throws DaoException {
+        try {
+            checkArgumentEntity(entityList);
+            return baseDaoProxy.batchInsert(entityList);
+        } catch (RuntimeException e) {
+            throw DaoExceptionTranslator.translate(e);
+        }
+    }
+
+    @Override
     public int update(T entity) throws DaoException {
         try {
             checkArgumentEntity(entity);
