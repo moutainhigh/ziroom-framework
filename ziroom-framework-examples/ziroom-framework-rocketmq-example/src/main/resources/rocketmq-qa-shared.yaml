@@ -1,0 +1,39 @@
+ziroom:
+  rocketmq:
+    name-server: 10.216.9.189:9876
+
+    ferrari:
+      enabled: true
+
+    producer:
+      # producer group
+      group: demo-group
+
+      #Millis of send message timeout.
+      send-message-timeout: 3000
+
+      # Compress message body threshold, namely, message body larger than 4k will be compressed on default.
+      compress-message-body-threshold: 4096
+
+      # Maximum number of retry to perform internally before claiming sending failure in synchronous mode.
+      # This may potentially cause message duplication which is up to application developers to resolve.
+      retry-times-when-send-failed: 2
+
+      # Maximum number of retry to perform internally before claiming sending failure in asynchronous mode.
+      # This may potentially cause message duplication which is up to application developers to resolve.
+      retry-times-when-send-async-failed: 2
+
+      # Indicate whether to retry another broker on sending failure internally.
+      retry-next-server: false
+
+      # Maximum allowed message size in bytes.
+      max-message-size: 4194304 # 4m
+
+      # The property of "access-key".
+      access-key:
+
+      # The property of "secret-key".
+      secret-key:
+
+      # Switch flag instance for message trace.
+      enable-msg-trace: true

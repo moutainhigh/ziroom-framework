@@ -1,6 +1,6 @@
 package com.ziroom.ferrari.test.conf;
 
-import com.ziroom.ferrari.test.listner.RocketMqExampleListner;
+import com.ziroom.ferrari.test.listener.RocketMqExampleListener;
 import com.ziroom.ferrari.test.service.TestRocketmqService;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
@@ -23,7 +23,7 @@ public class TestRocketmqConsumerConfig {
     private String nameServer = "10.216.9.189:9876";
 
     @Resource
-    private RocketMqExampleListner exampleListner;
+    private RocketMqExampleListener exampleListner;
 
     @PostConstruct
     public DefaultMQPushConsumer createDefaultMQPushConsumer() throws MQClientException {

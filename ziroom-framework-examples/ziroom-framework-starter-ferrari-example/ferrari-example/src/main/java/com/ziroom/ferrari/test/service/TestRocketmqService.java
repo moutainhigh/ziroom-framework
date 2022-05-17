@@ -2,11 +2,13 @@ package com.ziroom.ferrari.test.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.collect.Lists;
+import com.ziroom.ferrari.rocketmq.producer.BatchSendCallback;
 import com.ziroom.ferrari.rocketmq.producer.FerrariRocketmqTemplate;
 import com.ziroom.ferrari.test.dao.ContractLabelMapper;
 import com.ziroom.ferrari.test.dto.ModuleTypeEnum;
 import com.ziroom.ferrari.test.dto.NoticeReq;
 import com.ziroom.ferrari.test.entity.ContractLabelEntity;
+import org.apache.rocketmq.client.producer.SendResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +34,7 @@ public class TestRocketmqService {
     public static final String CONSUMER_GROUP_BEAN = "ferrari_test_bean";
 
     @Transactional(rollbackFor = Exception.class)
-    public void test() throws JsonProcessingException {
+    public void test(boolean async, boolean throwEx) throws JsonProcessingException {
         ContractLabelEntity labelEntity = newContractLabel();
         contractLabelMapper.insertSelective(labelEntity);
 
@@ -42,11 +44,19 @@ public class TestRocketmqService {
             .uid("2791a0ff-589c-46fd-a527-0109991600a1")
             .build();
 
-        ferrariRocketmqTemplate.syncSend(NOTICE_TOPIC, null, noticeReq);
+        if (async) {
+            ferrariRocketmqTemplate.asyncSend(NOTICE_TOPIC, null, noticeReq, null);
+        } else {
+            ferrariRocketmqTemplate.syncSend(NOTICE_TOPIC, noticeReq);
+        }
+
+        if (throwEx) {
+            throw new RuntimeException();
+        }
     }
 
     @Transactional(rollbackFor = Exception.class)
-    public void batchTest() throws JsonProcessingException {
+    public void batchTest(boolean async) throws JsonProcessingException {
         ContractLabelEntity labelEntity = newContractLabel();
         contractLabelMapper.insertSelective(labelEntity);
 
@@ -70,7 +80,23 @@ public class TestRocketmqService {
                 .build()
             );
 
-        ferrariRocketmqTemplate.batchSyncSend(NOTICE_TOPIC, null, msgs);
+        if (async) {
+            BatchSendCallback callback = new BatchSendCallback() {
+                @Override
+                public void onSuccess(Object message, SendResult sendResult) {
+                    System.out.println("Msg send success: " + message + " => " + sendResult);
+                }
+
+                @Override
+                public void onException(Object message, Throwable e) {
+
+                }
+            };
+            ferrariRocketmqTemplate.batchAsyncSend(NOTICE_TOPIC, null, msgs, callback);
+        } else {
+            ferrariRocketmqTemplate.batchSyncSend(NOTICE_TOPIC, null, msgs);
+        }
+
     }
 
 //

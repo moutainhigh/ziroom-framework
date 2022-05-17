@@ -139,4 +139,22 @@ public class FerrariMessage extends IdEntity implements Serializable {
     public void setMsgBodyClass(String msgBodyClass) {
         this.msgBodyClass = msgBodyClass;
     }
+
+    @Override
+    public String toString() {
+        return "FerrariMessage{" +
+            "beanId='" + beanId + '\'' +
+            ", exchangeKey='" + exchangeKey + '\'' +
+            ", routingKey='" + routingKey + '\'' +
+            ", msgStatus=" + msgStatus +
+            ", msgBody='" + msgBody + '\'' +
+            ", msgBodyType=" + msgBodyType +
+            ", msgBodyClass='" + msgBodyClass + '\'' +
+            ", msgAttribute='" + msgAttribute + '\'' +
+            ", msgType='" + msgType + '\'' +
+            ", createTime=" + createTime +
+            ", sendTime=" + sendTime +
+            ", id=" + id +
+            '}';
+    }
 }

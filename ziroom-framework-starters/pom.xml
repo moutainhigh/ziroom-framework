@@ -26,6 +26,7 @@
         <module>ziroom-framework-starter-data-redis</module>
         <module>ziroom-framework-starter-amqp</module>
         <module>ziroom-framework-starter-distributedlock</module>
+        <module>ziroom-framework-starter-rocketmq</module>
     </modules>
 
 </project>

@@ -36,4 +36,5 @@ public class WebLogMethodInterceptor implements MethodInterceptor {
         // 接口结束后换行，方便分割查看
         return result;
     }
+    
 }

@@ -23,6 +23,7 @@
         <module>ziroom-framework-dependencies-example</module>
         <module>ziroom-framework-starter-ferrari-example</module>
         <module>ziroom-framework-distributedlock-example</module>
+        <module>ziroom-framework-rocketmq-example</module>
     </modules>
 
     <properties>

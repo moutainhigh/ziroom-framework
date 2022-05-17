@@ -112,6 +112,29 @@
             <optional>true</optional>
         </dependency>
 
+        <dependency>
+            <groupId>com.ziroom.tech</groupId>
+            <artifactId>ares-api</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>dubhe-rocketmq</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ferrari-rocketmq-producer</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.ziroom.framework</groupId>
+            <artifactId>ferrari-rocketmq-consumer</artifactId>
+            <optional>true</optional>
+        </dependency>
+
     </dependencies>
 
     <profiles>

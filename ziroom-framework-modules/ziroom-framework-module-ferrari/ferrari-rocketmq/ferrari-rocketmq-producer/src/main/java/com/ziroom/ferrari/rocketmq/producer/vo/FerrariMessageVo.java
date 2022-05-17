@@ -48,4 +48,12 @@ public class FerrariMessageVo {
     public void setOriginalMessage(Object originalMessage) {
         this.originalMessage = originalMessage;
     }
+
+    @Override
+    public String toString() {
+        return "FerrariMessageVo{" +
+            "ferrariMessage=" + ferrariMessage +
+            ", originalMessage=" + originalMessage +
+            '}';
+    }
 }
