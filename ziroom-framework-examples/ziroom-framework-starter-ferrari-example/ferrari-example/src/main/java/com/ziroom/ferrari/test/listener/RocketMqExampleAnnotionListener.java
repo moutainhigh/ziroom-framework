@@ -1,4 +1,4 @@
-package com.ziroom.ferrari.test.listner;
+package com.ziroom.ferrari.test.listener;
 
 import com.ziroom.ferrari.test.dto.NoticeReq;
 import com.ziroom.ferrari.test.service.TestRocketmqService;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
         topic = TestRocketmqService.NOTICE_TOPIC,
         consumerGroup = TestRocketmqService.CONSUMER_GROUP_LISTENTER
 )
-public class RocketMqExampleAnnotionListner<T> implements RocketMQListener<NoticeReq> {
+public class RocketMqExampleAnnotionListener<T> implements RocketMQListener<NoticeReq> {
 
     @Override
     public void onMessage(NoticeReq noticeReq) {

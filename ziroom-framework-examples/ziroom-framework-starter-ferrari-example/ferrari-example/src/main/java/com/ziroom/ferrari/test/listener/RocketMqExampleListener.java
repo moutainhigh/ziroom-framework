@@ -1,4 +1,4 @@
-package com.ziroom.ferrari.test.listner;
+package com.ziroom.ferrari.test.listener;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class RocketMqExampleListner implements MessageListenerConcurrently {
+public class RocketMqExampleListener implements MessageListenerConcurrently {
 
     @Override
     public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) {

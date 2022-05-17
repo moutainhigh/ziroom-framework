@@ -143,6 +143,13 @@
             </dependency>
 
             <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-starter-rocketmq</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <dependency>
                 <groupId>com.ziroom.swagger</groupId>
                 <artifactId>ziroom-swagger-dubbo</artifactId>
                 <version>${project.version}</version>
@@ -191,6 +198,14 @@
                 <artifactId>ziroom-framework-module-executemanager</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <!-- region dubhe 流量染色 -->
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>dubhe-rocketmq</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <!-- endregion -->
 
             <!-- region gamma-rpc -->
             <dependency>
@@ -355,6 +370,11 @@
             <dependency>
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
+                <version>${rocketmq-spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.rocketmq</groupId>
+                <artifactId>rocketmq-spring-boot</artifactId>
                 <version>${rocketmq-spring.version}</version>
             </dependency>
             <!-- endregion -->
@@ -542,6 +562,12 @@
                 </exclusions>
             </dependency>
             <!-- endregion -->
+
+            <dependency>
+                <groupId>com.ziroom.tech</groupId>
+                <artifactId>ares-api</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

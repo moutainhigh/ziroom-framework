@@ -91,7 +91,4 @@ public class ZiroomDataSourceProvider {
         return this.ziroomDataSourceMap;
     }
 
-    public static void main(String[] args) {
-        new ZiroomDataSourceProvider().initialize();
-    }
 }

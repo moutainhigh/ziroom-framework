@@ -22,7 +22,6 @@ import java.util.Objects;
  * @Version 1.0
  */
 @Aspect
-@Component
 public class RocketMqConsumerAnnotationAspectJ {
     private final static String ListenerMethodName = "onMessage";
     @Resource

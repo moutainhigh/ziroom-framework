@@ -3,6 +3,7 @@ package com.ziroom.ferrari.test.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ziroom.ferrari.test.service.TestRocketmqService;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -19,15 +20,15 @@ public class TestRocketmqControllers {
     @Resource
     private TestRocketmqService testRocketmqService;
 
-    @RequestMapping("test")
-    public String test() throws JsonProcessingException {
-        testRocketmqService.test();
+    @RequestMapping("send")
+    public String test(@RequestParam(defaultValue = "false") boolean async, @RequestParam(defaultValue = "false") boolean rollback) throws JsonProcessingException {
+        testRocketmqService.test(async, rollback);
         return "success";
     }
 
-    @RequestMapping("batch")
-    public String batchTest() throws JsonProcessingException {
-        testRocketmqService.batchTest();
+    @RequestMapping("batchSend")
+    public String batchTest(@RequestParam(defaultValue = "false") boolean async) throws JsonProcessingException {
+        testRocketmqService.batchTest(async);
         return "success";
     }
 //
