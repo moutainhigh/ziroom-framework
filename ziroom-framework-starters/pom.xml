@@ -27,6 +27,7 @@
         <module>ziroom-framework-starter-amqp</module>
         <module>ziroom-framework-starter-distributedlock</module>
         <module>ziroom-framework-starter-rocketmq</module>
+        <module>ziroom-framework-starter-apollo</module>
     </modules>
 
 </project>
