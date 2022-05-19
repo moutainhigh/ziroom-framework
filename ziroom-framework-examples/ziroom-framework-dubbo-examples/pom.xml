@@ -45,11 +45,6 @@
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ziroom-framework-common</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.ziroom.framework</groupId>
-            <artifactId>ziroom-framework-starter-swagger</artifactId>
-        </dependency>
-
     </dependencies>
 
 </project>

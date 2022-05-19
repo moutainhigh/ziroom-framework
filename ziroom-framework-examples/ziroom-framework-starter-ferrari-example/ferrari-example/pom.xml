@@ -96,13 +96,13 @@
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ferrari-rabbit-producer</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
 
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ferrari-rabbit-consumer</artifactId>
-            <version>${project.version}</version>
+            <version>${revision}</version>
         </dependency>
 
         <dependency>

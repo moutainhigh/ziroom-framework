@@ -1,0 +1,20 @@
+ziroom:
+  web:
+    response:
+      enforce:
+        enabled: true
+        exclude-paths:
+          - /swagger-resources
+          - /v2/api-docs
+          - /response/exclude-path
+        exclude-types:
+          - com.ziroom.framework.example.controller.ExcludedResponse
+    accesslog:
+      enabled: true
+      include-headers:
+        - Content-Length
+        - TestHeader
+    swagger:
+      enabled: true
+      select:
+        base-package: com.ziroom

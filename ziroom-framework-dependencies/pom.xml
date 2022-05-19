@@ -26,9 +26,9 @@
         <mockito.version>1.10.19</mockito.version>
         <powermock.version>1.7.1</powermock.version>
 
-        <knife4j-starter.version>2.0.2</knife4j-starter.version>
+        <knife4j.version>2.0.7</knife4j.version>
         <swagger-annotations.version>1.5.22</swagger-annotations.version>
-        <springfox-swagger.version>2.9.2</springfox-swagger.version>
+<!--        <springfox-swagger.version>2.9.2</springfox-swagger.version>-->
 
         <commons-io.version>2.6</commons-io.version>
         <commons-codec.version>1.11</commons-codec.version>
@@ -70,11 +70,19 @@
         <io.searchbox.jest.version>2.4.0</io.searchbox.jest.version>
         <org.elasticsearch.elasticsearch.version>2.0.1</org.elasticsearch.elasticsearch.version>
 
+        <hibernate-validator.version>5.3.4.Final</hibernate-validator.version>
     </properties>
 
     <dependencyManagement>
 
         <dependencies>
+
+            <!-- region 自如内部组件 -->
+            <dependency>
+                <groupId>com.ziroom.framework</groupId>
+                <artifactId>ziroom-framework-module-web</artifactId>
+                <version>${revision}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
@@ -85,123 +93,116 @@
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ferrari-rocketmq-producer</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ferrari-rocketmq-consumer</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
-            <!-- region 自如内部组件 -->
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-starter-web</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-starter-exception</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-starter-http</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.ziroom.framework</groupId>
-                <artifactId>ziroom-framework-starter-swagger</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-starter-dubbo</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-starter-jdbc</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-starter-data-redis</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-starter-zns-discovery</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-starter-rocketmq</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-starter-apollo</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.swagger</groupId>
                 <artifactId>ziroom-swagger-dubbo</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framewor</groupId>
                 <artifactId>ziroom-swagger-starter</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-common</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-autoconfigure</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-starters</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-starter-parent</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-module-distributedlock</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-starter-distributedlock</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ziroom-framework-module-executemanager</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- region dubhe 流量染色 -->
@@ -329,16 +330,16 @@
 
 
             <!-- region swagger -->
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${springfox-swagger.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${springfox-swagger.version}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>io.springfox</groupId>-->
+<!--                <artifactId>springfox-swagger2</artifactId>-->
+<!--                <version>${springfox-swagger.version}</version>-->
+<!--            </dependency>-->
+<!--            <dependency>-->
+<!--                <groupId>io.springfox</groupId>-->
+<!--                <artifactId>springfox-swagger-ui</artifactId>-->
+<!--                <version>${springfox-swagger.version}</version>-->
+<!--            </dependency>-->
 
             <dependency>
                 <groupId>io.swagger</groupId>
@@ -348,9 +349,15 @@
 
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
-                <version>${knife4j-starter.version}</version>
+                <artifactId>knife4j-spring-boot-autoconfigure</artifactId>
+                <version>${knife4j.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
+
             <!-- endregion -->
 
             <!-- region curator-zk -->
@@ -572,6 +579,12 @@
                 <groupId>com.ziroom.tech</groupId>
                 <artifactId>ares-api</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
             </dependency>
 
         </dependencies>

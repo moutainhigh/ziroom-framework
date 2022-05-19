@@ -44,18 +44,6 @@
             <artifactId>ziroom-framework-starter-zns-discovery</artifactId>
         </dependency>
 
-
-        <dependency>
-            <groupId>com.ziroom.framework</groupId>
-            <artifactId>ziroom-framework-starter-swagger</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.validation</groupId>
-                    <artifactId>validation-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
         <dependency>
             <groupId>com.ziroom.tech</groupId>
             <artifactId>sentinel-http-adapter</artifactId>

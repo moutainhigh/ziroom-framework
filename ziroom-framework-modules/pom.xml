@@ -23,6 +23,7 @@
         <module>ziroom-framework-module-executemanager</module>
         <module>ziroom-framework-module-ferrari</module>
         <module>ziroom-framework-module-dubhe</module>
+        <module>ziroom-framework-module-web</module>
     </modules>
 
     <dependencies>
