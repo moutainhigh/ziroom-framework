@@ -28,7 +28,7 @@
 
     <properties>
         <!-- Project revision -->
-        <revision>1.0.0-SNAPSHOT</revision>
+        <revision>1.1.0-SNAPSHOT</revision>
 
         <!-- Framework Versions -->
         <spring-boot.version>2.3.2.RELEASE</spring-boot.version>

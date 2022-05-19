@@ -11,7 +11,7 @@
     <description>Rent Spring Cloud Dependencies</description>
 
     <properties>
-        <revision>1.0.0-SNAPSHOT</revision>
+        <revision>1.1.0-SNAPSHOT</revision>
 
         <flatten-maven-plugin.version>1.1.0</flatten-maven-plugin.version>
         <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
@@ -594,7 +594,7 @@
         <profile>
             <id>release</id>
             <properties>
-                <revision>1.0.0</revision>
+                <revision>1.0.0-RC1</revision>
             </properties>
         </profile>
     </profiles>
