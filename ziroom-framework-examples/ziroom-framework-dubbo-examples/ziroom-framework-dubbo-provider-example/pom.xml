@@ -47,10 +47,6 @@
             <artifactId>ziroom-framework-starter-http</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.ziroom.framework</groupId>
-            <artifactId>ziroom-framework-starter-swagger</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.ziroom.gelflog.spring</groupId>
             <artifactId>gelflog-spring</artifactId>
             <version>${gelflog.version}</version>

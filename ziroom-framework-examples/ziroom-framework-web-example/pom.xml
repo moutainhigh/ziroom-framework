@@ -23,6 +23,7 @@
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ziroom-framework-starter-web</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ziroom-framework-starter-apollo</artifactId>
@@ -31,6 +32,12 @@
         <dependency>
             <groupId>com.ziroom.framework</groupId>
             <artifactId>ziroom-framework-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
 
     </dependencies>

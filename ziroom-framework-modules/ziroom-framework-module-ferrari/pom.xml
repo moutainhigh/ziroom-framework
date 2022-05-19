@@ -34,58 +34,58 @@
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ferrari-common</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- ferrari-rocketmq -->
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ferrari-rocketmq-consumer</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ferrari-rocketmq-producer</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- ferrari-rabbit -->
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ferrari-rabbit-producer</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ferrari-rabbit-consumer</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <!-- ferrari-repository -->
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ferrari-repository-common</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ferrari-repository-consumer</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ferrari-repository-core</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.ziroom.framework</groupId>
                 <artifactId>ferrari-repository-producer</artifactId>
-                <version>${project.version}</version>
+                <version>${revision}</version>
             </dependency>
 
 

@@ -21,6 +21,7 @@ public final class ResponseData<T> implements Serializable {
     public static final int SUCCESS = 200;
     public static final int ERROR = 500;
     private static final long serialVersionUID = -1413678375545902711L;
+
     private int code;
     private String message;
     private T data;
