@@ -3,6 +3,7 @@ package com.ziroom.framework.autoconfigure.web;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ziroom.framework.module.web.log.WebAccessLogFilter;
 import com.ziroom.framework.module.web.log.WebAccessLogProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 
 @Configuration(proxyBeanMethods = false)
+@ConditionalOnClass(name = "com.ziroom.framework.module.web.log.WebAccessLogFilter")
 @EnableConfigurationProperties(WebAccessLogProperties.class)
 @ConditionalOnProperty(name = "ziroom.web.accesslog.enabled", havingValue = "true", matchIfMissing = true)
 public class WebAccessLogAutoConfiguration {

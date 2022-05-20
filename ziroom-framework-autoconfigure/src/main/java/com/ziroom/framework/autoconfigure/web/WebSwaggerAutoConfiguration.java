@@ -3,6 +3,7 @@ package com.ziroom.framework.autoconfigure.web;
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import com.ziroom.framework.module.web.swagger.WebSwaggerProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -18,10 +19,12 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 @Configuration
+@ConditionalOnClass(name = {"springfox.documentation.spring.web.plugins.Docket",
+    "com.ziroom.framework.module.web.swagger.WebSwaggerProperties"})
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @EnableKnife4j
 @EnableSwagger2WebMvc
 @EnableConfigurationProperties(WebSwaggerProperties.class)
-@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 public class WebSwaggerAutoConfiguration {
 
     @Autowired
